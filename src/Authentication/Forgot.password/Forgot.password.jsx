@@ -47,7 +47,7 @@ const Forgot_password = (props) => {
         alignItems="center"
         justifyContent="center"
         sx={{
-          width: "25%",
+          width: { md: "25%", xs: "85%" },
           height: "51%",
           boxShadow:
             " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
@@ -112,7 +112,7 @@ const Forgot_password = (props) => {
             </Typography>
 
             <Typography
-             onClick={() => Navigate("/")}
+              onClick={() => Navigate("/")}
               sx={{
                 cursor: "pointer",
                 fontSize: "14px",
