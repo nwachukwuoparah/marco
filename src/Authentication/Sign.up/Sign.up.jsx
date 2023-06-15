@@ -69,7 +69,6 @@ const Sign_up = (props) => {
             alignItems: "center",
             justifyContent: "center",
             bgcolor: "#f5f5f5",
-            bgcolor: "red",
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
