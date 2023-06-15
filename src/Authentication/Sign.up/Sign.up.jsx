@@ -48,6 +48,7 @@ const Sign_up = (props) => {
         alignItems: "center",
         position: "relative",
         backgroundImage: { md: `url(${background})`, xs: "none" },
+        backgroundImage: `url(${background})`,
       }}
     >
       <Stack
@@ -63,12 +64,13 @@ const Sign_up = (props) => {
       >
         <Stack
           sx={{
-            width: { md: "50%", xs: "100%" },
-            height: { md: "100%", xs: "none" },
-            padding: "20px 0px",
+            display: { md: "block", xs: "none" },
+            width: "50%",
+            height: "100%",
             alignItems: "center",
             justifyContent: "center",
-            bgcolor: { md: "#f5f5f5", xs: "#ffff" },
+            // bgcolor: { md: "#f5f5f5", xs: "#ffff" },
+            // bgcolor: { md: "#f5f5f5", xs: "#ffff" },
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
@@ -79,7 +81,7 @@ const Sign_up = (props) => {
             width: { md: "50%", xs: "100%" },
             height: { md: "100%", xs: "none" },
             padding: "30px 0px",
-            bgcolor: "white",
+            bgcolor: { md: "white", xs: "none" },
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -88,7 +90,6 @@ const Sign_up = (props) => {
           <Stack
             sx={{
               width: "80%",
-              bgcolor: "white",
               height: "85.5%",
             }}
             spacing={3.5}
