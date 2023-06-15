@@ -48,7 +48,7 @@ const Forgot_password = (props) => {
         justifyContent="center"
         sx={{
           width: { md: "25%", xs: "85%" },
-          height: "51%",
+          padding: "60px 0px",
           boxShadow:
             " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
           borderRadius: "6px",
