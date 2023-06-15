@@ -48,7 +48,7 @@ const Login = (props) => {
         sx={{
 
           width: { md: "50%", xs: "100%" },
-          height: { md: "68.5%", xs: "105`vh" },
+          height: { md: "68.5%", xs: "105vh" },
           boxShadow:
             " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
           borderRadius: "12px",
