@@ -55,15 +55,16 @@ const Sign_up = (props) => {
         sx={{
           width: { md: "50%", xs: "100%" },
           height: { md: "76%", xs: "120vh" },
-          boxShadow:
-            " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
+          boxShadow: {
+            md: " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
+            xs: "none",
+          },
           borderRadius: "12px",
-          bgcolor: "red",
         }}
       >
         <Stack
           sx={{
-            width: { md: "50%" ,xs:"100%"},
+            width: { md: "50%", xs: "100%" },
             height: { md: "100%", xs: "40%" },
             alignItems: "center",
             justifyContent: "center",
@@ -76,8 +77,8 @@ const Sign_up = (props) => {
 
         <Stack
           sx={{
-            width: { md: "50%", xs:"100%" },
-            height: { md: "100%",xs: "60%" },
+            width: { md: "50%", xs: "100%" },
+            height: { md: "100%", xs: "60%" },
             bgcolor: "white",
             display: "flex",
             alignItems: "center",
