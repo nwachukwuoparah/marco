@@ -12,7 +12,9 @@ import login_illustration from "../../../public/login_illustration.png";
 import marco from "../../../public/marco.png";
 import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
+import { useNavigate } from "react-router-dom";
 const Forgot_password = (props) => {
+  const Navigate = useNavigate();
   const From_input = [
     {
       key: 1,
@@ -46,17 +48,16 @@ const Forgot_password = (props) => {
         justifyContent="center"
         sx={{
           width: "25%",
-          height: "55%",
+          height: "51%",
           boxShadow:
             " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
           borderRadius: "6px",
           borderTop: "4.5px solid  #b3e5fc",
           bgcolor: "white",
-          bgcolor: "grey",
         }}
       >
         <Stack
-          spacing={3.5}
+          spacing={2}
           sx={{
             width: { md: "76%" },
             bgcolor: "white",
@@ -66,7 +67,7 @@ const Forgot_password = (props) => {
             direction="column"
             alignItems="center"
             textAlign="center"
-            spacing={3}
+            spacing={1.5}
           >
             <img src={marco} style={{ width: "60px" }} alt="logo" />
             <Typography
@@ -74,9 +75,9 @@ const Forgot_password = (props) => {
               sx={{
                 marginTop: 0,
                 fontWeight: 400,
-                lineHeight: 1.1,
+                lineHeight: 1,
                 color: "inherit",
-                fontSize: "14px",
+                fontSize: "17px",
                 fontWeight: 500,
               }}
             >
@@ -91,11 +92,38 @@ const Forgot_password = (props) => {
 
           <Button_component
             variant="contained"
-            content="Login"
+            content="SEND RECOVERY LINK"
             bgcolor="#03a9f4"
             Hbgcolor="#03a9f4"
             disableElevation="disableElevation"
           />
+          <Stack direction="row" justifyContent="space-between">
+            <Typography
+              onClick={() => Navigate("/login")}
+              sx={{
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: 400,
+                lineHeight: 1.5,
+              }}
+              variant="p"
+            >
+              Sign in
+            </Typography>
+
+            <Typography
+             onClick={() => Navigate("/")}
+              sx={{
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: 400,
+                lineHeight: 1.5,
+              }}
+              variant="p"
+            >
+              Create a new account
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
     </Container>

@@ -5,7 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import background from "../../../public/background.jpg";
 import login_illustration from "../../../public/login_illustration.png";
 import marco from "../../../public/marco.png";
@@ -13,6 +13,8 @@ import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
 const Sign_up = (props) => {
+  const [loading, setLoading] = useState(true);
+
   const Navigate = useNavigate();
 
   const From_input = [
@@ -51,20 +53,22 @@ const Sign_up = (props) => {
       <Stack
         direction={{ md: "row", xs: "column" }}
         sx={{
-          width: "50%",
-          height: "76%",
+          width: { md: "50%", xs: "100%" },
+          height: { md: "76%", xs: "120vh" },
           boxShadow:
             " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
           borderRadius: "12px",
+          bgcolor: "red",
         }}
       >
         <Stack
           sx={{
-            width: { md: "50%" },
-            height: { md: "100%" },
+            width: { md: "50%" ,xs:"100%"},
+            height: { md: "100%", xs: "40%" },
             alignItems: "center",
             justifyContent: "center",
             bgcolor: "#f5f5f5",
+            bgcolor: "red",
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
@@ -72,8 +76,8 @@ const Sign_up = (props) => {
 
         <Stack
           sx={{
-            width: { md: "50%" },
-            height: { md: "100%" },
+            width: { md: "50%", xs:"100%" },
+            height: { md: "100%",xs: "60%" },
             bgcolor: "white",
             display: "flex",
             alignItems: "center",
@@ -139,6 +143,7 @@ const Sign_up = (props) => {
               </Stack>
 
               <Button_component
+                routh="/login"
                 variant="contained"
                 content="Create your free account"
                 boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
