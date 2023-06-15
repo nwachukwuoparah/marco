@@ -47,28 +47,28 @@ const Sign_up = (props) => {
         placeContent: "center",
         alignItems: "center",
         position: "relative",
-        backgroundImage: `url(${background})`,
+        backgroundImage: { md: `url(${background})`, xs: "none" },
       }}
     >
       <Stack
         direction={{ md: "row", xs: "column" }}
         sx={{
           width: { md: "50%", xs: "100%" },
-          height: { md: "76%", xs: "120vh" },
           boxShadow: {
             md: " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
             xs: "none",
           },
-          borderRadius: "12px",
+          borderRadius: { md: "12px", xs: "0px" },
         }}
       >
         <Stack
           sx={{
             width: { md: "50%", xs: "100%" },
-            height: { md: "100%", xs: "40%" },
+            height: { md: "100%", xs: "none" },
+            padding: "20px 0px",
             alignItems: "center",
             justifyContent: "center",
-            bgcolor: "#f5f5f5",
+            bgcolor: { md: "#f5f5f5", xs: "#ffff" },
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
@@ -77,7 +77,8 @@ const Sign_up = (props) => {
         <Stack
           sx={{
             width: { md: "50%", xs: "100%" },
-            height: { md: "100%", xs: "60%" },
+            height: { md: "100%", xs: "none" },
+            padding: "30px 0px",
             bgcolor: "white",
             display: "flex",
             alignItems: "center",
