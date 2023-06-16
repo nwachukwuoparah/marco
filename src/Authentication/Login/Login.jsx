@@ -33,7 +33,7 @@ const Login = (props) => {
       disableGutters
       maxWidth={false}
       sx={{
-        height: "100vh",
+        padding: "10vh 0vh",
         backgrounflexFlow: "row wrap",
         boxSizing: " border-box",
         display: "flex",
@@ -47,20 +47,19 @@ const Login = (props) => {
         direction={{ md: "row", xs: "column" }}
         sx={{
           width: { md: "50%", xs: "100%" },
-          height: { md: "68.5%", xs: "105vh" },
           boxShadow: {
             md: " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
             xs: "none",
           },
         }}
+        spacing={5}
       >
         <Stack
           sx={{
             width: { md: "50%", xs: "100%" },
-            height: { md: "100%", xs: "40%" },
             alignItems: "center",
             justifyContent: "center",
-            bgcolor: "#f5f5f5",
+            bgcolor: { md: "#f5f5f5", xs: "none" },
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
@@ -69,8 +68,8 @@ const Login = (props) => {
         <Stack
           sx={{
             width: { md: "50%", xs: "100%" },
-            height: { md: "100%", xs: "60%" },
-            bgcolor: "white",
+            padding: "30px 0px",
+            bgcolor: { md: "white", xs: "none" },
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -79,7 +78,6 @@ const Login = (props) => {
           <Stack
             sx={{
               width: "80%",
-              bgcolor: "white",
               height: "83.5%",
             }}
             spacing={3.5}
@@ -111,7 +109,12 @@ const Login = (props) => {
                   <Input {...i} variant="outlined" />
                 ))}
 
-                <Stack direction="row" justifyContent="space-between">
+                <Stack
+                  direction="row"
+                  flexWrap="wrap"
+                  justifyContent="space-between"
+                  gap="20px"
+                >
                   <FormControlLabel
                     disableGutters
                     sx={{
