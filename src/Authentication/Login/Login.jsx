@@ -33,7 +33,8 @@ const Login = (props) => {
       disableGutters
       maxWidth={false}
       sx={{
-        padding: "10vh 0vh",
+        height: { md: "100vh", xs: "none" },
+        padding: { md: "0px", xs: "10vh 0vh" },
         backgrounflexFlow: "row wrap",
         boxSizing: " border-box",
         display: "flex",
@@ -52,7 +53,7 @@ const Login = (props) => {
             xs: "none",
           },
         }}
-        spacing={5}
+        spacing={{ md: 0, xs: 5 }}
       >
         <Stack
           sx={{
@@ -73,12 +74,12 @@ const Login = (props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            borderRadius: { md: "0px 12px 12px 0px" },
           }}
         >
           <Stack
             sx={{
               width: "80%",
-              height: "83.5%",
             }}
             spacing={3.5}
           >
@@ -109,12 +110,7 @@ const Login = (props) => {
                   <Input {...i} variant="outlined" />
                 ))}
 
-                <Stack
-                  direction="row"
-                  flexWrap="wrap"
-                  justifyContent="space-between"
-                  gap="20px"
-                >
+                <Stack direction="row" justifyContent="space-between">
                   <FormControlLabel
                     disableGutters
                     sx={{
