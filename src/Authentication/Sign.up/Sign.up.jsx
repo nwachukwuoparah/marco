@@ -40,7 +40,7 @@ const Sign_up = (props) => {
       disableGutters
       maxWidth={false}
       sx={{
-        height: "100vh",
+        padding: "7vh 0vh",
         backgrounflexFlow: "row wrap",
         boxSizing: " border-box",
         display: "flex",
@@ -61,16 +61,16 @@ const Sign_up = (props) => {
           },
           borderRadius: { md: "12px", xs: "0px" },
         }}
+        // bgcolor="red"
+        spacing={5}
       >
         <Stack
           sx={{
-            display: { md: "block", xs: "none" },
-            width: "50%",
-            height: "100%",
+            display: "flex",
+            width: { md: "50%", xs: "100%" },
             alignItems: "center",
             justifyContent: "center",
-            // bgcolor: { md: "#f5f5f5", xs: "#ffff" },
-            // bgcolor: { md: "#f5f5f5", xs: "#ffff" },
+            bgcolor: { md: "#f5f5f5", xs: "none" },
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
@@ -79,7 +79,6 @@ const Sign_up = (props) => {
         <Stack
           sx={{
             width: { md: "50%", xs: "100%" },
-            height: { md: "100%", xs: "none" },
             padding: "30px 0px",
             bgcolor: { md: "white", xs: "none" },
             display: "flex",
