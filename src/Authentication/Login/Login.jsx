@@ -148,6 +148,7 @@ const Login = (props) => {
                   height="36px"
                 />
                 <Button_component
+                  routh="/dashboard"
                   variant="contained"
                   content="Login"
                   bgcolor="#03a9f4"
