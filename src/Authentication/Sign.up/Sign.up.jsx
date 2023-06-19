@@ -72,7 +72,7 @@ const Sign_up = (props) => {
             alignItems: "center",
             justifyContent: "center",
             bgcolor: { md: "#f5f5f5", xs: "none" },
-            borderRadius: {md:"12px 0px 0px 12px"},
+            borderRadius: { md: "12px 0px 0px 12px" },
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
@@ -86,7 +86,7 @@ const Sign_up = (props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: {md:"0px 12px 12px 0px"},
+            borderRadius: { md: "0px 12px 12px 0px" },
           }}
         >
           <Stack
@@ -153,7 +153,7 @@ const Sign_up = (props) => {
                 boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                 bgcolor="#03a9f4"
                 Hbgcolor="#03a9f4"
-                width="218px"
+                width="100%"
                 height="36px"
               />
             </Stack>

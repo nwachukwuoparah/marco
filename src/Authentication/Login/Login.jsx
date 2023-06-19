@@ -100,9 +100,20 @@ const Login = (props) => {
                   Sign In
                 </Typography>
               </span>
-              <Typography sx={{ color: "rgba(0, 0, 0, 0.54)" }}>
-                Welcome back, please login to your account.
-              </Typography>
+              <Stack direction="row" alignItems="center">
+                <Typography sx={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                  Don't have an account?
+                </Typography>
+                <Button_component
+                  routh="/"
+                  variant="text"
+                  content="SignUp"
+                  fontWeight={400}
+                  fontSize="14px"
+                  color="#03a9f4"
+                  userSelect="none"
+                />
+              </Stack>
             </Stack>
             <Stack spacing={4.5}>
               <Stack spacing={3}>
@@ -123,7 +134,11 @@ const Login = (props) => {
                   />
                   <Typography
                     onClick={() => Navigate("/forgot.password")}
-                    sx={{ cursor: "pointer", fontSize: "14px" }}
+                    sx={{
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      color: "#03a9f4",
+                    }}
                   >
                     Forgot Password?
                   </Typography>
@@ -138,23 +153,13 @@ const Login = (props) => {
                 }}
               >
                 <Button_component
-                  routh="/"
-                  variant="outlined"
-                  content="Register"
-                  disableElevation="disableElevation"
-                  width="117px"
-                  borderColor="rgba(0,0,0,.12)"
-                  HborderColor="rgba(0,0,0,.12)"
-                  height="36px"
-                />
-                <Button_component
                   routh="/dashboard"
                   variant="contained"
-                  content="Login"
+                  content="Create your free account"
+                  boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                   bgcolor="#03a9f4"
                   Hbgcolor="#03a9f4"
-                  disableElevation="disableElevation"
-                  width="100px"
+                  width="100%"
                   height="36px"
                 />
               </Stack>
