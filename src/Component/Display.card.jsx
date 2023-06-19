@@ -12,7 +12,7 @@ const Display_card = (props) => {
         border: " 1px solid #e3ebf6",
         padding: "20px 15px",
         borderRadius: "5px",
-        bgcolor: "",
+        bgcolor: "rgb(172, 166, 204,15%)",
       }}
     >
       <Typography

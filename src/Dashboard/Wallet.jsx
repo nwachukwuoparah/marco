@@ -40,7 +40,8 @@ const Wallet = () => {
             fontSize: "17px",
             borderBottom: " 1px solid #e3ebf6",
             color: "#1d2c48",
-            fontWeight:"900"
+            fontWeight: "900",
+            bgcolor: "rgb(172, 166, 204,15%)",
           }}
         >
           {" "}
@@ -52,7 +53,6 @@ const Wallet = () => {
             height: "90%",
             bgcolor: "",
             overflowY: "scroll",
-            bgcolor: "",
           }}
         >
           {Array.from(Array(10)).map((i) => (
@@ -64,6 +64,11 @@ const Wallet = () => {
                 borderBottom: " 1px solid #e3ebf6",
                 alignItems: "center",
                 justifyContent: "space-between",
+                transition: "all .5s",
+                cursor: "pointer",
+                "&:hover": {
+                  bgcolor: "rgb(172, 166, 204,15%)",
+                },
               }}
             >
               <Stack>
