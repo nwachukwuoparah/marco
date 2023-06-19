@@ -64,7 +64,7 @@ const Dashboard = (props) => {
                 padding: "5px",
                 borderRadius: "20px",
                 cursor: "pointer",
-                "&:hover": { bgcolor: "rgb(128, 147, 211,15%)" },
+                "&:hover": { bgcolor: "rgb(128, 147, 211,10%)" },
               }}
             >
               <AccountCircleIcon sx={{ color: "#7081b9" }} />
