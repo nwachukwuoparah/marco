@@ -5,6 +5,8 @@ const Input = (props) => {
   return (
     <TextField
       sx={{
+        type: props.type,
+        width: props.width,
         height: props.height,
         border: props.border,
         borderColor: "white",

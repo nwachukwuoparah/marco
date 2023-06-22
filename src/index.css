@@ -4,6 +4,8 @@
   font-weight: 400;
   font-size: 0.875rem;
   /* color:rgb(128, 147, 211); */
- /* color: rgb(172, 166, 204) */
+  /* color: rgb(172, 166, 204) */
+  /* color: rgb(3, 216, 127); */
+  box-sizing: border-box;
   line-height: 1.5;
 }

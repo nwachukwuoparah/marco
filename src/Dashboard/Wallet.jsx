@@ -1,15 +1,26 @@
 import { Container, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Display_card from "../Component/Display.card";
 import ChartComponent from "../Component/Chart";
+import { Global_context } from "../Component/Context.api";
 
 const Wallet = () => {
+  const { setRouth } = useContext(Global_context);
+
+  useEffect(() => {
+    setRouth("Wallet");
+  }, []);
   return (
     // padding: "11px 15px",
     <Container
       disableGutters
       maxWidth
-      sx={{ display: "flex", justifyContent: "space-between", width: "97.5%" }}
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        width: "97.5%",
+        padding: "15px 0px 0px 0px",
+      }}
     >
       <Grid container columns={20} spacing={2} sx={{ width: "70%" }}>
         <Grid md={6.665} item>
