@@ -19,12 +19,16 @@ const Login = (props) => {
     {
       key: 1,
       id: "email",
-      label: "Email",
+      placeholder: "Email",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding:"10px 15px"
     },
     {
       key: 2,
       id: "password",
-      label: "Password",
+      placeholder: "Password",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding:"10px 15px"
     },
   ];
 

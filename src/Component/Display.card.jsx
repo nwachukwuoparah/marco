@@ -3,9 +3,11 @@ import ApexCharts from "apexcharts";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import PeopleIcon from "@mui/icons-material/People";
-import React from "react";
+import React, { useState } from "react";
 
 const Display_card = (props) => {
+  const [view, setView] = useState(false);
+
   return (
     <Stack
       sx={{
@@ -20,16 +22,31 @@ const Display_card = (props) => {
       >
         ACCOUNT # 3141052259
       </Typography>
-      <Typography
-        sx={{
-          fontSize: "25px",
-          lineHeight: "30px",
-          color: "#1d2c48",
-          fontWeight: 900,
-        }}
-      >
-        ₦ 5,000,000
-      </Typography>
+      {view ? (
+        <Typography
+          letterSpacing={3}
+          sx={{
+            fontSize: "25px",
+            lineHeight: "30px",
+            color: "#1d2c48",
+            fontWeight: 900,
+          }}
+        >
+          $ 500000
+        </Typography>
+      ) : (
+        <Typography
+          letterSpacing={3}
+          sx={{
+            fontSize: "25px",
+            lineHeight: "30px",
+            color: "#1d2c48",
+            fontWeight: 900,
+          }}
+        >
+          $*********
+        </Typography>
+      )}
       <Stack>
         <Stack direction="row" alignItems="center">
           <TrendingUpIcon
@@ -70,7 +87,7 @@ const Display_card = (props) => {
           justifyContent: "center",
         }}
       >
-        <PeopleIcon sx={{ color: "#a4abc5", }} />
+        <PeopleIcon onClick={() => setView(!view)} sx={{ color: "#a4abc5" }} />
       </Stack>
     </Stack>
   );

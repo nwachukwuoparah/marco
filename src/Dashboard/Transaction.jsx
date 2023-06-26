@@ -17,7 +17,7 @@ const Transaction = (props) => {
     <Container
       disableGutters
       maxWidth
-      sx={{ width: "97.5%", display: "flex", gap: "10px", padding: "15px 0px 0px 0px", }}
+      sx={{ width: "97.5%", display: "flex", gap: "10px"}}
     >
       <Stack
         sx={{

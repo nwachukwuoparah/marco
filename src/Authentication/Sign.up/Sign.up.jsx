@@ -19,19 +19,32 @@ const Sign_up = (props) => {
 
   const From_input = [
     {
-      key: 1,
-      id: "username",
-      label: "Username",
+      key: 3,
+      id: "first name",
+      placeholder: "First Name",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding:"10px 15px"
     },
     {
-      key: 2,
-      id: "email",
-      label: "Email",
+      key: 5,
+      id: "last name",
+      placeholder: "Last Name",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding:"10px 15px"
     },
     {
       key: 3,
-      id: "password",
-      label: "Password",
+      id: "Email",
+      placeholder: "Email",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding:"10px 15px"
+    },
+    {
+      key: 5,
+      id: "Password",
+      placeholder: "Password",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding:"10px 15px"
     },
   ];
 

@@ -14,6 +14,11 @@ import React, { useContext, useEffect } from "react";
 import { Global_context } from "../Component/Context.api";
 import Input from "../Component/Input";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+
+
+
+
+
 const Compliance = (props) => {
   const { setRouth } = useContext(Global_context);
 
@@ -29,9 +34,9 @@ const Compliance = (props) => {
         width: "97.5%",
         display: "flex",
         gap: "10px",
-        padding: "15px 0px 0px 0px",
       }}
     >
+        
       <Stack spacing={4.5} sx={{ width: "60%", bgcolor: "" }}>
         <Stack
           justifyContent="space-between"

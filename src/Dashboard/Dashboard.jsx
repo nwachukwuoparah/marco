@@ -4,16 +4,17 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import React, { useContext, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Wallet from "./Wallet";
 import Sidebar from "../Component/Sidebar";
 import { Global_context } from "../Component/Context.api";
 import Transaction from "./Transaction";
 import Compliance from "./Compliance";
+import Profile from "./Profile";
 const Dashboard = (props) => {
   const { hover, routh } = useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
-
+  const Navigate = useNavigate();
   return (
     <Container disableGutters maxWidth sx={{ display: "flex" }}>
       <Sidebar sidebar={sidebar} />
@@ -58,6 +59,7 @@ const Dashboard = (props) => {
             </Stack>
 
             <Stack
+              onClick={() => Navigate("/dashboard/profile")}
               direction="row"
               spacing={1}
               sx={{
@@ -78,7 +80,7 @@ const Dashboard = (props) => {
           direction={{ md: "row" }}
           justifyContent={{ md: "space-between" }}
           alignItems={{ md: "flex-end" }}
-          sx={{ padding: "15px 15px" ,  borderBottom: " 1px solid #e3ebf6",}}
+          sx={{ padding: "25px 15px" }}
         >
           <span>
             <Stack spacing={0.5} direction="row" alignItems="center">
@@ -91,8 +93,8 @@ const Dashboard = (props) => {
         <Routes>
           <Route path="/" element={<Wallet />} />
           <Route path="/transaction" element={<Transaction />} />
-           <Route path="/compliance" element={<Compliance />} />
-        {/* <Route path="/dashboard/*" element={<Dashboard />} /> */}
+          <Route path="/compliance" element={<Compliance />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Container>
     </Container>

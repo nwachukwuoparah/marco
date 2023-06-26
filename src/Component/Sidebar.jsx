@@ -39,7 +39,7 @@ const Sidebar = ({ sidebar }) => {
     },
     {
       icon: <WalletIcon />,
-      text: "Request",
+      text: "Deposit",
     },
   ];
 

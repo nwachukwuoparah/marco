@@ -19,7 +19,6 @@ const Wallet = () => {
         display: "flex",
         justifyContent: "space-between",
         width: "97.5%",
-        padding: "15px 0px 0px 0px",
       }}
     >
       <Grid container columns={20} spacing={2} sx={{ width: "70%" }}>
