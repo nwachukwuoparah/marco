@@ -5,12 +5,14 @@ import Login from "./Authentication/Login/Login";
 import Forgot_password from "./Authentication/Forgot.password/Forgot.password";
 import Dashboard from "./Dashboard/Dashboard";
 import Change_password from "./Authentication/Change.password/Change.password";
+import Verify from "./Authentication/Verify";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Sign_up />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verify" element={<Verify />} />
         <Route path="/forgot.password" element={<Forgot_password />} />
         <Route path="/change.password" element={<Change_password />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
