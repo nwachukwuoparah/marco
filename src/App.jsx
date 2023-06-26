@@ -4,6 +4,7 @@ import Sign_up from "./Authentication/Sign.up/Sign.up";
 import Login from "./Authentication/Login/Login";
 import Forgot_password from "./Authentication/Forgot.password/Forgot.password";
 import Dashboard from "./Dashboard/Dashboard";
+import Change_password from "./Authentication/Change.password/Change.password";
 function App() {
   return (
     <Router>
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Sign_up />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot.password" element={<Forgot_password />} />
+        <Route path="/change.password" element={<Change_password />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
       </Routes>
     </Router>

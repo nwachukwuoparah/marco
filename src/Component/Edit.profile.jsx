@@ -32,7 +32,7 @@ const Edit_profile = ({ setToggleProfile }) => {
           <Typography>Edit Profile</Typography>
           <ReplyAllIcon
             onClick={() => setToggleProfile(true)}
-            sx={{ fontSize: "40px" }}
+            sx={{ fontSize: "40px", cursor:"pointer" }}
           />
         </Stack>
 
@@ -66,7 +66,7 @@ const Edit_profile = ({ setToggleProfile }) => {
         />
 
 
-        
+
       </Stack>
 
       <Stack
