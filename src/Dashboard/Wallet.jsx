@@ -10,6 +10,7 @@ const Wallet = () => {
   useEffect(() => {
     setRouth("Wallet");
   }, []);
+
   return (
     // padding: "11px 15px",
     <Container

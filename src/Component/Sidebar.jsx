@@ -37,10 +37,10 @@ const Sidebar = ({ sidebar }) => {
       icon: <OutboxIcon />,
       text: "Transfer",
     },
-    {
-      icon: <WalletIcon />,
-      text: "Deposit",
-    },
+    // {
+    //   icon: <WalletIcon />,
+    //   text: "Deposit",
+    // },
   ];
 
   //   console.log(sidebar);

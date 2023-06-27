@@ -1,11 +1,16 @@
 import { Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import background from "../../public/background.jpg";
 import marco from "../../public/marco.png";
 import { useNavigate } from "react-router-dom";
 const Verify = (props) => {
-  const Navigate = useNavigate();
 
+  const Navigate = useNavigate();
+  useEffect(() => {
+    setTimeout(() => {
+      Navigate("/login");
+    }, 2000);
+  }, []);
   return (
     <Container
       disableGutters

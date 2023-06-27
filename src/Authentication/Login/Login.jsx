@@ -53,10 +53,12 @@ const Login = (props) => {
         sx={{
           width: { md: "50%", xs: "100%" },
           boxShadow: {
-            md: " 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)",
+            md: " 0px 0px 3px -1px rgba(66, 68, 90, 1)",
             xs: "none",
           },
+          borderRadius: { md: "12px", xs: "0px" },
         }}
+        
         spacing={{ md: 0, xs: 5 }}
       >
         <Stack
