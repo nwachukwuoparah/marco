@@ -16,7 +16,7 @@ const Transaction = (props) => {
   return (
     <Container
       disableGutters
-      maxWidth
+      maxWidth={false}
       sx={{ width: "97.5%", display: "flex", gap: "10px"}}
     >
       <Stack
@@ -50,8 +50,9 @@ const Transaction = (props) => {
             alignItems: "center",
           }}
         >
-          {Array.from(Array(20)).map((i) => (
+          {Array.from(Array(20)).map((i,index) => (
             <Stack
+            key={index}
               direction="row"
               sx={{
                 justifyContent: "space-between",

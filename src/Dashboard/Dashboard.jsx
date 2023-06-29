@@ -16,9 +16,9 @@ const Dashboard = (props) => {
   const [sidebar, setSidebar] = useState(false);
   const Navigate = useNavigate();
   return (
-    <Container disableGutters maxWidth sx={{ display: "flex" }}>
+    <Container disableGutters maxWidth={false} sx={{ display: "flex" }}>
       <Sidebar sidebar={sidebar} />
-      <Container disableGutters maxWidth sx={{ height: "100vh" }}>
+      <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
         <Stack
           direction={{ md: "row" }}
           sx={{

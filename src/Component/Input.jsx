@@ -1,10 +1,10 @@
 import { TextField } from "@mui/material";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const Input = (props) => {
-
-
-
   return (
     <input
       style={{
@@ -13,15 +13,16 @@ const Input = (props) => {
         padding: props.padding,
         type: props.type,
         width: props.width,
-        border: props.border,
+        border: props.errors[props.name] ? "1px solid red" : props.border,
         // borderColor: "white",
         // "&:hover": { border: props.border },
         borderRadius: "5px",
-        transition: "all 5s",
+        // transition: "all 5s",
       }}
-      id={props.id}
+      type={props.type}
+      name={props.name}
       placeholder={props.placeholder}
-      variant={props.variant}
+      {...props.register(props.name)}
     />
   );
 };

@@ -5,46 +5,71 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import background from "../../../public/background.jpg";
 import login_illustration from "../../../public/login_illustration.png";
 import marco from "../../../public/marco.png";
 import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
-const Sign_up = (props) => {
-  const [loading, setLoading] = useState(true);
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
+const schema = yup
+  .object({
+    firstname: yup.string().required(),
+    lastname: yup.string().required(),
+    email: yup.string().required(),
+    password: yup.number().positive().integer().required(),
+    terms: yup.bool().oneOf([true], "Field must be checked"),
+  })
+  .required();
+
+const Sign_up = (props) => {
   const Navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const From_input = [
     {
-      key: 3,
-      id: "first name",
+      id: 3,
+      name: "firstname",
+      type: "text",
       placeholder: "First Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
-      padding:"10px 15px"
+      padding: "10px 15px",
     },
     {
-      key: 5,
-      id: "last name",
+      id: 5,
+      name: "lastname",
+      type: "text",
       placeholder: "Last Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
-      padding:"10px 15px"
+      padding: "10px 15px",
     },
     {
-      key: 3,
-      id: "Email",
+      id: 3,
+      name: "email",
+      type: "email",
       placeholder: "Email",
       border: "1px solid rgba(28, 28, 28, 25%)",
-      padding:"10px 15px"
+      padding: "10px 15px",
     },
     {
-      key: 5,
-      id: "Password",
+      id: 5,
+      name: "password",
+      type: "text",
       placeholder: "Password",
       border: "1px solid rgba(28, 28, 28, 25%)",
-      padding:"10px 15px"
+      padding: "10px 15px",
     },
   ];
 
@@ -73,7 +98,6 @@ const Sign_up = (props) => {
             md: " 0px 0px 3px -1px rgba(66, 68, 90, 1)",
             xs: "none",
           },
-          borderRadius: { md: "12px", xs: "0px" },
         }}
         // bgcolor="red"
         spacing={{ md: 0, xs: 5 }}
@@ -139,37 +163,47 @@ const Sign_up = (props) => {
                   fontSize="14px"
                   color="#03a9f4"
                   userSelect="none"
+                  bgcolor="#ffff"
                 />
               </Stack>
             </Stack>
-            <Stack spacing={3}>
-              {From_input.map((i) => (
-                <Input {...i} variant="outlined" />
-              ))}
-              <Stack>
-                <FormControlLabel
-                  disablegutters="true"
-                  sx={{
-                    lineHeight: "24px",
-                    color: "rgba(0, 0, 0, 0.87)",
-                    height: "17px",
+            <form
+              onSubmit={handleSubmit((data) => {
+                Navigate("/verify");
+              })}
+            >
+              <Stack spacing={3}>
+                {From_input.map((i) => (
+                  <Input {...i} register={register} errors={errors} />
+                ))}
+                <label
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    color: errors["terms"] ? "red" : "inherit",
                   }}
-                  label=" I agree with terms and condtions"
-                  control={<Checkbox disableRipple />}
+                >
+                  <input
+                    type="checkbox"
+                    name="terms"
+                    {...register("terms")}
+                    disableRipple
+                  />
+                  I agree with terms and condtions
+                </label>
+
+                <Button_component
+                  content="Create your free account"
+                  boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
+                  bgcolor="#03a9f4"
+                  width="100%"
+                  height="36px"
+                  radius="5px"
+                  color="#fff"
                 />
               </Stack>
-
-              <Button_component
-                routh="/verify"
-                variant="contained"
-                content="Create your free account"
-                boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
-                bgcolor="#03a9f4"
-                Hbgcolor="#03a9f4"
-                width="100%"
-                height="36px"
-              />
-            </Stack>
+            </form>
           </Stack>
         </Stack>
       </Stack>

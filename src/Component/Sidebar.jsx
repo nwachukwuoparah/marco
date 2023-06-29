@@ -15,25 +15,24 @@ const Sidebar = ({ sidebar }) => {
 
   const data = [
     {
+      id: 1,
       icon: <WalletIcon />,
       text: "Wallet",
       path: "/",
     },
     {
+      id: 2,
       icon: <ReceiptLongIcon />,
       text: "Transaction",
       path: "/transaction",
     },
     {
-      icon: <TaskIcon />,
-      text: "Compliance",
-      path: "/compliance",
-    },
-    {
+      id: 3,
       icon: <WalletIcon />,
       text: "Airtime",
     },
     {
+      id: 4,
       icon: <OutboxIcon />,
       text: "Transfer",
     },
@@ -90,6 +89,7 @@ const Sidebar = ({ sidebar }) => {
       <Stack spacing={4}>
         {data.map((i) => (
           <NavLink
+            key={i.id}
             to={`/dashboard${i.path}`}
             style={({ isActive }) =>
               isActive

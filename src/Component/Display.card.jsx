@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import ApexCharts from "apexcharts";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import PeopleIcon from "@mui/icons-material/People";
+import WalletIcon from "@mui/icons-material/Wallet";
 import React, { useState } from "react";
 
 const Display_card = (props) => {
@@ -15,10 +15,12 @@ const Display_card = (props) => {
         padding: "20px 15px",
         borderRadius: "5px",
         bgcolor: "rgb(172, 166, 204,10%)",
+        // backgroundImage: `url(${bg_shape})`,
+        bgcolor: "#03a9f4",
       }}
     >
       <Typography
-        sx={{ fontSize: "14px", lineHeight: "30px", color: "#1d2c48" }}
+        sx={{ fontSize: "14px", lineHeight: "30px", color: "#f8f8f8" }}
       >
         ACCOUNT # 3141052259
       </Typography>
@@ -28,7 +30,7 @@ const Display_card = (props) => {
           sx={{
             fontSize: "25px",
             lineHeight: "30px",
-            color: "#1d2c48",
+            color: "#f8f8f8",
             fontWeight: 900,
           }}
         >
@@ -40,7 +42,7 @@ const Display_card = (props) => {
           sx={{
             fontSize: "25px",
             lineHeight: "30px",
-            color: "#1d2c48",
+            color: "#f8f8f8",
             fontWeight: 900,
           }}
         >
@@ -53,18 +55,18 @@ const Display_card = (props) => {
             sx={{
               fontSize: "12px",
               lineHeight: "30px",
-              color: "#03d87f",
+              color: "green",
             }}
           />
           <Typography
             sx={{
               fontSize: "12px",
               lineHeight: "30px",
-              color: "#a4abc5",
+              color: "#f8f8f8",
               "&:before": {
                 content: `"8.5% "`,
                 position: "relative",
-                color: "#03d87f",
+                color: "green",
               },
             }}
           >
@@ -81,13 +83,13 @@ const Display_card = (props) => {
           margin: "0px auto",
           bgcolor: "red",
           borderRadius: "50%",
-          bgcolor: "#fbfbfb ",
+          bgcolor: "rgb(128, 147, 211,45%)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <PeopleIcon onClick={() => setView(!view)} sx={{ color: "#a4abc5" }} />
+        <WalletIcon onClick={() => setView(!view)} sx={{ color: "#fbfbfb " }} />
       </Stack>
     </Stack>
   );

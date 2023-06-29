@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import Display_card from "../Component/Display.card";
 import ChartComponent from "../Component/Chart";
 import { Global_context } from "../Component/Context.api";
+import Banner_card from "../Component/Banner.card";
 
 const Wallet = () => {
   const { setRouth } = useContext(Global_context);
@@ -15,7 +16,7 @@ const Wallet = () => {
     // padding: "11px 15px",
     <Container
       disableGutters
-      maxWidth
+      maxWidth={false}
       sx={{
         display: "flex",
         justifyContent: "space-between",
@@ -26,12 +27,11 @@ const Wallet = () => {
         <Grid md={6.665} item>
           <Display_card />
         </Grid>
-        <Grid md={6.665} item>
-          <Display_card />
-        </Grid>
-        <Grid md={6.665} item>
-          <Display_card />
-        </Grid>
+        {[1, 2].map((i) => (
+          <Grid md={6.665} item>
+            <Banner_card />
+          </Grid>
+        ))}
         <Grid md={20} item>
           <ChartComponent />
         </Grid>
@@ -66,8 +66,9 @@ const Wallet = () => {
             overflowY: "scroll",
           }}
         >
-          {Array.from(Array(10)).map((i) => (
+          {Array.from(Array(10)).map((i, index) => (
             <Stack
+              key={index}
               direction="row"
               sx={{
                 padding: "15px",

@@ -12,23 +12,45 @@ import marco from "../../../public/marco.png";
 import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    email: yup.string().required(),
+    password: yup.number().positive().integer().required(),
+    memo: yup.boolean().required(),
+  })
+  .required();
+
 const Login = (props) => {
   const Navigate = useNavigate();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const From_input = [
     {
-      key: 1,
-      id: "email",
+      id: 1,
+      name: "email",
       placeholder: "Email",
+      type: "email",
       border: "1px solid rgba(28, 28, 28, 25%)",
-      padding:"10px 15px"
+      padding: "10px 15px",
     },
     {
-      key: 2,
-      id: "password",
+      id: 2,
+      name: "password",
       placeholder: "Password",
+      type: "text",
       border: "1px solid rgba(28, 28, 28, 25%)",
-      padding:"10px 15px"
+      padding: "10px 15px",
     },
   ];
 
@@ -58,7 +80,6 @@ const Login = (props) => {
           },
           borderRadius: { md: "12px", xs: "0px" },
         }}
-        
         spacing={{ md: 0, xs: 5 }}
       >
         <Stack
@@ -118,26 +139,44 @@ const Login = (props) => {
                   fontSize="14px"
                   color="#03a9f4"
                   userSelect="none"
+                  bgcolor="#ffff"
                 />
               </Stack>
             </Stack>
-            <Stack spacing={4.5}>
-              <Stack spacing={3}>
+
+            <form
+              onSubmit={handleSubmit((data) => {
+                // console.log(data);
+                Navigate("/dashboard")
+              })}
+            >
+              <Stack spacing={2.5}>
                 {From_input.map((i) => (
-                  <Input {...i} variant="outlined" />
+                  <Input
+                    {...i}
+                    register={register}
+                    errors={errors}
+                    width="100%"
+                  />
                 ))}
 
                 <Stack direction="row" justifyContent="space-between">
-                  <FormControlLabel
-                    disableGutters
-                    sx={{
-                      lineHeight: "24px",
-                      color: "rgba(0, 0, 0, 0.87)",
-                      height: "17px",
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
                     }}
-                    label="Remember me"
-                    control={<Checkbox disableRipple />}
-                  />
+                  >
+                    <input
+                      type="checkbox"
+                      name="memo"
+                      {...register("memo")}
+                      disableRipple
+                    />
+                    Remember me
+                  </label>
+
                   <Typography
                     onClick={() => Navigate("/forgot.password")}
                     sx={{
@@ -149,27 +188,18 @@ const Login = (props) => {
                     Forgot Password?
                   </Typography>
                 </Stack>
-              </Stack>
 
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{
-                  marginTop: "70px",
-                }}
-              >
                 <Button_component
-                  routh="/dashboard"
-                  variant="contained"
                   content="Create your free account"
                   boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                   bgcolor="#03a9f4"
-                  Hbgcolor="#03a9f4"
                   width="100%"
                   height="36px"
+                  radius="5px"
+                  color="#fff"
                 />
               </Stack>
-            </Stack>
+            </form>
           </Stack>
         </Stack>
       </Stack>

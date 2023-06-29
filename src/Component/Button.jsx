@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Button_component = (props) => {
@@ -8,32 +7,27 @@ const Button_component = (props) => {
     height: props.height,
     width: props.width,
     color: props.color,
-    bgcolor: props.bgcolor,
+    backgroundColor: props.bgcolor,
     fontWeight: props.fontWeight,
     fontSize: props.fontSize,
     userSelect: props.userSelect,
+    borderRadius: props.radius,
     cursor: "pointer",
     textTransform: "none",
     boxShadow: props.boxShadow,
-    borderColor: props.borderColor,
-    "&:hover": {
-      bgcolor: props.Hbgcolor,
-      borderColor: props.HborderColor,
-    },
+    border: props.border ? props.border : "none",
   };
 
   return (
     <>
-      <Button
+      <button
         onClick={() => {
           Navigate(props.routh);
         }}
-        variant={props.variant}
-        disableElevation
-        sx={styles}
+        style={styles}
       >
         {props.content}
-      </Button>
+      </button>
     </>
   );
 };
