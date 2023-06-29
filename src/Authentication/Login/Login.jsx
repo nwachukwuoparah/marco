@@ -122,6 +122,7 @@ const Login = (props) => {
                     color: "inherit",
                     fontSize: "20px",
                     fontWeight: 500,
+                    bgcolor: "none",
                   }}
                 >
                   Sign In
@@ -131,6 +132,7 @@ const Login = (props) => {
                 <Typography sx={{ color: "rgba(0, 0, 0, 0.54)" }}>
                   Don't have an account?
                 </Typography>
+                
                 <Button_component
                   routh="/"
                   variant="text"
@@ -139,7 +141,7 @@ const Login = (props) => {
                   fontSize="14px"
                   color="#03a9f4"
                   userSelect="none"
-                  bgcolor="#ffff"
+                  bgcolor="none"
                 />
               </Stack>
             </Stack>
@@ -147,7 +149,7 @@ const Login = (props) => {
             <form
               onSubmit={handleSubmit((data) => {
                 // console.log(data);
-                Navigate("/dashboard")
+                Navigate("/dashboard");
               })}
             >
               <Stack spacing={2.5}>

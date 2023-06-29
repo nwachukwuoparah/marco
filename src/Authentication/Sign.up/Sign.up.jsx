@@ -163,7 +163,7 @@ const Sign_up = (props) => {
                   fontSize="14px"
                   color="#03a9f4"
                   userSelect="none"
-                  bgcolor="#ffff"
+                  bgcolor="none"
                 />
               </Stack>
             </Stack>

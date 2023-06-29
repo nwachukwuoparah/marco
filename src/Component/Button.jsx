@@ -7,7 +7,7 @@ const Button_component = (props) => {
     height: props.height,
     width: props.width,
     color: props.color,
-    backgroundColor: props.bgcolor,
+    background: props.bgcolor,
     fontWeight: props.fontWeight,
     fontSize: props.fontSize,
     userSelect: props.userSelect,
