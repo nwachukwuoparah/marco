@@ -9,6 +9,7 @@ const Banner_card = (props) => {
     <Stack
       spacing={1.8}
       sx={{
+        display:{md:"flex",xs:"none"},
         border: " 1px solid #e3ebf6",
         padding: "20px 15px",
         borderRadius: "5px",

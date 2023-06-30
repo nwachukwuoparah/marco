@@ -4,27 +4,37 @@ import Display_card from "../Component/Display.card";
 import ChartComponent from "../Component/Chart";
 import { Global_context } from "../Component/Context.api";
 import Banner_card from "../Component/Banner.card";
+import zIndex from "@mui/material/styles/zIndex";
 
 const Wallet = () => {
-  const { setRouth } = useContext(Global_context);
+  const { setRouth, transaction, setTransaction } = useContext(Global_context);
 
   useEffect(() => {
     setRouth("Wallet");
   }, []);
 
   return (
-    // padding: "11px 15px",
     <Container
       disableGutters
       maxWidth={false}
       sx={{
         display: "flex",
         justifyContent: "space-between",
-        width: "97.5%",
+        width: { md: "97.5%", xs: "100%" },
+        padding: "0px 15px",
       }}
     >
-      <Grid container columns={20} spacing={2} sx={{ width: "70%" }}>
-        <Grid md={6.665} item>
+      <Grid
+        container
+        columns={20}
+        spacing={{ md: 2, xs: 0 }}
+        sx={{
+          width: { md: "70%", xs: "100%" },
+          display: { md: "flex" },
+          gap: { md: "0px", xs: "30px" },
+        }}
+      >
+        <Grid md={6.665} xs={20} item>
           <Display_card />
         </Grid>
         {[
@@ -41,19 +51,26 @@ const Wallet = () => {
         ].map((i) => (
           <Grid md={6.665} item>
             <Banner_card {...i} />
-          </Grid> 
+          </Grid>
         ))}
-        <Grid md={20} item>
+        <Grid md={20} xs={20} item>
           <ChartComponent />
         </Grid>
       </Grid>
 
       <Stack
         sx={{
-          height: "81vh",
+          display: { md: "block", xs: transaction ? "block" : "none" },
+          position: transaction && "fixed",
+          height: { md: "81vh", xs: "85vh" },
           border: " 1px solid #e3ebf6",
-          width: "30%",
-          borderRadius: "5px",
+          width: { md: "30%", xs: transaction && "100%" },
+          borderRadius: !transaction && "5px",
+          bgcolor: "#f8f8f8",
+          zIndex: 1000,
+          left: "0px",
+          right: "0px",
+          paddingBottom:transaction&&"20px"
         }}
       >
         <Stack

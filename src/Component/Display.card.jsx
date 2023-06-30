@@ -3,14 +3,17 @@ import ApexCharts from "apexcharts";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import WalletIcon from "@mui/icons-material/Wallet";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Global_context } from "./Context.api";
 
 const Display_card = (props) => {
-  const [view, setView] = useState(false);
 
+  const [view, setView] = useState(false);
+  const { transaction } = useContext(Global_context);
   return (
     <Stack
       sx={{
+        display: transaction && "none",
         border: " 1px solid #e3ebf6",
         padding: "20px 15px",
         borderRadius: "5px",

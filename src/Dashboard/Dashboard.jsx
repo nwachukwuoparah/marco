@@ -2,6 +2,7 @@ import { Container, Stack, Typography } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import React, { useContext, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -12,7 +13,8 @@ import Transaction from "./Transaction";
 import Compliance from "./Compliance";
 import Profile from "./Profile";
 const Dashboard = (props) => {
-  const { hover, routh } = useContext(Global_context);
+
+  const { routh, transaction, setTransaction } = useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
   const Navigate = useNavigate();
   return (
@@ -20,7 +22,7 @@ const Dashboard = (props) => {
       <Sidebar sidebar={sidebar} />
       <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
         <Stack
-          direction={{ md: "row" }}
+          direction={{ md: "row", xs: "row" }}
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
@@ -33,7 +35,11 @@ const Dashboard = (props) => {
             sx={{ color: "#7081b9", fontSize: "30px", cursor: "pointer" }}
           />
 
-          <Stack direction={{ md: "row" }} alignItems="center" spacing={2.5}>
+          <Stack
+            direction={{ md: "row", xs: "row" }}
+            alignItems="center"
+            spacing={2.5}
+          >
             <Stack
               sx={{
                 padding: "3.5px",
@@ -77,9 +83,9 @@ const Dashboard = (props) => {
         </Stack>
 
         <Stack
-          direction={{ md: "row" }}
-          justifyContent={{ md: "space-between" }}
-          alignItems={{ md: "flex-end" }}
+          direction={{ md: "row", xs: "row" }}
+          justifyContent={{ md: "space-between", xs: "space-between" }}
+          alignItems="center"
           sx={{ padding: "25px 15px" }}
         >
           <span>
@@ -87,7 +93,23 @@ const Dashboard = (props) => {
               <p>Dashboard</p> <p>/</p> <Typography>{routh}</Typography>
             </Stack>
           </span>
-          <Typography>Date</Typography>
+
+          <Stack
+            onClick={() => {
+              setTransaction(!transaction);
+            }}
+            direction="row"
+            spacing={1}
+            sx={{
+              display: { md: "none", xs: "flex" },
+              padding: "5px 10px",
+              border: "1px solid rgb(128, 147, 211,50%) ",
+              borderRadius: "10px",
+            }}
+          >
+            <Typography sx={{ color: "#7081b9" }}>Hostory</Typography>
+            <HistoryToggleOffIcon sx={{ color: "#7081b9" }} />
+          </Stack>
         </Stack>
 
         <Routes>

@@ -5,6 +5,7 @@ export const Global_state = ({ children }) => {
   const [hover, setHover] = useState(false);
   const [routh, setRouth] = useState("");
   const [toggleProfile, setToggleProfile] = useState(false);
+  const [transaction, setTransaction] = useState(false);
   return (
     <Global_context.Provider
       value={{
@@ -14,6 +15,8 @@ export const Global_state = ({ children }) => {
         setRouth,
         toggleProfile,
         setToggleProfile,
+        transaction,
+        setTransaction,
       }}
     >
       {children}
