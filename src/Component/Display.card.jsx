@@ -13,7 +13,6 @@ const Display_card = (props) => {
   return (
     <Stack
       sx={{
-        display: transaction && "none",
         border: " 1px solid #e3ebf6",
         padding: "20px 15px",
         borderRadius: "5px",

@@ -5,8 +5,8 @@ import ChartComponent from "../Component/Chart";
 import { Global_context } from "../Component/Context.api";
 import Banner_card from "../Component/Banner.card";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import SendToMobileIcon from '@mui/icons-material/SendToMobile';
+import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 const Wallet = () => {
   const { setRouth, transaction, setTransaction } = useContext(Global_context);
 
@@ -59,10 +59,10 @@ const Wallet = () => {
         </Grid>
       </Grid>
 
-      <Stack spacing={5} marginTop={20}>
+      <Stack spacing={5} marginTop={15}>
         <Stack
           onClick={() => {
-            setTransaction(!transaction);
+            // setTransaction(!transaction);
           }}
           direction="row"
           spacing={1}
@@ -75,13 +75,19 @@ const Wallet = () => {
             justifyContent: "center",
           }}
         >
-          <Typography sx={{ color: "#7081b9", fontSize: "20px", fontWeight: 600 }}>Airtime</Typography>
-          <SendToMobileIcon  sx={{ color: "#7081b9", fontSize: "35px", fontWeight: 600 }} />
+          <Typography
+            sx={{ color: "#7081b9", fontSize: "20px", fontWeight: 600 }}
+          >
+            Airtime
+          </Typography>
+          <SendToMobileIcon
+            sx={{ color: "#7081b9", fontSize: "35px", fontWeight: 600 }}
+          />
         </Stack>
 
         <Stack
           onClick={() => {
-            setTransaction(!transaction);
+            // setTransaction(!transaction);
           }}
           direction="row"
           spacing={1}
@@ -100,23 +106,24 @@ const Wallet = () => {
           >
             Transfer
           </Typography>
-          <CompareArrowsIcon  sx={{ color: "#f8f8f8", fontSize: "35px"}} />
+          <CompareArrowsIcon sx={{ color: "#f8f8f8", fontSize: "35px" }} />
         </Stack>
       </Stack>
 
       <Stack
         sx={{
           display: { md: "block", xs: transaction ? "block" : "none" },
-          position: transaction && "fixed",
+          position: "fixed",
           height: { md: "81vh", xs: "85vh" },
           border: " 1px solid #e3ebf6",
           width: { md: "30%", xs: transaction && "100%" },
           borderRadius: !transaction && "5px",
           bgcolor: "#f8f8f8",
           zIndex: 1000,
+          top: "135px",
           left: "0px",
           right: "0px",
-          paddingBottom: transaction && "20px",
+          paddingBottom: transaction && "10px",
         }}
       >
         <Stack
