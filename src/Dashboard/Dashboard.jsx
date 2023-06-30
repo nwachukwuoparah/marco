@@ -107,7 +107,7 @@ const Dashboard = (props) => {
               borderRadius: "10px",
             }}
           >
-            <Typography sx={{ color: "#7081b9" }}>Hostory</Typography>
+            <Typography sx={{ color: "#7081b9" }}>History</Typography>
             <HistoryToggleOffIcon sx={{ color: "#7081b9" }} />
           </Stack>
         </Stack>

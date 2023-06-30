@@ -54,7 +54,13 @@ const ChartComponent = () => {
     };
   }, []);
 
-  return <Stack id="chart" ref={chartRef} />;
+  return (
+    <Stack
+      sx={{ display: { md: "block", xs: "none" } }}
+      id="chart"
+      ref={chartRef}
+    />
+  );
 };
 
 export default ChartComponent;

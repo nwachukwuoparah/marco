@@ -4,8 +4,9 @@ import Display_card from "../Component/Display.card";
 import ChartComponent from "../Component/Chart";
 import { Global_context } from "../Component/Context.api";
 import Banner_card from "../Component/Banner.card";
-import zIndex from "@mui/material/styles/zIndex";
-
+import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import SendToMobileIcon from '@mui/icons-material/SendToMobile';
 const Wallet = () => {
   const { setRouth, transaction, setTransaction } = useContext(Global_context);
 
@@ -18,7 +19,7 @@ const Wallet = () => {
       disableGutters
       maxWidth={false}
       sx={{
-        display: "flex",
+        display: { md: "flex", xs: "block" },
         justifyContent: "space-between",
         width: { md: "97.5%", xs: "100%" },
         padding: "0px 15px",
@@ -58,6 +59,51 @@ const Wallet = () => {
         </Grid>
       </Grid>
 
+      <Stack spacing={5} marginTop={20}>
+        <Stack
+          onClick={() => {
+            setTransaction(!transaction);
+          }}
+          direction="row"
+          spacing={1}
+          sx={{
+            display: { md: "none", xs: "flex" },
+            padding: "5px 10px",
+            border: "1px solid rgb(128, 147, 211,50%) ",
+            borderRadius: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography sx={{ color: "#7081b9", fontSize: "20px", fontWeight: 600 }}>Airtime</Typography>
+          <SendToMobileIcon  sx={{ color: "#7081b9", fontSize: "35px", fontWeight: 600 }} />
+        </Stack>
+
+        <Stack
+          onClick={() => {
+            setTransaction(!transaction);
+          }}
+          direction="row"
+          spacing={1}
+          sx={{
+            display: { md: "none", xs: "flex" },
+            padding: "10px 10px",
+            border: "1px solid rgb(128, 147, 211,50%) ",
+            borderRadius: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+            bgcolor: "#03a9f4",
+          }}
+        >
+          <Typography
+            sx={{ color: "#f8f8f8", fontSize: "20px", fontWeight: 600 }}
+          >
+            Transfer
+          </Typography>
+          <CompareArrowsIcon  sx={{ color: "#f8f8f8", fontSize: "35px"}} />
+        </Stack>
+      </Stack>
+
       <Stack
         sx={{
           display: { md: "block", xs: transaction ? "block" : "none" },
@@ -70,7 +116,7 @@ const Wallet = () => {
           zIndex: 1000,
           left: "0px",
           right: "0px",
-          paddingBottom:transaction&&"20px"
+          paddingBottom: transaction && "20px",
         }}
       >
         <Stack
