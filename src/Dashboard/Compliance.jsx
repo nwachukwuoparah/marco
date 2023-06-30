@@ -28,7 +28,7 @@ const schema = yup
     city: yup.string().required(),
     lga: yup.string().required(),
     address: yup.string().required(),
-    businessname: yup.string().required("Business Name is required").max(5,"Business name should not be more than 5"),
+    businessname: yup.string().required("Business Name is required"),
     businessaddress: yup.string().required(),
     nin: yup.number().required(),
     image: yup

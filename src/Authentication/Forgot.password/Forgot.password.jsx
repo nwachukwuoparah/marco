@@ -13,8 +13,23 @@ import marco from "../../../public/marco.png";
 import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
+import { Forget_schema } from "../../Component/Schema";
+
 const Forgot_password = (props) => {
   const Navigate = useNavigate();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(Forget_schema),
+  });
+
+  const onSubmit = (data) => console.log(data);
+
   const From_input = [
     {
       key: 1,
@@ -55,6 +70,7 @@ const Forgot_password = (props) => {
           bgcolor: "white",
         }}
       >
+        {" "}
         <Stack
           spacing={2}
           sx={{
@@ -86,16 +102,34 @@ const Forgot_password = (props) => {
               Enter your email for password recovery.
             </Typography>
           </Stack>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={2}>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    sx={{
+                      borderBottom: errors["email"] && "2px solid red",
+                    }}
+                    {...field}
+                    variant="standard"
+                    label="Email"
+                  />
+                )}
+              />
 
-          <TextField id="standard-basic" label="Email" variant="standard" />
-
-          <Button_component
-            variant="contained"
-            content="SEND RECOVERY LINK"
-            bgcolor="#03a9f4"
-            Hbgcolor="#03a9f4"
-            disableElevation="disableElevation"
-          />
+              <Button_component
+                content="SEND RECOVERY LINK"
+                boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
+                bgcolor="#03a9f4"
+                width="100%"
+                height="36px"
+                radius="5px"
+                color="#fff"
+              />
+            </Stack>
+          </form>
           <Stack direction="row" justifyContent="space-between">
             <Typography
               onClick={() => Navigate("/login")}
@@ -125,7 +159,7 @@ const Forgot_password = (props) => {
               Create a new account
             </Typography>
           </Stack>
-        </Stack>
+        </Stack>{" "}
       </Stack>
     </Container>
   );

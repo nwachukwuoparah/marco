@@ -14,17 +14,7 @@ import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
-const schema = yup
-  .object({
-    firstname: yup.string().required(),
-    lastname: yup.string().required(),
-    email: yup.string().required(),
-    password: yup.number().positive().integer().required(),
-    terms: yup.bool().oneOf([true], "Field must be checked"),
-  })
-  .required();
+import { Signup_schema } from "../../Component/Schema";
 
 const Sign_up = (props) => {
   const Navigate = useNavigate();
@@ -35,7 +25,7 @@ const Sign_up = (props) => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(Signup_schema ),
   });
 
   const From_input = [
@@ -93,7 +83,7 @@ const Sign_up = (props) => {
       <Stack
         direction={{ md: "row", xs: "column" }}
         sx={{
-          width: { md: "50%", xs: "100%" },
+          width: { md: "60%", xs: "100%" },
           boxShadow: {
             md: " 0px 0px 3px -1px rgba(66, 68, 90, 1)",
             xs: "none",

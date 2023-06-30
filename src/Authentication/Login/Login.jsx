@@ -14,15 +14,8 @@ import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Login_schema } from "../../Component/Schema";
 
-const schema = yup
-  .object({
-    email: yup.string().required(),
-    password: yup.number().positive().integer().required(),
-    memo: yup.boolean().required(),
-  })
-  .required();
 
 const Login = (props) => {
   const Navigate = useNavigate();
@@ -32,7 +25,7 @@ const Login = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(Login_schema),
   });
 
   const From_input = [
@@ -73,7 +66,7 @@ const Login = (props) => {
       <Stack
         direction={{ md: "row", xs: "column" }}
         sx={{
-          width: { md: "50%", xs: "100%" },
+          width: { md: "60%", xs: "100%" },
           boxShadow: {
             md: " 0px 0px 3px -1px rgba(66, 68, 90, 1)",
             xs: "none",
@@ -132,7 +125,7 @@ const Login = (props) => {
                 <Typography sx={{ color: "rgba(0, 0, 0, 0.54)" }}>
                   Don't have an account?
                 </Typography>
-                
+
                 <Button_component
                   routh="/"
                   variant="text"

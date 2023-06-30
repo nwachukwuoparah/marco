@@ -27,10 +27,21 @@ const Wallet = () => {
         <Grid md={6.665} item>
           <Display_card />
         </Grid>
-        {[1, 2].map((i) => (
+        {[
+          {
+            type: "Airtime",
+            text1: "Buy Airtime",
+            text2: "Buy Airtime with just few",
+          },
+          {
+            type: "transfer",
+            text1: "Transfer",
+            text2: "Transfer money with just few",
+          },
+        ].map((i) => (
           <Grid md={6.665} item>
-            <Banner_card />
-          </Grid>
+            <Banner_card {...i} />
+          </Grid> 
         ))}
         <Grid md={20} item>
           <ChartComponent />

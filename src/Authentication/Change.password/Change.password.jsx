@@ -13,20 +13,22 @@ import marco from "../../../public/marco.png";
 import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
+import { Change_schema } from "../../Component/Schema";
+
 const Change_password = (props) => {
   const Navigate = useNavigate();
-  const From_input = [
-    {
-      key: 1,
-      id: "email",
-      label: "Email",
-    },
-    {
-      key: 2,
-      id: "password",
-      label: "Password",
-    },
-  ];
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(Change_schema),
+  });
+
+  const onSubmit = (data) => console.log(data);
 
   return (
     <Container
@@ -84,16 +86,34 @@ const Change_password = (props) => {
               New Password
             </Typography>
           </Stack>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={2}>
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    sx={{
+                      borderBottom: errors["password"] && "2px solid red",
+                    }}
+                    {...field}
+                    variant="standard"
+                    label="Password"
+                  />
+                )}
+              />
 
-          <TextField id="standard-basic" label="Email" variant="standard" />
-
-          <Button_component
-            variant="contained"
-            content="CHANGE PASSWORD"
-            bgcolor="#03a9f4"
-            Hbgcolor="#03a9f4"
-            disableElevation="disableElevation"
-          />
+              <Button_component
+                content="CHANGE PASSWORD"
+                boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
+                bgcolor="#03a9f4"
+                width="100%"
+                height="36px"
+                radius="5px"
+                color="#fff"
+              />
+            </Stack>
+          </form>
         </Stack>
       </Stack>
     </Container>
