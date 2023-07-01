@@ -13,7 +13,6 @@ import Transaction from "./Transaction";
 import Compliance from "./Compliance";
 import Profile from "./Profile";
 const Dashboard = (props) => {
-
   const { routh, transaction, setTransaction } = useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
   const Navigate = useNavigate();
@@ -95,9 +94,7 @@ const Dashboard = (props) => {
           </span>
 
           <Stack
-            onClick={() => {
-              setTransaction(!transaction);
-            }}
+            onClick={() => setTransaction(!transaction)}
             direction="row"
             spacing={1}
             sx={{
