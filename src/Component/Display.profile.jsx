@@ -66,7 +66,7 @@ const Display_profile = ({ setToggleProfile }) => {
       </Stack>
 
       <Stack
-        spacing={2}
+        spacing={{md:2,xs:4}}
         sx={{ bgcolor: "#f7f9fb", padding: "50px 30px", borderRadius: "10px" }}
       >
         <Typography
@@ -78,7 +78,7 @@ const Display_profile = ({ setToggleProfile }) => {
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <Stack
             direction={{ md: "row", xs: "column" }}
-            spacing={{ md: 40, xs: 5 }}
+            spacing={{ md: 40, xs: 1.5 }}
           >
             <Typography
               sx={{
@@ -107,7 +107,7 @@ const Display_profile = ({ setToggleProfile }) => {
         justifyContent="space-between"
         sx={{ bgcolor: "#f7f9fb", padding: "50px 30px", borderRadius: "10px" }}
       >
-        <Stack spacing={2}>
+        <Stack spacing={{md:2,xs:4}}>
           <Typography
             variant="h6"
             sx={{ fontWeight: 600, fontSize: "15px", lineHeight: "1.25rem" }}
@@ -117,7 +117,7 @@ const Display_profile = ({ setToggleProfile }) => {
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <Stack
               direction={{ md: "row", xs: "column" }}
-              spacing={{ md: 40, xs: 5 }}
+              spacing={{ md: 40, xs: 1.5 }}
             >
               <Typography
                 sx={{
@@ -128,6 +128,7 @@ const Display_profile = ({ setToggleProfile }) => {
               >
                 Company
               </Typography>
+
               <Typography
                 sx={{
                   color: "#1C1C1C",
