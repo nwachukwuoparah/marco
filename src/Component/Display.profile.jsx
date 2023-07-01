@@ -76,7 +76,10 @@ const Display_profile = ({ setToggleProfile }) => {
           Profile Details
         </Typography>
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <Stack direction="row" spacing={40}>
+          <Stack
+            direction={{ md: "row", xs: "column" }}
+            spacing={{ md: 40, xs: 5 }}
+          >
             <Typography
               sx={{
                 color: "rgb(28 28 28 / 0.4)",
@@ -112,7 +115,10 @@ const Display_profile = ({ setToggleProfile }) => {
             Compliance Details
           </Typography>
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <Stack direction="row" spacing={40}>
+            <Stack
+              direction={{ md: "row", xs: "column" }}
+              spacing={{ md: 40, xs: 5 }}
+            >
               <Typography
                 sx={{
                   color: "rgb(28 28 28 / 0.4)",

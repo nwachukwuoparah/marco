@@ -59,7 +59,7 @@ const Wallet = () => {
         </Grid>
       </Grid>
 
-      <Stack spacing={5} marginTop={15}>
+      <Stack spacing={5} marginTop="15vh">
         <Stack
           onClick={() => {
             // setTransaction(!transaction);
@@ -113,14 +113,14 @@ const Wallet = () => {
       <Stack
         sx={{
           display: { md: "block", xs: transaction ? "block" : "none" },
-          position: "fixed",
+          position: { md: "relative", xs: "fixed" },
           height: { md: "81vh", xs: "85vh" },
           border: " 1px solid #e3ebf6",
           width: { md: "30%", xs: transaction && "100%" },
           borderRadius: !transaction && "5px",
           bgcolor: "#f8f8f8",
           zIndex: 1000,
-          top: "135px",
+          top: { md: "0px", xs: "135px" },
           left: "0px",
           right: "0px",
           paddingBottom: transaction && "10px",
