@@ -38,7 +38,7 @@ const schema = yup
         message: "NIN document is requried",
         test: (value) => value?.length > 0,
       })
-      .test({  
+      .test({
         name: "fileSize",
         message: "file uploaded is larger than 500kb",
         test: (value) => {
@@ -156,7 +156,8 @@ const Compliance = (props) => {
       disableGutters
       maxWidth={false}
       sx={{
-        width: "97.5%",
+        width: { md: "97.5%", xs: "100%" },
+        padding: { md: "0px", xs: " 30px 10px" },
       }}
     >
       <form
@@ -168,7 +169,7 @@ const Compliance = (props) => {
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Stack spacing={4.5} sx={{ width: "70%" }}>
+        <Stack spacing={4.5} sx={{ width: { md: "70%", xs: "100%" } }}>
           <Stack
             justifyContent="space-between"
             direction="row"
@@ -208,7 +209,7 @@ const Compliance = (props) => {
           direction="row"
           borderTop=" 1px solid #e3ebf6"
           paddingTop="28px"
-          width="33.5%"
+          width={{md:"33.5%",xs:"100%"}}
         >
           <Button_component
             content="Submit"

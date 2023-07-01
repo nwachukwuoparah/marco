@@ -6,14 +6,14 @@ import * as yup from "yup";
 
 const Input = (props) => {
   return (
-    <Stack>
+    <Stack sx={{ width: { md: props.width, xs: "100%" } }}>
       <input
         style={{
           outline: "none",
           bgcolor: "red",
           padding: props.padding,
           type: props.type,
-          width: props.width,
+          width: "100%",
           border: props.errors[props.name] ? "1px solid red" : props.border,
           // borderColor: "white",
           // "&:hover": { border: props.border },
@@ -26,7 +26,9 @@ const Input = (props) => {
         {...props.register(props.name)}
       />
       {console.log(props.errors[props.name])}
-      <Typography sx={{color:"red"}}>{props.errors[props.name]?.message}</Typography>
+      <Typography sx={{ color: "red" }}>
+        {props.errors[props.name]?.message}
+      </Typography>
     </Stack>
   );
 };
