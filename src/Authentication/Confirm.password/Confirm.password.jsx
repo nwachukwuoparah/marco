@@ -17,8 +17,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Change_schema } from "../../Component/Schema";
 import * as yup from "yup";
 
-const Confirm_schema = yup
-.object({
+const Confirm_schema = yup.object({
   currentpassword: yup
     .string()
     .required("Current Password is required")
@@ -26,9 +25,9 @@ const Confirm_schema = yup
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
       "Password should contain 6 characters(lowercase and uppercase) and at least one special"
     ),
-})
+});
 
-const Confirm_password = ({ setConfirm }) => {
+const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
   const Navigate = useNavigate();
 
   const {
@@ -108,7 +107,8 @@ const Confirm_password = ({ setConfirm }) => {
                 render={({ field }) => (
                   <TextField
                     sx={{
-                      borderBottom: errors["currentpassword"] && "2px solid red",
+                      borderBottom:
+                        errors["currentpassword"] && "2px solid red",
                     }}
                     {...field}
                     variant="standard"
@@ -140,7 +140,10 @@ const Confirm_password = ({ setConfirm }) => {
               alignItems: "center",
               justifyContent: "center",
             }}
-            onClick={() => setConfirm(false)}
+            onClick={() => {
+              setConfirm_change(false);
+              setConfirm_user(false);
+            }}
           >
             <ArrowBackIcon sx={{ fontSize: "20px", color: "#03a9f4" }} />
             <Typography sx={{ color: "#03a9f4" }}>Back</Typography>

@@ -3,18 +3,20 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import React, { useState } from "react";
 
 const Banner_card = (props) => {
+  
   const [view, setView] = useState(false);
 
   return (
     <Stack
       spacing={1.8}
       sx={{
-        display:{md:"flex",xs:"none"},
+        display: { md: "flex", xs: "none" },
         border: " 1px solid #e3ebf6",
         padding: "20px 15px",
         borderRadius: "5px",
         bgcolor: "#C7C8B7",
         overflowY: "hidden",
+        cursor: "pointer",
       }}
     >
       <Typography
@@ -38,7 +40,7 @@ const Banner_card = (props) => {
           />
         </Stack>
       </Stack>
-      <Typography sx={{color: "white" }}>
+      <Typography sx={{ color: "white" }}>
         {props.text2}
         <br /> steps
       </Typography>

@@ -10,10 +10,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { User_schema } from "./Schema";
 import { Change_schema } from "./Schema";
 import Confirm_password from "../Authentication/Confirm.password/Confirm.password";
+
 const Edit_profile = ({ setToggleProfile }) => {
   const { setRouth } = useContext(Global_context);
 
-  const [confirm, setConfirm] = useState(false);
+  const [confirm_user, setConfirm_user] = useState(false);
+  const [confirm_change, setConfirm_change] = useState(false);
 
   const {
     register,
@@ -34,6 +36,7 @@ const Edit_profile = ({ setToggleProfile }) => {
   });
 
   const onSubmit = (data) => {
+    setConfirm_change(true);
     const { image, ...others } = data;
     console.log({ ...others, image: image[0] });
   };
@@ -85,7 +88,6 @@ const Edit_profile = ({ setToggleProfile }) => {
     setRouth("Profile/Edit Profile");
   }, []);
 
-
   return (
     <Stack
       sx={{
@@ -96,13 +98,22 @@ const Edit_profile = ({ setToggleProfile }) => {
         height: "80vh",
         padding: "20px 0px",
       }}
-  >
-      {confirm && <Confirm_password  setConfirm={setConfirm} />}
+    >
+      {(confirm_user || confirm_change) && (
+        <Confirm_password
+          setConfirm_change={setConfirm_change}
+          setConfirm_user={setConfirm_user}
+        />
+      )}
       <Stack
         // direction="row"
         justifyContent="space-between"
         spacing={2}
-        sx={{ bgcolor: "#f7f9fb", padding: "30px 30px", borderRadius: "10px" }}
+        sx={{
+          bgcolor: "#f7f9fb ",
+          padding: "30px 30px",
+          borderRadius: "10px",
+        }}
       >
         <Stack direction="roe" justifyContent="space-between">
           <Typography>Edit Profile</Typography>
@@ -197,7 +208,7 @@ const Edit_profile = ({ setToggleProfile }) => {
         onSubmit={handle_change_password((data) => {
           console.log(data);
           console.log("call");
-          setConfirm(true);
+          setConfirm_change(true);
         })}
       >
         <Stack
