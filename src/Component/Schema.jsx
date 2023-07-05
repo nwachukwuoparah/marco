@@ -50,12 +50,100 @@ export const Forget_schema = yup
 
 export const Change_schema = yup
   .object({
-    password: yup
+    oldpassword: yup
       .string()
-      .required("Password is required")
+      .required("Old Password is required")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
-        "Password should contain (6, at leastone special) characters lowercase and uppercase"
+        "Password should contain 6 characters(lowercase and uppercase) and at least one special"
+      ),
+    newpassword: yup
+      .string()
+      .required("New Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
+        "Password should contain 6 characters(lowercase and uppercase) and at least one special"
       ),
   })
   .required();
+
+export const Compliance_schema = yup
+  .object({
+    bvn: yup
+      .string()
+      .required("BVN is required")
+      .matches(/^\d{1,11}$/, "BVN should not be longer than 11 digits"),
+    country: yup.string().required("Country is required"),
+    state: yup.string().required("State is required"),
+    city: yup.string().required("City is required"),
+    lga: yup.string().required("LGA is required"),
+    address: yup.string().required("Address is required"),
+    businessname: yup.string().required("Business Name is required"),
+    businessaddress: yup.string().required("Business address is required"),
+    nin: yup
+      .string()
+      .required("NIN is required")
+      .matches(/^\d{1,11}$/, "NIN should not be longer than 11 digits"),
+    image: yup
+      .mixed()
+      .test({
+        name: "required",
+        message: "NIN document is requried",
+        test: (value) => value?.length > 0,
+      })
+      .test({
+        name: "fileSize",
+        message: "file uploaded is larger than 500kb",
+        test: (value) => {
+          if (typeof value === "object") {
+            return value[0]?.size < 500000;
+          } else {
+            return true;
+          }
+        },
+      }),
+  })
+  .required();
+
+export const User_schema = yup
+  .object({
+    image: yup
+      .mixed()
+      .test({
+        name: "required",
+        message: "NIN document is requried",
+        test: (value) => value?.length > 0,
+      })
+      .test({
+        name: "fileSize",
+        message: "file uploaded is larger than 500kb",
+        test: (value) => {
+          if (typeof value === "object") {
+            return value[0]?.size < 500000;
+          } else {
+            return true;
+          }
+        },
+      }),
+    firstname: yup.string().required("First Name is required"),
+    lastname: yup.string().required("Last Name is required"),
+    email: yup.string().required("Email is required"),
+    sex: yup.string().required("Email is required"),
+    pnonenumber: yup
+      .string()
+      .required("NIN is required")
+      .matches(/^\d{1,11}$/, "NIN should not be longer than 11 digits"),
+  })
+  .required();
+
+// export const Change_schema = yup
+//   .object({
+//     password: yup
+//       .string()
+//       .required("Password is required")
+//       .matches(
+//         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
+//         "Password should contain 6 characters(lowercase and uppercase) and at least one special"
+//       ),
+//   })
+//   .required();

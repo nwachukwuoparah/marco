@@ -12,14 +12,17 @@ import { Global_context } from "../Component/Context.api";
 import Transaction from "./Transaction";
 import Compliance from "./Compliance";
 import Profile from "./Profile";
+
 const Dashboard = (props) => {
   const { routh, transaction, setTransaction } = useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
   const Navigate = useNavigate();
+
   return (
+
     <Container disableGutters maxWidth={false} sx={{ display: "flex" }}>
       <Sidebar sidebar={sidebar} />
-      <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
+      <Container disableGutters maxWidth={false}>
         <Stack
           direction={{ md: "row", xs: "row" }}
           sx={{

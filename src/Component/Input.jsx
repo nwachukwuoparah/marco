@@ -15,17 +15,14 @@ const Input = (props) => {
           type: props.type,
           width: "100%",
           border: props.errors[props.name] ? "1px solid red" : props.border,
-          // borderColor: "white",
-          // "&:hover": { border: props.border },
           borderRadius: "5px",
-          // transition: "all 5s",
         }}
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}
         {...props.register(props.name)}
       />
-      {console.log(props.errors[props.name])}
+
       <Typography sx={{ color: "red" }}>
         {props.errors[props.name]?.message}
       </Typography>

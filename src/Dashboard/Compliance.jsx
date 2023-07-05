@@ -16,58 +16,27 @@ import Input from "../Component/Input";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import Button_component from "../Component/Button";
 import { useNavigate } from "react-router-dom";
-
-const schema = yup
-  .object({
-    bvn: yup.number().required(),
-    country: yup.string().required(),
-    state: yup.string().required(),
-    city: yup.string().required(),
-    lga: yup.string().required(),
-    address: yup.string().required(),
-    businessname: yup.string().required("Business Name is required"),
-    businessaddress: yup.string().required(),
-    nin: yup.number().required(),
-    image: yup
-      .mixed()
-      .test({
-        name: "required",
-        message: "NIN document is requried",
-        test: (value) => value?.length > 0,
-      })
-      .test({
-        name: "fileSize",
-        message: "file uploaded is larger than 500kb",
-        test: (value) => {
-          if (typeof value === "object") {
-            return value[0]?.size < 500000;
-          } else {
-            return true;
-          }
-        },
-      }),
-  })
-  .required();
+import { Compliance_schema } from "../Component/Schema";
 
 const Compliance = (props) => {
   const { setRouth } = useContext(Global_context);
   const imageref = useRef(null);
   const Navigate = useNavigate();
+
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(Compliance_schema),
   });
 
   useEffect(() => {
     setRouth("Compliance");
-    // console.log(imageref.current);
     console.log(errors);
   }, [errors]);
 
@@ -164,7 +133,7 @@ const Compliance = (props) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "35px",
+          gap: "25px",
           position: "relative",
         }}
         onSubmit={handleSubmit(onSubmit)}
@@ -209,7 +178,7 @@ const Compliance = (props) => {
           direction="row"
           borderTop=" 1px solid #e3ebf6"
           paddingTop="28px"
-          width={{md:"33.5%",xs:"100%"}}
+          width={{ md: "33.5%", xs: "100%" }}
         >
           <Button_component
             content="Submit"
