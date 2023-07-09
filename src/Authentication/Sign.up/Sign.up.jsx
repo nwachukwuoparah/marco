@@ -92,6 +92,8 @@ const Sign_up = (props) => {
         // bgcolor="red"
         spacing={{ md: 0, xs: 5 }}
       >
+
+
         <Stack
           sx={{
             display: "flex",
@@ -104,6 +106,7 @@ const Sign_up = (props) => {
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
         </Stack>
+
 
         <Stack
           sx={{

@@ -28,14 +28,17 @@ const Sidebar = ({ sidebar }) => {
     },
     {
       id: 3,
-      icon: <WalletIcon />,
-      text: "Airtime",
+      icon: <OutboxIcon />,
+      text: "Transfer",
+      path: "/transfer",
     },
     {
       id: 4,
-      icon: <OutboxIcon />,
-      text: "Transfer",
+      icon: <WalletIcon />,
+      text: "Airtime",
+      path: "/airtime",
     },
+
     // {
     //   icon: <WalletIcon />,
     //   text: "Deposit",
@@ -49,7 +52,7 @@ const Sidebar = ({ sidebar }) => {
       onMouseLeave={() => setHover(false)}
       spacing={8}
       sx={{
-        display:{ md: "block", xs: "none" },
+        display: { md: "block", xs: "none" },
         height: "100vh",
         width: hover || sidebar ? "15%" : "5%",
         borderRight: "1px solid #e3ebf6",

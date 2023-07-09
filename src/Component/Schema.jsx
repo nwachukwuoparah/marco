@@ -136,14 +136,17 @@ export const User_schema = yup
   })
   .required();
 
-// export const Change_schema = yup
-//   .object({
-//     password: yup
-//       .string()
-//       .required("Password is required")
-//       .matches(
-//         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
-//         "Password should contain 6 characters(lowercase and uppercase) and at least one special"
-//       ),
-//   })
-//   .required();
+export const Transfer_schema = yup
+  .object({
+    bank_name: yup.string().required("Bank Name is required"),
+    account_number: yup
+      .string()
+      .required("Account Number is required")
+      .matches(
+        /^\d{1,10}$/,
+        "Account Number should not be longer than 11 digits"
+      ),
+    amount: yup.string().required("Amount is required"),
+    naration: yup.string(),
+  })
+  .required();

@@ -12,6 +12,8 @@ import { Global_context } from "../Component/Context.api";
 import Transaction from "./Transaction";
 import Compliance from "./Compliance";
 import Profile from "./Profile";
+import Transfer from "./Transfer";
+import Airtime from "./Airtime";
 
 const Dashboard = (props) => {
   const { routh, transaction, setTransaction } = useContext(Global_context);
@@ -117,6 +119,8 @@ const Dashboard = (props) => {
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/compliance" element={<Compliance />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/transfer" element={<Transfer />} />
+          <Route path="/airtime" element={<Airtime />} />
         </Routes>
       </Container>
     </Container>

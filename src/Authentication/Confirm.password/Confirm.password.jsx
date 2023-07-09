@@ -50,7 +50,7 @@ const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
         backgrounflexFlow: "row wrap",
         boxSizing: " border-box",
         display: "flex",
-        placeContent: "center",
+        justifyContent: "center",
         alignItems: "center",
         backgroundImage: `url(${background})`,
         zIndex: 100,

@@ -1,13 +1,15 @@
 import { Stack, Typography } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Banner_card = (props) => {
-  
+  const navigate = useNavigate();
   const [view, setView] = useState(false);
 
   return (
     <Stack
+      onClick={() => navigate(props.path)}
       spacing={1.8}
       sx={{
         display: { md: "flex", xs: "none" },
@@ -17,6 +19,9 @@ const Banner_card = (props) => {
         bgcolor: "#C7C8B7",
         overflowY: "hidden",
         cursor: "pointer",
+        "&:hover": {
+          bgcolor: "rgba(199, 200, 183,90%)",
+        },
       }}
     >
       <Typography

@@ -6,6 +6,7 @@ import Forgot_password from "./Authentication/Forgot.password/Forgot.password";
 import Dashboard from "./Dashboard/Dashboard";
 import Change_password from "./Authentication/Change.password/Change.password";
 import Verify from "./Authentication/Verify";
+
 function App() {
   return (
     <Router>

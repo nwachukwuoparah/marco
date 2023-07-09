@@ -43,11 +43,13 @@ const Wallet = () => {
             type: "Airtime",
             text1: "Buy Airtime",
             text2: "Buy Airtime with just few",
+            path: "/dashboard/airtime",
           },
           {
             type: "transfer",
             text1: "Transfer",
             text2: "Transfer money with just few",
+            path: "/dashboard/transfer",
           },
         ].map((i) => (
           <Grid md={6.665} item>
