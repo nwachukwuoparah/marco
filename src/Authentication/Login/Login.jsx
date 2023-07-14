@@ -5,7 +5,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { map } from "rxjs";
 import React, { useContext, useEffect } from "react";
 import background from "../../../public/background.jpg";
 import login_illustration from "../../../public/login_illustration.png";
