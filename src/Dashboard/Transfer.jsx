@@ -85,7 +85,7 @@ const Transfer = (props) => {
       >
         <Stack
           sx={{
-            width: "80%",
+            width: "60%",
             // height: "85.5%",
           }}
           spacing={3.5}

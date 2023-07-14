@@ -25,7 +25,6 @@ const Compliance = (props) => {
   const imageref = useRef(null);
   const Navigate = useNavigate();
 
-
   const {
     register,
     handleSubmit,
@@ -125,86 +124,102 @@ const Compliance = (props) => {
       disableGutters
       maxWidth={false}
       sx={{
-        width: { md: "97.5%", xs: "100%" },
+        display: "flex",
+        justifyContent: "space-between",
         padding: { md: "0px", xs: " 30px 10px" },
+        height: "82vh",
+
+        padding: "0px 15px 30px",
       }}
     >
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "25px",
-          position: "relative",
+      <Stack
+        width={{
+          md: "50%",
+          xs: "100%",
+          overflowY: "scroll",
+          padding: "0px 0px 30px",
         }}
-        onSubmit={handleSubmit(onSubmit)}
       >
-        <Stack spacing={4.5} sx={{ width: { md: "70%", xs: "100%" } }}>
-          <Stack
-            justifyContent="space-between"
-            direction="row"
-            flexWrap="wrap"
-            gap="30px"
-            sx={{ width: "100%" }}
-          >
+        <form
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "25px",
+            position: "relative",
+          }}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Stack gap="30px" sx={{ width: "100%" }}>
             {From_input.map((i) => (
-              <Input
-                key={i.id}
-                width="48%"
-                {...i}
-                register={register}
-                errors={errors}
-              />
+              <Input key={i.id} {...i} register={register} errors={errors} />
             ))}
           </Stack>
-        </Stack>
+          <Stack
+            spacing={3}
+            direction="row"
+            borderTop=" 1px solid #e3ebf6"
+            paddingTop="28px"
+          >
+            <Button_component
+              content="Submit"
+              boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
+              bgcolor="#03a9f4"
+              width="35%"
+              height="45px"
+              radius="2px"
+              color="#fff"
+              fontSize="15px"
+            />
 
+            <Button_component
+              routh="/dashboard/profile"
+              content="Cancel"
+              boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
+              bgcolor="#ffff"
+              width="35%"
+              height="45px"
+              radius="2px"
+              // color="#fff"
+              border=" 1px solid #e3ebf6"
+              fontSize="15px"
+            />
+          </Stack>
+        </form>
+      </Stack>
+      <Stack
+        sx={{
+          width: "45%",
+          height: "100%",
+          borderRadius: "10px",
+          border: "1px rgba(128, 128, 128,20%)",
+          borderStyle: "dashed",
+          position: "sticky",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <label
           style={{
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             gap: "6px",
             fontSize: "16px",
-            textDecoration: "underline",
-            color: errors["image"] ? "red" : "#03a9f4",
+            color: errors["image"] ? "red" : "rgba(3, 169, 244,20%)",
             cursor: "pointer",
           }}
         >
-          <CameraAltIcon sx={{ fontSize: "25px" }} />
-          Upload a clear picture of your NIN
+          <CameraAltIcon sx={{ fontSize: "30px" }} />
+          <Typography
+            sx={{ padding: "15px", bgcolor: "rgba(3, 169, 244,15%)",color: "rgba(3, 169, 244)",borderRadius:"10px" }}
+          >
+            Upload a clear picture of your NIN
+          </Typography>
           <input name="image" hidden type="file" {...register("image")} />
         </label>
-        <Stack
-          spacing={3}
-          direction="row"
-          borderTop=" 1px solid #e3ebf6"
-          paddingTop="28px"
-          width={{ md: "33.5%", xs: "100%" }}
-        >
-          <Button_component
-            content="Submit"
-            boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
-            bgcolor="#03a9f4"
-            width="35%"
-            height="45px"
-            radius="2px"
-            color="#fff"
-            fontSize="15px"
-          />
-
-          <Button_component
-            routh="/dashboard/profile"
-            content="Cancel"
-            boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
-            bgcolor="#ffff"
-            width="35%"
-            height="45px"
-            radius="2px"
-            // color="#fff"
-            border=" 1px solid #e3ebf6"
-            fontSize="15px"
-          />
-        </Stack>
-      </form>
+      </Stack>
     </Container>
   );
 };

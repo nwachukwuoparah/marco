@@ -89,7 +89,6 @@ const Change_password = (props) => {
               variant="h3"
               sx={{
                 marginTop: 0,
-                fontWeight: 400,
                 lineHeight: 1,
                 color: "inherit",
                 fontSize: "17px",

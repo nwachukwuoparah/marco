@@ -31,6 +31,9 @@ const Banner_card = (props) => {
           width: "fit-content",
           bgcolor: "#f8f8f8",
           borderRadius: "20px",
+          opacity: 0.6,
+          border: "1px rgba(128, 128, 128,20%)",
+          borderStyle: "dashed",
         }}
       >
         {props.type}

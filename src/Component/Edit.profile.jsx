@@ -105,9 +105,8 @@ const Edit_profile = ({ setToggleProfile }) => {
           setConfirm_user={setConfirm_user}
         />
       )}
+
       <Stack
-        // direction="row"
-        justifyContent="space-between"
         spacing={2}
         sx={{
           bgcolor: "#f7f9fb ",
@@ -122,8 +121,8 @@ const Edit_profile = ({ setToggleProfile }) => {
             sx={{ cursor: "pointer", alignItems: "center" }}
             onClick={() => setToggleProfile(true)}
           >
-            <ArrowBackIcon sx={{ fontSize: "20px" }} />
-            <Typography>Back</Typography>
+            <ArrowBackIcon sx={{ fontSize: "18px" ,color:"rgb(28, 28, 28,70%)" }} />
+            <Typography  sx={{ color:"rgb(28, 28, 28,70%)" }}>Back</Typography>
           </Stack>
         </Stack>
 
@@ -163,32 +162,30 @@ const Edit_profile = ({ setToggleProfile }) => {
             </Typography>
           </Stack>
 
-          <Stack spacing={4.5} sx={{ width: { md: "70%", xs: "100%" } }}>
             <Stack
               justifyContent="space-between"
-              direction="row"
-              flexWrap="wrap"
               gap="30px"
               sx={{ width: "100%" }}
             >
               {From_input.map((i) => (
                 <Input
                   key={i.id}
-                  width="48%"
+                  width="35%"
                   {...i}
                   register={register}
                   errors={errors}
                 />
               ))}
             </Stack>
-          </Stack>
+
+
 
           <Stack
             spacing={3}
             direction="row"
             borderTop=" 1px solid #e3ebf6"
             paddingTop="28px"
-            width={{ md: "33.5%", xs: "100%" }}
+            width={{ md: "35%", xs: "100%" }}
           >
             <Button_component
               content="Save changes"
@@ -204,6 +201,9 @@ const Edit_profile = ({ setToggleProfile }) => {
         </form>
       </Stack>
 
+
+
+
       <form
         onSubmit={handle_change_password((data) => {
           console.log(data);
@@ -214,11 +214,12 @@ const Edit_profile = ({ setToggleProfile }) => {
         <Stack
           // direction="row"
           justifyContent="space-between"
-          spacing={2}
           sx={{
+            width: "100%",
             bgcolor: "#f7f9fb",
             padding: "20px 30px",
             borderRadius: "10px",
+            gap:"30px"
           }}
         >
           <Typography>Change Password</Typography>
@@ -243,7 +244,7 @@ const Edit_profile = ({ setToggleProfile }) => {
           ].map((i) => (
             <Input
               key={i.id}
-              width="48%"
+              width="35%"
               {...i}
               register={register_change_password}
               errors={change_password_errors}
@@ -255,7 +256,7 @@ const Edit_profile = ({ setToggleProfile }) => {
             direction="row"
             borderTop=" 1px solid #e3ebf6"
             paddingTop="28px"
-            width={{ md: "33.5%", xs: "100%" }}
+            width={{ md: "35%", xs: "100%" }}
           >
             <Button_component
               content="Change password"

@@ -16,8 +16,7 @@ const Display_card = (props) => {
         border: " 1px solid #e3ebf6",
         padding: "20px 15px",
         borderRadius: "5px",
-        bgcolor: "rgb(172, 166, 204,10%)",
-        // backgroundImage: `url(${bg_shape})`,
+        // bgcolor: "rgb(172, 166, 204,10%)",
         bgcolor: "#03a9f4",
       }}
     >

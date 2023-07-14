@@ -59,7 +59,7 @@ const Display_profile = ({ setToggleProfile }) => {
             sx={{
               color: "rgb(28, 28, 28,70%)",
               position: "relative",
-              top: "-7px",
+              top: "-3.5px",
             }}
           />
         </Stack>
@@ -156,7 +156,7 @@ const Display_profile = ({ setToggleProfile }) => {
             sx={{
               color: "rgb(28, 28, 28,70%)",
               position: "relative",
-              top: "-7px",
+              top: "-3.5px",
             }}
           />
         </Stack>

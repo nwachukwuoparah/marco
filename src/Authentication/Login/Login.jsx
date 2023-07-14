@@ -80,6 +80,7 @@ const Login = (props) => {
     >
       {error && message && <Message title={error?.response?.data.message} />}
       <Stack
+        spacing={{ md: 0, xs: 5 }}
         direction={{ md: "row", xs: "column" }}
         sx={{
           width: { md: "60%", xs: "100%" },
@@ -89,7 +90,6 @@ const Login = (props) => {
           },
           borderRadius: { md: "12px", xs: "0px" },
         }}
-        spacing={{ md: 0, xs: 5 }}
       >
         <Stack
           sx={{

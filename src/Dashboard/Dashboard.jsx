@@ -30,7 +30,8 @@ const Dashboard = (props) => {
             justifyContent: "space-between",
             alignItems: "center",
             borderBottom: " 1px solid #e3ebf6",
-            padding: "11px 15px",
+            padding: "0px 15px",
+            height: "8vh",
           }}
         >
           <MenuRoundedIcon
@@ -89,7 +90,7 @@ const Dashboard = (props) => {
           direction={{ md: "row", xs: "row" }}
           justifyContent={{ md: "space-between", xs: "space-between" }}
           alignItems="center"
-          sx={{ padding: "25px 15px" }}
+          sx={{ padding: "0px 15px", height: "10vh" }}
         >
           <span>
             <Stack spacing={0.5} direction="row" alignItems="center">
