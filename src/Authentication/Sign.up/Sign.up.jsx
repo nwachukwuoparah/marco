@@ -5,7 +5,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import background from "../../../public/background.jpg";
 import login_illustration from "../../../public/login_illustration.png";
 import marco from "../../../public/marco.png";
@@ -15,9 +16,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Signup_schema } from "../../Component/Schema";
-
+import { signUp } from "../../Component/Apis/Mutation/mutate";
+import Message from "../../Component/message";
+import { Global_context } from "../../Component/Context.api";
 const Sign_up = (props) => {
   const Navigate = useNavigate();
+  const { message, setMessage } = useContext(Global_context);
 
   const {
     register,
@@ -25,21 +29,35 @@ const Sign_up = (props) => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Signup_schema ),
+    resolver: yupResolver(Signup_schema),
   });
+
+  const { data, error, isLoading, mutate, status } = useMutation(
+    ["signUp"],
+    signUp,
+    {
+      onSuccess: () => {
+        Navigate("/login");
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (error) setMessage(!message);
+  }, [error]);
 
   const From_input = [
     {
-      id: 3,
-      name: "firstname",
+      id: 1,
+      name: "firstName",
       type: "text",
       placeholder: "First Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
     },
     {
-      id: 5,
-      name: "lastname",
+      id: 2,
+      name: "lastName",
       type: "text",
       placeholder: "Last Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -54,7 +72,7 @@ const Sign_up = (props) => {
       padding: "10px 15px",
     },
     {
-      id: 5,
+      id: 4,
       name: "password",
       type: "text",
       placeholder: "Password",
@@ -77,9 +95,9 @@ const Sign_up = (props) => {
         alignItems: "center",
         position: "relative",
         backgroundImage: { md: `url(${background})`, xs: "none" },
-        backgroundImage: `url(${background})`,
       }}
     >
+      {error && message && <Message title={error?.response?.data.message} />}
       <Stack
         direction={{ md: "row", xs: "column" }}
         sx={{
@@ -89,11 +107,8 @@ const Sign_up = (props) => {
             xs: "none",
           },
         }}
-        // bgcolor="red"
         spacing={{ md: 0, xs: 5 }}
       >
-
-
         <Stack
           sx={{
             display: "flex",
@@ -106,7 +121,6 @@ const Sign_up = (props) => {
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
         </Stack>
-
 
         <Stack
           sx={{
@@ -122,7 +136,6 @@ const Sign_up = (props) => {
           <Stack
             sx={{
               width: "80%",
-              // height: "85.5%",
             }}
             spacing={3.5}
           >
@@ -133,7 +146,6 @@ const Sign_up = (props) => {
                   variant="h3"
                   sx={{
                     marginTop: 0,
-                    fontWeight: 400,
                     lineHeight: 1.1,
                     color: "inherit",
                     fontSize: "20px",
@@ -149,7 +161,7 @@ const Sign_up = (props) => {
                   Already have an account?
                 </Typography>
                 <Button_component
-                  routh="/login"
+                  click={() => Navigate("/login")}
                   variant="text"
                   content="Login"
                   fontWeight={400}
@@ -162,31 +174,54 @@ const Sign_up = (props) => {
             </Stack>
             <form
               onSubmit={handleSubmit((data) => {
-                Navigate("/verify");
+                const { terms, ...others } = data;
+                mutate(others);
               })}
             >
               <Stack spacing={3}>
                 {From_input.map((i) => (
-                  <Input {...i} register={register} errors={errors} />
-                ))}
-                <label
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px",
-                    color: errors["terms"] ? "red" : "inherit",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    name="terms"
-                    {...register("terms")}
-                    disableRipple
+                  <Input
+                    key={i.id}
+                    {...i}
+                    register={register}
+                    errors={errors}
                   />
-                  I agree with terms and condtions
-                </label>
-
+                ))}
+                <Stack spacing={2}>
+                  {[
+                    {
+                      id: 1,
+                      title: "Optional for business acount",
+                      name: "accountType",
+                      error: null,
+                    },
+                    {
+                      id: 2,
+                      title: "I agree with terms and condtions",
+                      name: "terms",
+                      error: errors["terms"],
+                    },
+                  ].map((i) => (
+                    <label
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                        color: i.error ? "red" : "inherit",
+                      }}
+                      key={i.id}
+                    >
+                      <input
+                        type="checkbox"
+                        name="terms"
+                        {...register(i.name)}
+                      />
+                      {i.title}
+                    </label>
+                  ))}
+                </Stack>
                 <Button_component
+                  loading={isLoading}
                   content="Create your free account"
                   boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                   bgcolor="#03a9f4"

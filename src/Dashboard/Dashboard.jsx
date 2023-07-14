@@ -21,7 +21,6 @@ const Dashboard = (props) => {
   const Navigate = useNavigate();
 
   return (
-
     <Container disableGutters maxWidth={false} sx={{ display: "flex" }}>
       <Sidebar sidebar={sidebar} />
       <Container disableGutters maxWidth={false}>

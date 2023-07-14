@@ -1,15 +1,20 @@
 import * as yup from "yup";
+// "FirstName": "Favour",
+// "LastName": "Igbani",
+// "email": "favourigbani29@gmail.com",
+// "password": "Favour#01",
+// "accountType": "business"
 
 export const Signup_schema = yup
   .object({
-    firstname: yup
+    firstName: yup
       .string()
       .required("First name is required")
       .matches(
         /^[a-zA-Z]{1,15}$/,
         "First Name must not longer than 15 letters"
       ),
-    lastname: yup
+    lastName: yup
       .string()
       .required("Last name is required")
       .matches(
@@ -24,6 +29,7 @@ export const Signup_schema = yup
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
         "Password should contain (6, at leastone special) characters lowercase and uppercase"
       ),
+    accountType: yup.bool().oneOf([true, false]),
     terms: yup.bool().oneOf([true], "Field must be checked"),
   })
   .required();

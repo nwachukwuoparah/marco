@@ -67,7 +67,7 @@ const Airtime = (props) => {
     >
       <Stack
         sx={{
-          width: { md: "50%", xs: "100%" },
+          width: { md: "40%", xs: "100%" },
           padding: "30px 0px",
           bgcolor: { md: "white", xs: "none" },
           display: "flex",

@@ -6,7 +6,8 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import React from "react";
+import { useMutation } from "@tanstack/react-query";
+import React, { useContext, useEffect } from "react";
 import background from "../../../public/background.jpg";
 import login_illustration from "../../../public/login_illustration.png";
 import marco from "../../../public/marco.png";
@@ -16,10 +17,12 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { Forget_schema } from "../../Component/Schema";
-
-const Forgot_password = (props) => {
+import { resetPassword } from "../../Component/Apis/Mutation/mutate";
+import { Global_context } from "../../Component/Context.api";
+import Message from "../../Component/message";
+const Forgot_password = () => {
   const Navigate = useNavigate();
-
+  const { message, setMessage } = useContext(Global_context);
   const {
     control,
     handleSubmit,
@@ -28,20 +31,20 @@ const Forgot_password = (props) => {
     resolver: yupResolver(Forget_schema),
   });
 
-  const onSubmit = (data) => console.log(data);
+  const { data, error, isLoading, mutate } = useMutation(
+    ["login"],
+    resetPassword,
+    {
+      onSuccess: () => {
+        // Navigate("/dashboard");
+        console.log(data);
+      },
+    }
+  );
 
-  const From_input = [
-    {
-      key: 1,
-      id: "email",
-      label: "Email",
-    },
-    {
-      key: 2,
-      id: "password",
-      label: "Password",
-    },
-  ];
+  useEffect(() => {
+    if (error) setMessage(!message);
+  }, [error]);
 
   return (
     <Container
@@ -58,6 +61,7 @@ const Forgot_password = (props) => {
         backgroundImage: `url(${background})`,
       }}
     >
+      {error && message && <Message title={error?.response?.data.message} />}
       <Stack
         alignItems="center"
         justifyContent="center"
@@ -102,7 +106,8 @@ const Forgot_password = (props) => {
               Enter your email for password recovery.
             </Typography>
           </Stack>
-          <form onSubmit={handleSubmit(onSubmit)}>
+
+          <form onSubmit={handleSubmit((data) => mutate(data))}>
             <Stack spacing={2}>
               <Controller
                 name="email"
@@ -120,6 +125,7 @@ const Forgot_password = (props) => {
               />
 
               <Button_component
+                loading={isLoading}
                 content="SEND RECOVERY LINK"
                 boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                 bgcolor="#03a9f4"
@@ -130,6 +136,7 @@ const Forgot_password = (props) => {
               />
             </Stack>
           </form>
+
           <Stack direction="row" justifyContent="space-between">
             <Typography
               onClick={() => Navigate("/login")}

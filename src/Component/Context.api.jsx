@@ -6,6 +6,7 @@ export const Global_state = ({ children }) => {
   const [routh, setRouth] = useState("");
   const [toggleProfile, setToggleProfile] = useState(false);
   const [transaction, setTransaction] = useState(false);
+  const [message, setMessage] = useState(false);
   return (
     <Global_context.Provider
       value={{
@@ -17,6 +18,8 @@ export const Global_state = ({ children }) => {
         setToggleProfile,
         transaction,
         setTransaction,
+        message,
+        setMessage,
       }}
     >
       {children}

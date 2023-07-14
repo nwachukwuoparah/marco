@@ -12,12 +12,12 @@ import login_illustration from "../../../public/login_illustration.png";
 import marco from "../../../public/marco.png";
 import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 
- const Change_schema = yup
+const Change_schema = yup
   .object({
     newpassword: yup
       .string()
@@ -31,7 +31,8 @@ import { useForm, Controller } from "react-hook-form";
 
 const Change_password = (props) => {
   const Navigate = useNavigate();
-
+  const { token } = useParams();
+  console.log(token)
   const {
     control,
     handleSubmit,

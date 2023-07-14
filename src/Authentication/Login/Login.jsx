@@ -5,7 +5,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { map } from "rxjs";
+import React, { useContext, useEffect } from "react";
 import background from "../../../public/background.jpg";
 import login_illustration from "../../../public/login_illustration.png";
 import marco from "../../../public/marco.png";
@@ -15,11 +16,14 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Login_schema } from "../../Component/Schema";
-
+import { useMutation } from "@tanstack/react-query";
+import { logIn } from "../../Component/Apis/Mutation/mutate";
+import Message from "../../Component/message";
+import { Global_context } from "../../Component/Context.api";
 
 const Login = (props) => {
   const Navigate = useNavigate();
-
+  const { message, setMessage } = useContext(Global_context);
   const {
     register,
     handleSubmit,
@@ -47,6 +51,18 @@ const Login = (props) => {
     },
   ];
 
+  const { data, error, isLoading, mutate } = useMutation(["login"], logIn, {
+    onSuccess: () => {
+      // JSON.parse(localStorage.getItem("state"))
+      // localStorage.setItem("state", JSON.stringify(state));
+      Navigate("/dashboard");
+    },
+  });
+
+  useEffect(() => {
+    if (error) setMessage(!message);
+  }, [error]);
+
   return (
     <Container
       disableGutters
@@ -63,6 +79,7 @@ const Login = (props) => {
         backgroundImage: `url(${background})`,
       }}
     >
+      {error && message && <Message title={error?.response?.data.message} />}
       <Stack
         direction={{ md: "row", xs: "column" }}
         sx={{
@@ -127,7 +144,7 @@ const Login = (props) => {
                 </Typography>
 
                 <Button_component
-                  routh="/"
+                  click={() => Navigate("/")}
                   variant="text"
                   content="SignUp"
                   fontWeight={400}
@@ -141,13 +158,13 @@ const Login = (props) => {
 
             <form
               onSubmit={handleSubmit((data) => {
-                // console.log(data);
-                Navigate("/dashboard");
+                mutate(data);
               })}
             >
               <Stack spacing={2.5}>
                 {From_input.map((i) => (
                   <Input
+                    key={i.id}
                     {...i}
                     register={register}
                     errors={errors}
@@ -163,12 +180,7 @@ const Login = (props) => {
                       gap: "5px",
                     }}
                   >
-                    <input
-                      type="checkbox"
-                      name="memo"
-                      {...register("memo")}
-                      disableRipple
-                    />
+                    <input type="checkbox" name="memo" {...register("memo")} />
                     Remember me
                   </label>
 
@@ -185,6 +197,7 @@ const Login = (props) => {
                 </Stack>
 
                 <Button_component
+                  loading={isLoading}
                   content="Create your free account"
                   boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                   bgcolor="#03a9f4"
