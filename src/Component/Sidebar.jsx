@@ -7,8 +7,8 @@ import TaskIcon from "@mui/icons-material/Task";
 
 import OutboxIcon from "@mui/icons-material/Outbox";
 
-import marco from "../../public/marco.png";
-import bg_shape from "../../public/bg-shape.jpeg";
+import marco from "../assets/marco.png";
+import bg_shape from "../assets/bg-shape.jpeg";
 import { NavLink } from "react-router-dom";
 const Sidebar = ({ sidebar }) => {
   const { hover, setHover } = useContext(Global_context);

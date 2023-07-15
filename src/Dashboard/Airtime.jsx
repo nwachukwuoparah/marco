@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Stack, Typography } from "@mui/material";
 import Display_card from "../Component/Display.card";
-import background from "../../public/background.jpg";
+import background from "../assets/background.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Input from "../Component/Input";
 import Button_component from "../Component/Button";

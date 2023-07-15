@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import React, { useEffect } from "react";
-import background from "../../public/background.jpg";
-import marco from "../../public/marco.png";
+import background from "../assets/background.jpg";
+import marco from "../assets/marco.png";
 import { useNavigate } from "react-router-dom";
 const Verify = (props) => {
 

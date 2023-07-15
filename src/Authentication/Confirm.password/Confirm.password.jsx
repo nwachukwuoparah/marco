@@ -7,8 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import background from "../../../public/background.jpg";
-import marco from "../../../public/marco.png";
+import background from "../../assets/background.jpg";
+import marco from "../../assets/marco.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";
@@ -89,7 +89,6 @@ const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
               variant="h3"
               sx={{
                 marginTop: 0,
-                fontWeight: 400,
                 lineHeight: 1,
                 color: "inherit",
                 fontSize: "17px",

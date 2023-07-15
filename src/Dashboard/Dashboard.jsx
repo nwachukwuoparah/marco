@@ -14,10 +14,12 @@ import Compliance from "./Compliance";
 import Profile from "./Profile";
 import Transfer from "./Transfer";
 import Airtime from "./Airtime";
+import zIndex from "@mui/material/styles/zIndex";
 
 const Dashboard = (props) => {
   const { routh, transaction, setTransaction } = useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
+  const [menu, setMenu] = useState(false);
   const Navigate = useNavigate();
 
   return (
@@ -29,9 +31,11 @@ const Dashboard = (props) => {
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: " 1px solid #e3ebf6",
+            borderBottom: "1px solid #e3ebf6",
             padding: "0px 15px",
             height: "8vh",
+            zIndex: 100,
+            bgcolor: "white",
           }}
         >
           <MenuRoundedIcon
@@ -69,7 +73,9 @@ const Dashboard = (props) => {
             </Stack>
 
             <Stack
-              onClick={() => Navigate("/dashboard/profile")}
+              onMouseEnter={() => setMenu(true)}
+              onMouseLeave={() => setMenu(false)}
+              // onClick={() => Navigate("/dashboard/profile")}
               direction="row"
               spacing={1}
               sx={{
@@ -85,6 +91,20 @@ const Dashboard = (props) => {
             </Stack>
           </Stack>
         </Stack>
+
+        <Stack
+          sx={{
+            width: "200px",
+            height: "200px",
+            // backgroundColor: "grey",
+            position: "absolute",
+            top: menu ? 50 : -150,
+            right: 15,
+            zIndex: -5,
+            transition: "ease-in-out 0.5s",
+            border:"1px dashed grey"
+          }}
+        ></Stack>
 
         <Stack
           direction={{ md: "row", xs: "row" }}

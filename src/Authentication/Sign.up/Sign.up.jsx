@@ -7,9 +7,9 @@ import {
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import background from "../../../public/background.jpg";
-import login_illustration from "../../../public/login_illustration.png";
-import marco from "../../../public/marco.png";
+import background from "../../assets/background.jpg";
+import login_illustration from "../../assets/login_illustration.png";
+import marco from "../../assets/marco.png";
 import Input from "../../Component/Input";
 import Button_component from "../../Component/Button";
 import { useNavigate } from "react-router-dom";

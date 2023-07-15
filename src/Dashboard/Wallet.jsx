@@ -7,7 +7,9 @@ import Banner_card from "../Component/Banner.card";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import SendToMobileIcon from "@mui/icons-material/SendToMobile";
+import { useNavigate } from "react-router-dom";
 const Wallet = () => {
+  const Navigate = useNavigate();
   const { setRouth, transaction, setTransaction } = useContext(Global_context);
 
   useEffect(() => {
@@ -64,7 +66,7 @@ const Wallet = () => {
       <Stack spacing={5} marginTop="15vh">
         <Stack
           onClick={() => {
-            // setTransaction(!transaction);
+            Navigate("/dashboard/airtime");
           }}
           direction="row"
           spacing={1}
@@ -89,7 +91,7 @@ const Wallet = () => {
 
         <Stack
           onClick={() => {
-            // setTransaction(!transaction);
+            Navigate("/dashboard/transfer");
           }}
           direction="row"
           spacing={1}
@@ -121,7 +123,7 @@ const Wallet = () => {
           width: { md: "30%", xs: transaction && "100%" },
           borderRadius: !transaction && "5px",
           bgcolor: "#f8f8f8",
-          zIndex: 1000,
+          zIndex: { md: -10, xs: 1000 },
           top: { md: "0px", xs: "135px" },
           left: "0px",
           right: "0px",

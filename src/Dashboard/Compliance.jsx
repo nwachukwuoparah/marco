@@ -213,7 +213,12 @@ const Compliance = (props) => {
         >
           <CameraAltIcon sx={{ fontSize: "30px" }} />
           <Typography
-            sx={{ padding: "15px", bgcolor: "rgba(3, 169, 244,15%)",color: "rgba(3, 169, 244)",borderRadius:"10px" }}
+            sx={{
+              padding: "15px",
+              bgcolor: "rgba(3, 169, 244,15%)",
+              color: "rgba(3, 169, 244)",
+              borderRadius: "10px",
+            }}
           >
             Upload a clear picture of your NIN
           </Typography>
