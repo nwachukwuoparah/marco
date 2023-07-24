@@ -44,7 +44,7 @@ const Sign_up = (props) => {
 
   useEffect(() => {
     if (error) setMessage(!message);
-  }, [error]);
+  }, [error, data]);
 
   const From_input = [
     {

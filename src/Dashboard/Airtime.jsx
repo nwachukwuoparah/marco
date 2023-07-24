@@ -7,7 +7,7 @@ import Input from "../Component/Input";
 import Button_component from "../Component/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Transfer_schema } from "../Component/Schema";
+import { Airtime_schema} from "../Component/Schema";
 import { useNavigate } from "react-router-dom";
 
 const Airtime = (props) => {
@@ -18,13 +18,13 @@ const Airtime = (props) => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Transfer_schema),
+    resolver: yupResolver(Airtime_schema),
   });
 
   const From_input = [
     {
       id: 3,
-      name: "select_biller`",
+      name: "selectBiller",
       type: "text",
       placeholder: "Select Biller",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -32,7 +32,7 @@ const Airtime = (props) => {
     },
     {
       id: 5,
-      name: "phone_number",
+      name: "phoneNumber",
       type: "text",
       placeholder: "Enter Phone Number",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -63,6 +63,7 @@ const Airtime = (props) => {
         backgroundImage: `url(${background})`,
         top: 0,
         left: 0,
+        zIndex: 20,
       }}
     >
       <Stack

@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+const { VITE_userToken } = import.meta.env;
 import React, { useContext, useEffect } from "react";
 import background from "../../assets/background.jpg";
 import login_illustration from "../../assets/login_illustration.png";
@@ -52,15 +53,21 @@ const Login = (props) => {
 
   const { data, error, isLoading, mutate } = useMutation(["login"], logIn, {
     onSuccess: () => {
-      // JSON.parse(localStorage.getItem("state"))
-      // localStorage.setItem("state", JSON.stringify(state));
-      Navigate("/dashboard");
+      setTimeout(() => {
+        Navigate("/dashboard");
+      }, 2000);
     },
   });
 
   useEffect(() => {
     if (error) setMessage(!message);
-  }, [error]);
+    data
+      ? localStorage.setItem(
+          VITE_userToken,
+          JSON.stringify(data?.data?.access_token)
+        )
+      : null;
+  }, [error, data]);
 
   return (
     <Container
@@ -197,7 +204,7 @@ const Login = (props) => {
 
                 <Button_component
                   loading={isLoading}
-                  content="Create your free account"
+                  content="Login" 
                   boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                   bgcolor="#03a9f4"
                   width="100%"

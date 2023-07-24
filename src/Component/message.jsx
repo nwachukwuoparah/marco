@@ -20,7 +20,7 @@ const Message = ({ title }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 bgcolor: "rgba(248, 248, 248,90%)",
-                zIndex: 1,
+                zIndex: 1000,
                 cursor: "pointer"
             }}>
             <Stack sx={{

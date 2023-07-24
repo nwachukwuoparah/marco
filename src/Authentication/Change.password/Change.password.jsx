@@ -6,7 +6,8 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import React from "react";
+import { useMutation } from "@tanstack/react-query";
+import React, { useContext, useEffect } from "react";
 import background from "../../assets/background.jpg";
 import login_illustration from "../../assets/login_illustration.png";
 import marco from "../../assets/marco.png";
@@ -16,10 +17,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
+import { changePassword } from "../../Component/Apis/Mutation/mutate";
+import { Global_context } from "../../Component/Context.api";
+import Message from "../../Component/message";
 
 const Change_schema = yup
   .object({
-    newpassword: yup
+    password: yup
       .string()
       .required("Password is required")
       .matches(
@@ -31,8 +35,10 @@ const Change_schema = yup
 
 const Change_password = (props) => {
   const Navigate = useNavigate();
+
+  const { message, setMessage } = useContext(Global_context);
   const { token } = useParams();
-  console.log(token)
+
   const {
     control,
     handleSubmit,
@@ -41,7 +47,22 @@ const Change_password = (props) => {
     resolver: yupResolver(Change_schema),
   });
 
-  const onSubmit = (data) => console.log(data);
+  const { data, error, isLoading, mutate } = useMutation(
+    ["changePassword"],
+    changePassword,
+    {
+      onSuccess: () => {
+        Navigate("/login");
+      },
+    }
+  );
+  const onSubmit = (data) => {
+    mutate({ token: token, data: data });
+  };
+
+  useEffect(() => {
+    if (error) setMessage(!message);
+  }, [error]);
 
   return (
     <Container
@@ -58,6 +79,7 @@ const Change_password = (props) => {
         backgroundImage: `url(${background})`,
       }}
     >
+      {error && message && <Message title={error?.response?.data.message} />}
       <Stack
         alignItems="center"
         justifyContent="center"
@@ -101,7 +123,7 @@ const Change_password = (props) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
               <Controller
-                name="newpassword"
+                name="password"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -118,6 +140,7 @@ const Change_password = (props) => {
                 {errors["newpassword"]?.message}
               </Typography>
               <Button_component
+                loading={isLoading}
                 content="CHANGE PASSWORD"
                 boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                 bgcolor="#03a9f4"

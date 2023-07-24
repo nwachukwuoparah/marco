@@ -10,7 +10,7 @@ const ChartComponent = () => {
     const options = {
       chart: {
         type: "area",
-        height: 380,
+        height: 371,
       },
       stroke: {
         curve: "smooth",

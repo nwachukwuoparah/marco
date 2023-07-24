@@ -23,7 +23,7 @@ const Transfer = (props) => {
   const From_input = [
     {
       id: 3,
-      name: "bank_name",
+      name: "bankName",
       type: "text",
       placeholder: "Select Bank",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -31,7 +31,7 @@ const Transfer = (props) => {
     },
     {
       id: 5,
-      name: "account_number",
+      name: "accountNumber",
       type: "text",
       placeholder: "Enter Destination Account",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -70,6 +70,7 @@ const Transfer = (props) => {
         backgroundImage: `url(${background})`,
         top: 0,
         left: 0,
+        zIndex: 20,
       }}
     >
       <Stack

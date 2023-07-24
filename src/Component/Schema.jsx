@@ -144,8 +144,8 @@ export const User_schema = yup
 
 export const Transfer_schema = yup
   .object({
-    bank_name: yup.string().required("Bank Name is required"),
-    account_number: yup
+    bankName: yup.string().required("Bank Name is required"),
+    accountNumber: yup
       .string()
       .required("Account Number is required")
       .matches(
@@ -154,5 +154,19 @@ export const Transfer_schema = yup
       ),
     amount: yup.string().required("Amount is required"),
     naration: yup.string(),
+  })
+  .required();
+
+export const Airtime_schema = yup
+  .object({
+    selectBiller: yup.string().required("Bank Name is required"),
+    phoneNumber: yup
+      .string()
+      .required("Account Number is required")
+      .matches(
+        /^\d{1,10}$/,
+        "Account Number should not be longer than 11 digits"
+      ),
+    amount: yup.string().required("Amount is required"),
   })
   .required();

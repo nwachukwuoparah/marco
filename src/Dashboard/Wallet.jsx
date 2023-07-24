@@ -8,13 +8,29 @@ import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { useNavigate } from "react-router-dom";
+import Message from "../Component/message";
+import { useQuery } from "@tanstack/react-query";
+import { getUser } from "../Component/Apis/Query/query";
 const Wallet = () => {
   const Navigate = useNavigate();
-  const { setRouth, transaction, setTransaction } = useContext(Global_context);
+  const {
+    message,
+    setMessage,
+    setRouth,
+    transaction,
+    setTransaction,
+    data,
+    isLoading,
+    error,
+  } = useContext(Global_context);
+
+
 
   useEffect(() => {
+    console.log(data)
+    if (error) setMessage(!message);
     setRouth("Wallet");
-  }, []);
+  }, [data, isLoading, error]);
 
   return (
     <Container
@@ -25,8 +41,10 @@ const Wallet = () => {
         justifyContent: "space-between",
         width: { md: "97.5%", xs: "100%" },
         padding: "0px 15px",
+        height: "82vh",
       }}
     >
+      {error && message && <Message title={error?.response?.data.message} />}
       <Grid
         container
         columns={20}
@@ -118,12 +136,12 @@ const Wallet = () => {
         sx={{
           display: { md: "block", xs: transaction ? "block" : "none" },
           position: { md: "relative", xs: "fixed" },
-          height: { md: "81vh", xs: "85vh" },
+          height: { md: "100%", xs: "85vh" },
           border: " 1px solid #e3ebf6",
           width: { md: "30%", xs: transaction && "100%" },
           borderRadius: !transaction && "5px",
           bgcolor: "#f8f8f8",
-          zIndex: { md: -10, xs: 1000 },
+          zIndex: { md: 1, xs: 1000 },
           top: { md: "0px", xs: "135px" },
           left: "0px",
           right: "0px",

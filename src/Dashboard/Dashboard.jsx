@@ -17,7 +17,8 @@ import Airtime from "./Airtime";
 import zIndex from "@mui/material/styles/zIndex";
 
 const Dashboard = (props) => {
-  const { routh, transaction, setTransaction } = useContext(Global_context);
+  const { routh, transaction, setTransaction, setLogOut } =
+    useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
   const [menu, setMenu] = useState(false);
   const Navigate = useNavigate();
@@ -34,8 +35,7 @@ const Dashboard = (props) => {
             borderBottom: "1px solid #e3ebf6",
             padding: "0px 15px",
             height: "8vh",
-            zIndex: 100,
-            bgcolor: "white",
+            zIndex: 5000,
           }}
         >
           <MenuRoundedIcon
@@ -47,6 +47,9 @@ const Dashboard = (props) => {
             direction={{ md: "row", xs: "row" }}
             alignItems="center"
             spacing={2.5}
+            zIndex={10}
+            height="100%"
+            bgcolor="white"
           >
             <Stack
               sx={{
@@ -56,6 +59,10 @@ const Dashboard = (props) => {
               }}
             >
               <SearchRoundedIcon
+                onClick={() => {
+                  console.log("call")
+                  setLogOut(true);
+                }}
                 sx={{ color: "#7081b9", fontSize: "25px", cursor: "pointer" }}
               />
             </Stack>
@@ -96,13 +103,12 @@ const Dashboard = (props) => {
           sx={{
             width: "200px",
             height: "200px",
-            // backgroundColor: "grey",
             position: "absolute",
-            top: menu ? 50 : -150,
-            right: 15,
-            zIndex: -5,
+            top: menu ? 56 : -160,
+            right: 17,
+            zIndex: 5,
             transition: "ease-in-out 0.5s",
-            border:"1px dashed grey"
+            border: "1px dashed grey",
           }}
         ></Stack>
 

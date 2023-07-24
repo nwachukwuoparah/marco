@@ -32,14 +32,8 @@ const Forgot_password = () => {
   });
 
   const { data, error, isLoading, mutate } = useMutation(
-    ["login"],
+    ["resetPassword"],
     resetPassword,
-    {
-      onSuccess: () => {
-        // Navigate("/dashboard");
-        console.log(data);
-      },
-    }
   );
 
   useEffect(() => {

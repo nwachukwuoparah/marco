@@ -34,6 +34,7 @@ const Banner_card = (props) => {
           opacity: 0.6,
           border: "1px rgba(128, 128, 128,20%)",
           borderStyle: "dashed",
+          fontWeight: 900,
         }}
       >
         {props.type}
