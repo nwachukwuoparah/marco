@@ -11,6 +11,7 @@ import {
   Button,
 } from "@mui/material";
 import React, { useContext, useEffect, useRef } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Global_context } from "../Component/Context.api";
 import Input from "../Component/Input";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -19,6 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button_component from "../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { Compliance_schema } from "../Component/Schema";
+import { createCompliance } from "../Component/Apis/Mutation/mutate";
 
 const Compliance = (props) => {
   const { setRouth } = useContext(Global_context);
@@ -39,15 +41,10 @@ const Compliance = (props) => {
     console.log(errors);
   }, [errors]);
 
-  const onSubmit = (data) => {
-    const { image, ...others } = data;
-    console.log({ ...others, image: image[0] });
-  };
-
   const From_input = [
     {
       id: 1,
-      name: "bvn",
+      name: "BVN",
       type: "text",
       placeholder: "BVN",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -79,7 +76,7 @@ const Compliance = (props) => {
     },
     {
       id: 5,
-      name: "lga",
+      name: "LGA",
       type: "text",
       placeholder: "LGA",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -95,7 +92,7 @@ const Compliance = (props) => {
     },
     {
       id: 7,
-      name: "businessname",
+      name: "businessName",
       type: "text",
       placeholder: "Business Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -103,7 +100,7 @@ const Compliance = (props) => {
     },
     {
       id: 8,
-      name: "businessaddress",
+      name: "businessAddress",
       type: "text",
       placeholder: "Business Address",
       border: "1px solid rgba(28, 28, 28, 25%)",
@@ -111,13 +108,35 @@ const Compliance = (props) => {
     },
     {
       id: 9,
-      name: "nin",
+      name: "NIN",
       type: "text",
       placeholder: "NIN Number",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
     },
   ];
+
+  const { data, error, isLoading, mutate, status } = useMutation(
+    ["compliance"],
+    createCompliance,
+    {
+      onSuccess: () => {
+        // Navigate("/login");
+      },
+    }
+  );
+
+  const onSubmit = (data) => {
+    const { image, ...others } = data;
+    console.log({ ...others, image: image[0] })
+    mutate({ ...others, image: image[0] });
+  };
+
+  useEffect(() => {
+    console.log(data);
+    console.log(isLoading);
+    console.log(error);
+  }, [data, isLoading, error]);
 
   return (
     <Container

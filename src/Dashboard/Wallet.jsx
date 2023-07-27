@@ -11,26 +11,17 @@ import { useNavigate } from "react-router-dom";
 import Message from "../Component/message";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../Component/Apis/Query/query";
-const Wallet = () => {
+import Loadind from "../Component/loading.state";
+const Wallet = ({ data }) => {
   const Navigate = useNavigate();
-  const {
-    message,
-    setMessage,
-    setRouth,
-    transaction,
-    setTransaction,
-    data,
-    isLoading,
-    error,
-  } = useContext(Global_context);
+  console.log(data);
 
-
+  const { message, setMessage, setRouth, transaction, setTransaction } =
+    useContext(Global_context);
 
   useEffect(() => {
-    console.log(data)
-    if (error) setMessage(!message);
     setRouth("Wallet");
-  }, [data, isLoading, error]);
+  }, []);
 
   return (
     <Container
@@ -44,7 +35,6 @@ const Wallet = () => {
         height: "82vh",
       }}
     >
-      {error && message && <Message title={error?.response?.data.message} />}
       <Grid
         container
         columns={20}
@@ -56,23 +46,28 @@ const Wallet = () => {
         }}
       >
         <Grid md={6.665} xs={20} item>
-          <Display_card />
+          <Display_card
+            accountNo={data?.accountNumber}
+            wallet={data?.wallet[0]}
+          />
         </Grid>
         {[
           {
+            id: 1,
             type: "Airtime",
             text1: "Buy Airtime",
             text2: "Buy Airtime with just few",
             path: "/dashboard/airtime",
           },
           {
+            id: 2,
             type: "transfer",
             text1: "Transfer",
             text2: "Transfer money with just few",
             path: "/dashboard/transfer",
           },
         ].map((i) => (
-          <Grid md={6.665} item>
+          <Grid key={i.id} md={6.665} item>
             <Banner_card {...i} />
           </Grid>
         ))}

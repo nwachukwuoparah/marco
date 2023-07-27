@@ -75,18 +75,18 @@ export const Change_schema = yup
 
 export const Compliance_schema = yup
   .object({
-    bvn: yup
+    BVN: yup
       .string()
       .required("BVN is required")
       .matches(/^\d{1,11}$/, "BVN should not be longer than 11 digits"),
     country: yup.string().required("Country is required"),
     state: yup.string().required("State is required"),
     city: yup.string().required("City is required"),
-    lga: yup.string().required("LGA is required"),
+    LGA: yup.string().required("LGA is required"),
     address: yup.string().required("Address is required"),
-    businessname: yup.string().required("Business Name is required"),
-    businessaddress: yup.string().required("Business address is required"),
-    nin: yup
+    businessName: yup.string().required("Business Name is required"),
+    businessAddress: yup.string().required("Business address is required"),
+    NIN: yup
       .string()
       .required("NIN is required")
       .matches(/^\d{1,11}$/, "NIN should not be longer than 11 digits"),

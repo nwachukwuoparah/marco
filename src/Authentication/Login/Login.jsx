@@ -55,7 +55,7 @@ const Login = (props) => {
     onSuccess: () => {
       setTimeout(() => {
         Navigate("/dashboard");
-      }, 2000);
+      }, 1000);
     },
   });
 
@@ -204,7 +204,7 @@ const Login = (props) => {
 
                 <Button_component
                   loading={isLoading}
-                  content="Login" 
+                  content="Login"
                   boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                   bgcolor="#03a9f4"
                   width="100%"

@@ -31,3 +31,18 @@
     transform: rotate(360deg);
   }
 }
+
+.loading {
+  width: 100px;
+  height: 100px;
+  animation: scaleAnimation 2s infinite alternate;
+}
+
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(0.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

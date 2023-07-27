@@ -1,10 +1,11 @@
+const { VITE_userToken } = import.meta.env;
 import { Container, Stack, Typography } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Wallet from "./Wallet";
 import Sidebar from "../Component/Sidebar";
@@ -15,16 +16,59 @@ import Profile from "./Profile";
 import Transfer from "./Transfer";
 import Airtime from "./Airtime";
 import zIndex from "@mui/material/styles/zIndex";
+import Loadind from "../Component/loading.state";
+import Message from "../Component/message";
+import { getUser } from "../Component/Apis/Query/query";
+import { useQuery } from "@tanstack/react-query";
+import { userLogOut } from "../Component/Apis/Mutation/mutate";
 
 const Dashboard = (props) => {
-  const { routh, transaction, setTransaction, setLogOut } =
+  const { routh, transaction, setTransaction, error, message, setMessage } =
     useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [logOut, setLogOut] = useState(false);
   const Navigate = useNavigate();
+
+  const {
+    data: logOutData,
+    isFetching: logOutFetching,
+    error: logOutError,
+  } = useQuery(["logOut"], userLogOut, {
+    enabled: logOut,
+    refetchOnWindowFocus: false,
+    cacheTime: 0,
+    onSuccess: () => {
+      localStorage.removeItem(VITE_userToken);
+      setTimeout(() => {
+        Navigate("/login");
+      }, [500]);
+    },
+  });
+
+  const {
+    data: userdata,
+    isFetching: userFetching,
+    error: userError,
+  } = useQuery(["getUser"], getUser, {
+    enabled: !!localStorage.getItem(VITE_userToken),
+    refetchOnWindowFocus: false,
+    retry: 3,
+  });
+
+  const value = userdata?.data?.data;
+
+  useEffect(() => {
+    if (logOutError) setMessage(!message);
+    if (userError) setLogOut(true);
+  }, [userError, logOutError]);
 
   return (
     <Container disableGutters maxWidth={false} sx={{ display: "flex" }}>
+      {(logOutFetching || userFetching) && <Loadind />}
+      {(logOutError || (userError && message)) && (
+        <Message title={error?.response?.data.message} />
+      )}
       <Sidebar sidebar={sidebar} />
       <Container disableGutters maxWidth={false}>
         <Stack
@@ -60,7 +104,6 @@ const Dashboard = (props) => {
             >
               <SearchRoundedIcon
                 onClick={() => {
-                  console.log("call")
                   setLogOut(true);
                 }}
                 sx={{ color: "#7081b9", fontSize: "25px", cursor: "pointer" }}
@@ -94,7 +137,7 @@ const Dashboard = (props) => {
               }}
             >
               <AccountCircleIcon sx={{ color: "#7081b9" }} />
-              <Typography>Dimkpa Oparah</Typography>
+              <Typography>{value?.accountName}</Typography>
             </Stack>
           </Stack>
         </Stack>
@@ -141,12 +184,12 @@ const Dashboard = (props) => {
         </Stack>
 
         <Routes>
-          <Route path="/" element={<Wallet />} />
-          <Route path="/transaction" element={<Transaction />} />
-          <Route path="/compliance" element={<Compliance />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/transfer" element={<Transfer />} />
-          <Route path="/airtime" element={<Airtime />} />
+          <Route path="/" element={<Wallet data={value} />} />
+          <Route path="/transaction" element={<Transaction data={value} />} />
+          <Route path="/compliance" element={<Compliance data={value} />} />
+          <Route path="/profile" element={<Profile data={value} />} />
+          <Route path="/transfer" element={<Transfer data={value} />} />
+          <Route path="/airtime" element={<Airtime data={value} />} />
         </Routes>
       </Container>
     </Container>

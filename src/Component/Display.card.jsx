@@ -6,8 +6,7 @@ import WalletIcon from "@mui/icons-material/Wallet";
 import React, { useContext, useState } from "react";
 import { Global_context } from "./Context.api";
 
-const Display_card = (props) => {
-
+const Display_card = ({ accountNo, wallet }) => {
   const [view, setView] = useState(false);
   const { transaction } = useContext(Global_context);
   return (
@@ -23,7 +22,7 @@ const Display_card = (props) => {
       <Typography
         sx={{ fontSize: "14px", lineHeight: "30px", color: "#f8f8f8" }}
       >
-        ACCOUNT # 3141052259
+        ACCOUNT # {accountNo}
       </Typography>
       {view ? (
         <Typography
@@ -35,7 +34,7 @@ const Display_card = (props) => {
             fontWeight: 900,
           }}
         >
-          $ 500000
+          $ {wallet?.accountBalance}
         </Typography>
       ) : (
         <Typography

@@ -13,7 +13,7 @@ const Message = ({ title }) => {
             maxWidth={false}
             onClick={() => setMessage(!message)}
             sx={{
-                position: "fixed",
+                position: "absolute",
                 width: "100%",
                 height: "100vh",
                 display: "flex",
