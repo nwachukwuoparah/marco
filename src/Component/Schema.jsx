@@ -84,8 +84,21 @@ export const Compliance_schema = yup
     city: yup.string().required("City is required"),
     LGA: yup.string().required("LGA is required"),
     address: yup.string().required("Address is required"),
-    businessName: yup.string().required("Business Name is required"),
-    businessAddress: yup.string().required("Business address is required"),
+    businessName: yup.string().when("isDisabled", (isDisabled, schema) => {
+      if (!isDisabled) {
+        console.log(isDisabled);
+        return schema.required("Business Name is required");
+      }
+      return schema;
+    }),
+
+    businessAddress: yup.string().when("isDisabled", (isDisabled, schema) => {
+      if (!isDisabled) {
+        console.log(isDisabled);
+        return schema.required("Business address is required");
+      }
+      return schema;
+    }),
     NIN: yup
       .string()
       .required("NIN is required")

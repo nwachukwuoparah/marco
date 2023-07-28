@@ -21,9 +21,9 @@ import Button_component from "../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { Compliance_schema } from "../Component/Schema";
 import { createCompliance } from "../Component/Apis/Mutation/mutate";
-
-const Compliance = (props) => {
-  const { setRouth } = useContext(Global_context);
+import Message from "../Component/message";
+const Compliance = ({ data }) => {
+  const { setRouth, message, setMessage } = useContext(Global_context);
   const imageref = useRef(null);
   const Navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Compliance = (props) => {
 
   useEffect(() => {
     setRouth("Compliance");
-    console.log(errors);
+    // console.log(errors);
   }, [errors]);
 
   const From_input = [
@@ -91,12 +91,21 @@ const Compliance = (props) => {
       padding: "10px 15px",
     },
     {
+      id: 9,
+      name: "NIN",
+      type: "text",
+      placeholder: "NIN Number",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding: "10px 15px",
+    },
+    {
       id: 7,
       name: "businessName",
       type: "text",
       placeholder: "Business Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      disabled: !data?.compliance ? true : false,
     },
     {
       id: 8,
@@ -105,38 +114,42 @@ const Compliance = (props) => {
       placeholder: "Business Address",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-    },
-    {
-      id: 9,
-      name: "NIN",
-      type: "text",
-      placeholder: "NIN Number",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
+      disabled: !data?.compliance ? true : false,
     },
   ];
 
-  const { data, error, isLoading, mutate, status } = useMutation(
-    ["compliance"],
-    createCompliance,
-    {
-      onSuccess: () => {
-        // Navigate("/login");
-      },
-    }
-  );
+  const {
+    data: complianceData,
+    error,
+    isLoading,
+    mutate,
+    status,
+  } = useMutation(["compliance"], createCompliance, {
+    onSuccess: () => {
+      // Navigate("/login");
+    },
+  });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const { image, ...others } = data;
-    console.log({ ...others, image: image[0] })
+    await Compliance_schema?.validate({
+      isDisabled: !data?.compliance ? true : false,
+      ...others,
+      image: image,
+    });
+    console.log({ ...others, image: image[0] });
     mutate({ ...others, image: image[0] });
   };
 
   useEffect(() => {
-    console.log(data);
+    console.log(complianceData);
     console.log(isLoading);
     console.log(error);
-  }, [data, isLoading, error]);
+  }, [complianceData, isLoading, error]);
+
+  useEffect(() => {
+    if (error) setMessage(!message);
+  }, [error]);
 
   return (
     <Container

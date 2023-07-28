@@ -54,10 +54,10 @@ const Dashboard = (props) => {
     enabled: !!localStorage.getItem(VITE_userToken),
     refetchOnWindowFocus: false,
     retry: 3,
+    cacheTime: 1,
   });
 
   const value = userdata?.data?.data;
-
   useEffect(() => {
     if (logOutError) setMessage(!message);
     if (userError) setLogOut(true);

@@ -16,11 +16,13 @@ const Input = (props) => {
           width: "100%",
           border: props.errors[props.name] ? "1px solid red" : props.border,
           borderRadius: "5px",
+          opacity: props.disabled && 0.4,
         }}
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}
         {...props.register(props.name)}
+        disabled={props.disabled}
       />
 
       <Typography sx={{ color: "red" }}>

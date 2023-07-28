@@ -4,8 +4,6 @@ const { VITE_userToken } = import.meta.env;
 const token = localStorage.getItem(VITE_userToken);
 
 export const signUp = async (data) => {
-  console.log(data);
-  console.log("called");
   return await axios.post(`${VITE_End_Point}/user/register`, data);
 };
 
@@ -21,8 +19,6 @@ export const logIn = async (userData) => {
 export const userLogOut = () => {
   const token = localStorage.getItem(VITE_userToken);
   const removedToken = token?.replace(/"/g, "");
-  console.log("call");
-  console.log(removedToken);
   return axios.post(
     `${VITE_End_Point}/user/logout/?access_token=${removedToken}`
   );
@@ -40,10 +36,12 @@ export const changePassword = async (userData) => {
   );
 };
 
-export const createCompliance = () => {
+export const createCompliance = (data) => {
   const token = localStorage.getItem(VITE_userToken);
   const removedToken = token?.replace(/"/g, "");
+  console.log(data)
   return axios.post(
-    `${VITE_End_Point}/compliance/new/?access_token=${removedToken}`
+    `${VITE_End_Point}/compliance/new/?access_token=${removedToken}`,
+    data
   );
 };

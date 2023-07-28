@@ -12,9 +12,9 @@ import Message from "../Component/message";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../Component/Apis/Query/query";
 import Loadind from "../Component/loading.state";
+ 
 const Wallet = ({ data }) => {
   const Navigate = useNavigate();
-  console.log(data);
 
   const { message, setMessage, setRouth, transaction, setTransaction } =
     useContext(Global_context);
