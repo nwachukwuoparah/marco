@@ -11,8 +11,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Sign_up />} />
-        <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Sign_up />} />
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/forgot.password" element={<Forgot_password />} />
         <Route path="/change.password/:token" element={<Change_password />} />
