@@ -5,6 +5,7 @@ import background from "../assets/background.jpg";
 import marco from "../assets/marco.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { verify } from "../Component/Apis/mutate";
+
 const Verify = (props) => {
   const Navigate = useNavigate();
   const { token } = useParams();

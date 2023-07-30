@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Sign_up from "./Authentication/sign.up";
-import Login from "./Authentication/login";
+import Login from "./Authentication/Login";
 import Forgot_password from "./Authentication/forgot.password";
 import Dashboard from "./Dashboard/Dashboard";
 import Reset_password from "./Authentication/reset.password";
-import Verify from "./Authentication/verify";
+import Verify from "./Authentication/Verify";
 
 function App() {
   return (
