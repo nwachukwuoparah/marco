@@ -181,13 +181,13 @@ const Dashboard = (props) => {
                 Navigate("/dashboard/profile");
               },
             },
-            {
-              icon: <LogoutIcon sx={{ color: "#7081b9", fontSize: "25px" }} />,
-              title: "Logout",
-              call: () => {
-                setLogOut(true);
-              },
-            },
+            // {
+            //   icon: <LogoutIcon sx={{ color: "#7081b9", fontSize: "25px" }} />,
+            //   title: "Logout",
+            //   call: () => {
+            //     setLogOut(true);
+            //   },
+            // },
           ].map((i) => (
             <Stack
               onClick={i.call}
