@@ -161,7 +161,9 @@ console.log(userError)
             transition: "ease-in-out 0.5s",
             border: "1px dashed grey",
           }}
-        ></Stack>
+        >
+          
+        </Stack>
 
         <Stack
           direction={{ md: "row", xs: "row" }}
