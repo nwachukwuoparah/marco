@@ -1,5 +1,6 @@
 import { Button, Container, Stack, Typography, colors } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Input from "./Input";
 import Button_component from "./Button";
 import { Global_context } from "./Context.api";
@@ -9,21 +10,32 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { User_schema } from "./Schema";
 import { Change_schema } from "./Schema";
-import Confirm_password from "../Authentication/Confirm.password/Confirm.password";
+import Confirm_password from "../Authentication/confirm.password";
+import { changePassword } from "./Apis/mutate";
+import { useNavigate } from "react-router-dom";
 
-const Edit_profile = ({ setToggleProfile }) => {
+const Edit_profile = ({ setToggleProfile, value }) => {
   const { setRouth } = useContext(Global_context);
 
   const [confirm_user, setConfirm_user] = useState(false);
   const [confirm_change, setConfirm_change] = useState(false);
+  const Navigate = useNavigate();
 
   const {
+    defaultValue,
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(User_schema),
+    // defaultValues: {
+    //   firstName: value?.firstName,
+    //   lastName: value?.lastName,
+    //   email: value?.email,
+    //   sex: value?.sex,
+    //   phoneNumber: value?.phoneNumber,
+    // },
   });
 
   const {
@@ -35,6 +47,18 @@ const Edit_profile = ({ setToggleProfile }) => {
     resolver: yupResolver(Change_schema),
   });
 
+  const {
+    data: passwordData,
+    error: passwordError,
+    isLoading: passwordIsLoading,
+    mutate: passwordMutate,
+    status,
+  } = useMutation(["compliance"], changePassword, {
+    onSuccess: () => {
+      // Navigate("/login");
+    },
+  });
+
   const onSubmit = (data) => {
     setConfirm_change(true);
     const { image, ...others } = data;
@@ -44,19 +68,21 @@ const Edit_profile = ({ setToggleProfile }) => {
   const From_input = [
     {
       id: 1,
-      name: "firstname",
+      name: "firstName",
       type: "text",
       placeholder: "Frst Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      defaultValue: value?.firstName,
     },
     {
       id: 2,
-      name: "lastname",
+      name: "lastName",
       type: "text",
       placeholder: "last Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      defaultValue: value?.lastName,
     },
     {
       id: 3,
@@ -65,14 +91,16 @@ const Edit_profile = ({ setToggleProfile }) => {
       placeholder: "Email",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      defaultValue: value?.email,
     },
     {
       id: 4,
-      name: "pnonenumber",
+      name: "phoneNumber",
       type: "text",
       placeholder: "Phone Number",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      defaultValue: value?.sex,
     },
     {
       id: 8,
@@ -81,6 +109,7 @@ const Edit_profile = ({ setToggleProfile }) => {
       placeholder: "Sex",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      defaultValue: value?.phoneNumber,
     },
   ];
 
@@ -119,10 +148,12 @@ const Edit_profile = ({ setToggleProfile }) => {
           <Stack
             direction="row"
             sx={{ cursor: "pointer", alignItems: "center" }}
-            onClick={() => setToggleProfile(true)}
+            onClick={() => Navigate("/dashboard/profile/")}
           >
-            <ArrowBackIcon sx={{ fontSize: "18px" ,color:"rgb(28, 28, 28,70%)" }} />
-            <Typography  sx={{ color:"rgb(28, 28, 28,70%)" }}>Back</Typography>
+            <ArrowBackIcon
+              sx={{ fontSize: "18px", color: "rgb(28, 28, 28,70%)" }}
+            />
+            <Typography sx={{ color: "rgb(28, 28, 28,70%)" }}>Back</Typography>
           </Stack>
         </Stack>
 
@@ -147,7 +178,13 @@ const Edit_profile = ({ setToggleProfile }) => {
               }}
             >
               <AccountCircleIcon sx={{ fontSize: "110px", color: "#03a9f4" }} />
-              <input name="image" hidden type="file" {...register("image")} />
+              <input
+                defaultValue={value?.image}
+                name="image"
+                hidden
+                type="file"
+                {...register("image")}
+              />
             </label>
             <Typography
               sx={{
@@ -162,23 +199,21 @@ const Edit_profile = ({ setToggleProfile }) => {
             </Typography>
           </Stack>
 
-            <Stack
-              justifyContent="space-between"
-              gap="30px"
-              sx={{ width: "100%" }}
-            >
-              {From_input.map((i) => (
-                <Input
-                  key={i.id}
-                  width="35%"
-                  {...i}
-                  register={register}
-                  errors={errors}
-                />
-              ))}
-            </Stack>
-
-
+          <Stack
+            justifyContent="space-between"
+            gap="30px"
+            sx={{ width: "100%" }}
+          >
+            {From_input.map((i) => (
+              <Input
+                key={i.id}
+                width="35%"
+                {...i}
+                register={register}
+                errors={errors}
+              />
+            ))}
+          </Stack>
 
           <Stack
             spacing={3}
@@ -201,14 +236,10 @@ const Edit_profile = ({ setToggleProfile }) => {
         </form>
       </Stack>
 
-
-
-
       <form
         onSubmit={handle_change_password((data) => {
           console.log(data);
-          console.log("call");
-          setConfirm_change(true);
+          passwordMutate(data);
         })}
       >
         <Stack
@@ -219,7 +250,7 @@ const Edit_profile = ({ setToggleProfile }) => {
             bgcolor: "#f7f9fb",
             padding: "20px 30px",
             borderRadius: "10px",
-            gap:"30px"
+            gap: "30px",
           }}
         >
           <Typography>Change Password</Typography>
@@ -227,15 +258,16 @@ const Edit_profile = ({ setToggleProfile }) => {
           {[
             {
               id: 1,
-              name: "oldpassword",
+              name: "oldPassword",
               type: "text",
               placeholder: "Old Password",
               border: "1px solid rgba(28, 28, 28, 25%)",
               padding: "10px 15px",
+              apiError: passwordError?.response.data,
             },
             {
               id: 2,
-              name: "newpassword",
+              name: "newPassword",
               type: "text",
               placeholder: "New Password",
               border: "1px solid rgba(28, 28, 28, 25%)",
@@ -250,7 +282,7 @@ const Edit_profile = ({ setToggleProfile }) => {
               errors={change_password_errors}
             />
           ))}
-
+{/* {console.log(passwordError?.response.data.message)} */}
           <Stack
             spacing={3}
             direction="row"
@@ -259,6 +291,7 @@ const Edit_profile = ({ setToggleProfile }) => {
             width={{ md: "35%", xs: "100%" }}
           >
             <Button_component
+              loading={passwordIsLoading}
               content="Change password"
               boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
               bgcolor="#03a9f4"

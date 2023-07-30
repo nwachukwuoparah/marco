@@ -24,11 +24,11 @@ export const userLogOut = () => {
   );
 };
 
-export const resetPassword = async (data) => {
+export const forgotPassword = async (data) => {
   return await axios.post(`${VITE_End_Point}/user/recover-password`, data);
 };
 
-export const changePassword = async (userData) => {
+export const resetPassword = async (userData) => {
   const { token, data } = userData;
   return await axios.post(
     `${VITE_End_Point}/user/reset-password/${token}`,
@@ -36,12 +36,26 @@ export const changePassword = async (userData) => {
   );
 };
 
+export const changePassword = async (data) => {
+  const token = localStorage.getItem(VITE_userToken);
+  const removedToken = token?.replace(/"/g, "");
+  return await axios.patch(
+    `${VITE_End_Point}/user/change-password/?access_token=${removedToken}`,
+    data
+  );
+};
+
 export const createCompliance = (data) => {
   const token = localStorage.getItem(VITE_userToken);
   const removedToken = token?.replace(/"/g, "");
-  console.log(data)
+  console.log(data);
   return axios.post(
     `${VITE_End_Point}/compliance/new/?access_token=${removedToken}`,
-    data
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
   );
 };

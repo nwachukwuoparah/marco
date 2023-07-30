@@ -4,12 +4,96 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditIcon from "@mui/icons-material/Edit";
 import { Global_context } from "./Context.api";
 import { useNavigate } from "react-router-dom";
-const Display_profile = ({ setToggleProfile }) => {
+import { CropLandscapeOutlined } from "@mui/icons-material";
+
+const Display_profile = ({ setToggleProfile, value }) => {
   const { setRouth } = useContext(Global_context);
   const Navigate = useNavigate();
+
   useEffect(() => {
     setRouth("Profile");
   }, []);
+
+  const userDate = [
+    {
+      id: 1,
+      title: "First Name",
+      value: value?.firstName,
+    },
+    {
+      id: 1,
+      title: "Last Name",
+      value: value?.lastName,
+    },
+    {
+      id: 1,
+      title: "Email",
+      value: value?.email,
+    },
+    {
+      id: 1,
+      title: "Phone Number",
+      value: value?.phoneNumber,
+    },
+    {
+      id: 1,
+      title: "Sex",
+      value: value?.sex,
+    },
+    {
+      id: 1,
+      title: "Account Type",
+      value: value?.accountType,
+    },
+  ];
+
+  const complianceDate = [
+    {
+      id: 1,
+      title: "BVN",
+      value: value?.compliance?.BVN,
+    },
+    {
+      id: 1,
+      title: "National Id",
+      value: value?.compliance?.NIN,
+    },
+    {
+      id: 1,
+      title: "Country",
+      value: value?.compliance?.country,
+    },
+    {
+      id: 1,
+      title: "State",
+      value: value?.compliance?.state,
+    },
+    {
+      id: 1,
+      title: "City",
+      value: value?.compliance?.city,
+    },
+    {
+      id: 1,
+      title: "LGA",
+      value: value?.compliance?.LGA,
+    },
+    {
+      id: 1,
+      title: "Home Adress",
+      value: value?.compliance?.address,
+    },
+    {
+      id: 1,
+      title: "Business Name",
+      value: value?.compliance?.businessName,
+    },
+    {
+      id: 1,
+      title: "Business Address",
+      value: value?.compliance?.businessAddress,
+    },
+  ];
   return (
     <Container
       sx={{
@@ -40,13 +124,13 @@ const Display_profile = ({ setToggleProfile }) => {
             }}
             variant="body1"
           >
-            Dimkpa Oparah
+            {value?.accountName}
           </Typography>
         </Stack>
 
         <Stack
           onClick={() => {
-            setToggleProfile(false);
+            Navigate("/dashboard/profile/editprofile");
           }}
           direction="row"
           gap={0.5}
@@ -66,7 +150,7 @@ const Display_profile = ({ setToggleProfile }) => {
       </Stack>
 
       <Stack
-        spacing={{md:2,xs:4}}
+        spacing={{ md: 2, xs: 4 }}
         sx={{ bgcolor: "#f7f9fb", padding: "50px 30px", borderRadius: "10px" }}
       >
         <Typography
@@ -75,10 +159,10 @@ const Display_profile = ({ setToggleProfile }) => {
         >
           Profile Details
         </Typography>
-        {[1, 2, 3, 4, 5, 6].map((i) => (
+        {userDate.map((i) => (
           <Stack
             direction={{ md: "row", xs: "column" }}
-            spacing={{ md: 40, xs: 1.5 }}
+            justifyContent="space-between"
           >
             <Typography
               sx={{
@@ -87,37 +171,45 @@ const Display_profile = ({ setToggleProfile }) => {
                 lineHeight: "1rem",
               }}
             >
-              Company
+              {i?.title}
             </Typography>
-            <Typography
+            <Stack
               sx={{
-                color: "#1C1C1C",
-                fontSize: "14px",
-                lineHeight: "1rem",
+                width: "70%",
               }}
             >
-              Cold Design
-            </Typography>
+              <Typography
+                sx={{
+                  textAlign: "left",
+                  color: "#1C1C1C",
+                  fontSize: "14px",
+                  lineHeight: "1rem",
+                }}
+              >
+                {i?.value ? i?.value : "null"}
+              </Typography>
+            </Stack>
           </Stack>
         ))}
       </Stack>
 
       <Stack
-        direction="row"
+        // direction="row"
         justifyContent="space-between"
         sx={{ bgcolor: "#f7f9fb", padding: "50px 30px", borderRadius: "10px" }}
       >
-        <Stack spacing={{md:2,xs:4}}>
+        <Stack spacing={{ md: 2, xs: 4 }}>
           <Typography
             variant="h6"
             sx={{ fontWeight: 600, fontSize: "15px", lineHeight: "1.25rem" }}
           >
             Compliance Details
           </Typography>
-          {[1, 2, 3, 4, 5, 6].map((i) => (
+
+          {complianceDate.map((i) => (
             <Stack
               direction={{ md: "row", xs: "column" }}
-              spacing={{ md: 40, xs: 1.5 }}
+              justifyContent="space-between"
             >
               <Typography
                 sx={{
@@ -126,22 +218,31 @@ const Display_profile = ({ setToggleProfile }) => {
                   lineHeight: "1rem",
                 }}
               >
-                Company
+                {i?.title}
               </Typography>
 
-              <Typography
+              <Stack
                 sx={{
-                  color: "#1C1C1C",
-                  fontSize: "14px",
-                  lineHeight: "1rem",
+                  width: "70%",
                 }}
               >
-                Cold Design
-              </Typography>
+                {i?.value && (
+                  <Typography
+                    sx={{
+                      color: "#1C1C1C",
+                      fontSize: "14px",
+                      lineHeight: "1rem",
+                    }}
+                  >
+                    {i?.value}
+                  </Typography>
+                )}
+              </Stack>
             </Stack>
           ))}
         </Stack>
-        <Stack
+
+        {/* <Stack
           onClick={() => {
             Navigate("/dashboard/compliance");
           }}
@@ -159,7 +260,7 @@ const Display_profile = ({ setToggleProfile }) => {
               top: "-3.5px",
             }}
           />
-        </Stack>
+        </Stack> */}
       </Stack>
     </Container>
   );

@@ -5,7 +5,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useLayoutEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Wallet from "./Wallet";
 import Sidebar from "../Component/Sidebar";
@@ -18,9 +18,9 @@ import Airtime from "./Airtime";
 import zIndex from "@mui/material/styles/zIndex";
 import Loadind from "../Component/loading.state";
 import Message from "../Component/message";
-import { getUser } from "../Component/Apis/Query/query";
+import { getUser } from "../Component/Apis/query";
 import { useQuery } from "@tanstack/react-query";
-import { userLogOut } from "../Component/Apis/Mutation/mutate";
+import { userLogOut } from "../Component/Apis/mutate";
 
 const Dashboard = (props) => {
   const { routh, transaction, setTransaction, error, message, setMessage } =
@@ -37,12 +37,11 @@ const Dashboard = (props) => {
   } = useQuery(["logOut"], userLogOut, {
     enabled: logOut,
     refetchOnWindowFocus: false,
+    staleTime: 0,
     cacheTime: 0,
     onSuccess: () => {
       localStorage.removeItem(VITE_userToken);
-      setTimeout(() => {
         Navigate("/login");
-      }, [500]);
     },
   });
 
@@ -53,15 +52,24 @@ const Dashboard = (props) => {
   } = useQuery(["getUser"], getUser, {
     enabled: !!localStorage.getItem(VITE_userToken),
     refetchOnWindowFocus: false,
-    retry: 3,
+    staleTime: 60000,
     cacheTime: 1,
+    onSuccess: () => {},
   });
 
   const value = userdata?.data?.data;
-  useEffect(() => {
+console.log(userError)
+  useLayoutEffect(() => {
+    if (value?.compliance === null) {
+      console.log(value?.compliance);
+      Navigate("/dashboard/compliance");
+    }
+    if (!localStorage.getItem(VITE_userToken)) {
+      Navigate("/login");
+    }
     if (logOutError) setMessage(!message);
     if (userError) setLogOut(true);
-  }, [userError, logOutError]);
+  }, [userError, logOutError, userdata]);
 
   return (
     <Container disableGutters maxWidth={false} sx={{ display: "flex" }}>
@@ -69,7 +77,7 @@ const Dashboard = (props) => {
       {(logOutError || (userError && message)) && (
         <Message title={error?.response?.data.message} />
       )}
-      <Sidebar sidebar={sidebar} />
+      {value?.compliance && <Sidebar sidebar={sidebar} />}
       <Container disableGutters maxWidth={false}>
         <Stack
           direction={{ md: "row", xs: "row" }}
@@ -187,7 +195,7 @@ const Dashboard = (props) => {
           <Route path="/" element={<Wallet data={value} />} />
           <Route path="/transaction" element={<Transaction data={value} />} />
           <Route path="/compliance" element={<Compliance data={value} />} />
-          <Route path="/profile" element={<Profile data={value} />} />
+          <Route path="/profile/*" element={<Profile data={value} />} />
           <Route path="/transfer" element={<Transfer data={value} />} />
           <Route path="/airtime" element={<Airtime data={value} />} />
         </Routes>

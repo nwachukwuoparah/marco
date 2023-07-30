@@ -10,7 +10,7 @@ import {
   Radio,
   Button,
 } from "@mui/material";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useLayoutEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Global_context } from "../Component/Context.api";
 import Input from "../Component/Input";
@@ -20,13 +20,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button_component from "../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { Compliance_schema } from "../Component/Schema";
-import { createCompliance } from "../Component/Apis/Mutation/mutate";
+import { createCompliance } from "../Component/Apis/mutate";
 import Message from "../Component/message";
 const Compliance = ({ data }) => {
   const { setRouth, message, setMessage } = useContext(Global_context);
   const imageref = useRef(null);
   const Navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -105,7 +104,7 @@ const Compliance = ({ data }) => {
       placeholder: "Business Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      disabled: !data?.compliance ? true : false,
+      disabled: !data?.status ? true : false,
     },
     {
       id: 8,
@@ -114,7 +113,7 @@ const Compliance = ({ data }) => {
       placeholder: "Business Address",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      disabled: !data?.compliance ? true : false,
+      disabled: !data?.status ? true : false,
     },
   ];
 
@@ -126,14 +125,14 @@ const Compliance = ({ data }) => {
     status,
   } = useMutation(["compliance"], createCompliance, {
     onSuccess: () => {
-      // Navigate("/login");
+      Navigate("/dashboard/profile");
     },
   });
 
   const onSubmit = async (data) => {
     const { image, ...others } = data;
     await Compliance_schema?.validate({
-      isDisabled: !data?.compliance ? true : false,
+      isDisabled: !data?.status ? true : false,
       ...others,
       image: image,
     });
@@ -141,11 +140,11 @@ const Compliance = ({ data }) => {
     mutate({ ...others, image: image[0] });
   };
 
-  useEffect(() => {
-    console.log(complianceData);
-    console.log(isLoading);
-    console.log(error);
-  }, [complianceData, isLoading, error]);
+  useLayoutEffect(() => {
+    if (data?.compliance !== null) {
+      Navigate("/dashboard/");
+    }
+  }, []);
 
   useEffect(() => {
     if (error) setMessage(!message);

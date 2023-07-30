@@ -10,7 +10,7 @@ import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { useNavigate } from "react-router-dom";
 import Message from "../Component/message";
 import { useQuery } from "@tanstack/react-query";
-import { getUser } from "../Component/Apis/Query/query";
+import { getUser } from "../Component/Apis/query";
 import Loadind from "../Component/loading.state";
  
 const Wallet = ({ data }) => {
@@ -47,7 +47,6 @@ const Wallet = ({ data }) => {
       >
         <Grid md={6.665} xs={20} item>
           <Display_card
-            accountNo={data?.accountNumber}
             wallet={data?.wallet[0]}
           />
         </Grid>

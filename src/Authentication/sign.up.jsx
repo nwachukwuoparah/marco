@@ -5,69 +5,83 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-const { VITE_userToken } = import.meta.env;
-import React, { useContext, useEffect } from "react";
-import background from "../../assets/background.jpg";
-import login_illustration from "../../assets/login_illustration.png";
-import marco from "../../assets/marco.png";
-import Input from "../../Component/Input";
-import Button_component from "../../Component/Button";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import background from "../assets/background.jpg";
+import login_illustration from "../assets/login_illustration.png";
+import marco from "../assets/marco.png";
+import Input from "../Component/Input";
+import { InputSelect } from "../Component/Input";
+import Button_component from "../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Login_schema } from "../../Component/Schema";
-import { useMutation } from "@tanstack/react-query";
-import { logIn } from "../../Component/Apis/Mutation/mutate";
-import Message from "../../Component/message";
-import { Global_context } from "../../Component/Context.api";
+import { Signup_schema } from "../Component/Schema";
+import { signUp } from "../Component/Apis/mutate";
+import Message from "../Component/message";
+import { Global_context } from "../Component/Context.api";
 
-const Login = (props) => {
+const Sign_up = (props) => {
   const Navigate = useNavigate();
   const { message, setMessage } = useContext(Global_context);
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Login_schema),
+    resolver: yupResolver(Signup_schema),
   });
+
+  const { data, error, isLoading, mutate, status } = useMutation(
+    ["signUp"],
+    signUp,
+    {
+      onSuccess: () => {
+        Navigate("/login");
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (error) setMessage(!message);
+  }, [error, data]);
 
   const From_input = [
     {
       id: 1,
-      name: "email",
-      placeholder: "Email",
-      type: "email",
+      name: "firstName",
+      type: "text",
+      placeholder: "First Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
     },
     {
       id: 2,
-      name: "password",
-      placeholder: "Password",
+      name: "lastName",
       type: "text",
+      placeholder: "Last Name",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding: "10px 15px",
+    },
+    {
+      id: 3,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding: "10px 15px",
+    },
+    {
+      id: 4,
+      name: "password",
+      type: "text",
+      placeholder: "Password",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
     },
   ];
-
-  const { data, error, isLoading, mutate } = useMutation(["login"], logIn, {
-    onSuccess: () => {
-      setTimeout(() => {
-        Navigate("/dashboard");
-      }, 1000);
-    },
-  });
-
-  useEffect(() => {
-    if (error) setMessage(!message);
-    data
-      ? localStorage.setItem(
-          VITE_userToken,
-          JSON.stringify(data?.data?.access_token)
-        )
-      : null;
-  }, [error, data]);
 
   return (
     <Container
@@ -75,19 +89,18 @@ const Login = (props) => {
       maxWidth={false}
       sx={{
         height: { md: "100vh", xs: "none" },
-        padding: { md: "0px", xs: "10vh 0vh" },
+        padding: { md: "0px", xs: "7vh 0vh" },
         backgrounflexFlow: "row wrap",
         boxSizing: " border-box",
         display: "flex",
         placeContent: "center",
         alignItems: "center",
         position: "relative",
-        backgroundImage: `url(${background})`,
+        backgroundImage: { md: `url(${background})`, xs: "none" },
       }}
     >
       {error && message && <Message title={error?.response?.data.message} />}
       <Stack
-        spacing={{ md: 0, xs: 5 }}
         direction={{ md: "row", xs: "column" }}
         sx={{
           width: { md: "60%", xs: "100%" },
@@ -95,15 +108,17 @@ const Login = (props) => {
             md: " 0px 0px 3px -1px rgba(66, 68, 90, 1)",
             xs: "none",
           },
-          borderRadius: { md: "12px", xs: "0px" },
         }}
+        spacing={{ md: 0, xs: 5 }}
       >
         <Stack
           sx={{
+            display: "flex",
             width: { md: "50%", xs: "100%" },
             alignItems: "center",
             justifyContent: "center",
             bgcolor: { md: "#f5f5f5", xs: "none" },
+            borderRadius: { md: "12px 0px 0px 12px" },
           }}
         >
           <img style={{ width: "78%" }} src={login_illustration} alt="image" />
@@ -133,26 +148,24 @@ const Login = (props) => {
                   variant="h3"
                   sx={{
                     marginTop: 0,
-                    fontWeight: 400,
                     lineHeight: 1.1,
                     color: "inherit",
                     fontSize: "20px",
                     fontWeight: 500,
-                    bgcolor: "none",
                   }}
                 >
-                  Sign In
+                  Sign Up
                 </Typography>
               </span>
+
               <Stack direction="row" alignItems="center">
                 <Typography sx={{ color: "rgba(0, 0, 0, 0.54)" }}>
-                  Don't have an account?
+                  Already have an account?
                 </Typography>
-
                 <Button_component
-                  click={() => Navigate("/")}
+                  click={() => Navigate("/login")}
                   variant="text"
-                  content="SignUp"
+                  content="Login"
                   fontWeight={400}
                   fontSize="14px"
                   color="#03a9f4"
@@ -161,50 +174,54 @@ const Login = (props) => {
                 />
               </Stack>
             </Stack>
-
             <form
               onSubmit={handleSubmit((data) => {
-                mutate(data);
+                const { terms, ...others } = data;
+                mutate(others);
               })}
             >
-              <Stack spacing={2.5}>
+              <Stack spacing={3}>
                 {From_input.map((i) => (
                   <Input
                     key={i.id}
                     {...i}
                     register={register}
                     errors={errors}
-                    width="100%"
                   />
                 ))}
+                <InputSelect
+                  register={register}
+                  errors={errors}
+                  value={[
+                    { title: "Select account type", value: "" },
+                    { title: "Personal", value: "Personal" },
+                    { title: "Business", value: "Business" },
+                  ]}
+                  name="accountType"
+                  border="1px solid rgba(28, 28, 28, 25%)"
+                  padding="10px 15px"
+                />
 
-                <Stack direction="row" justifyContent="space-between">
+                <Stack spacing={2}>
                   <label
                     style={{
                       display: "flex",
                       alignItems: "center",
                       gap: "5px",
+                      color: errors["terms"] ? "red" : "inherit",
                     }}
                   >
-                    <input type="checkbox" name="memo" {...register("memo")} />
-                    Remember me
+                    <input
+                      type="checkbox"
+                      name="terms"
+                      {...register("terms")}
+                    />
+                    I agree with terms and condtions
                   </label>
-
-                  <Typography
-                    onClick={() => Navigate("/forgot.password")}
-                    sx={{
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      color: "#03a9f4",
-                    }}
-                  >
-                    Forgot Password?
-                  </Typography>
                 </Stack>
-
                 <Button_component
                   loading={isLoading}
-                  content="Login"
+                  content="Create your free account"
                   boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                   bgcolor="#03a9f4"
                   width="100%"
@@ -221,4 +238,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Sign_up;

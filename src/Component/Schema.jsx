@@ -29,7 +29,7 @@ export const Signup_schema = yup
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
         "Password should contain (6, at leastone special) characters lowercase and uppercase"
       ),
-    accountType: yup.bool().oneOf([true, false]),
+    accountType: yup.string().required("Account type is required"),
     terms: yup.bool().oneOf([true], "Field must be checked"),
   })
   .required();
@@ -56,14 +56,14 @@ export const Forget_schema = yup
 
 export const Change_schema = yup
   .object({
-    oldpassword: yup
+    oldPassword: yup
       .string()
       .required("Old Password is required")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
         "Password should contain 6 characters(lowercase and uppercase) and at least one special"
       ),
-    newpassword: yup
+    newPassword: yup
       .string()
       .required("New Password is required")
       .matches(
@@ -144,13 +144,13 @@ export const User_schema = yup
           }
         },
       }),
-    firstname: yup.string().required("First Name is required"),
-    lastname: yup.string().required("Last Name is required"),
+    firstName: yup.string().required("First Name is required"),
+    lastName: yup.string().required("Last Name is required"),
     email: yup.string().required("Email is required"),
-    sex: yup.string().required("Email is required"),
-    pnonenumber: yup
+    sex: yup.string().required("Sex is required"),
+    phoneNumber: yup
       .string()
-      .required("NIN is required")
+      .required("Phone number is required")
       .matches(/^\d{1,11}$/, "NIN should not be longer than 11 digits"),
   })
   .required();

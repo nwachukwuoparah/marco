@@ -8,18 +8,20 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import React, { useContext, useEffect } from "react";
-import background from "../../assets/background.jpg";
-import login_illustration from "../../assets/login_illustration.png";
-import marco from "../../assets/marco.png";
-import Input from "../../Component/Input";
-import Button_component from "../../Component/Button";
+import background from "../assets/background.jpg";
+import login_illustration from "../assets/login_illustration.png";
+import marco from "../assets/marco.png";
+import Input from "../Component/Input";
+import Button_component from "../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import { Forget_schema } from "../../Component/Schema";
-import { resetPassword } from "../../Component/Apis/Mutation/mutate";
-import { Global_context } from "../../Component/Context.api";
-import Message from "../../Component/message";
+import { Forget_schema } from "../Component/Schema";
+import { resetPassword } from "../Component/Apis/mutate";
+import { Global_context } from "../Component/Context.api";
+import Message from "../Component/message";
+
+
 const Forgot_password = () => {
   const Navigate = useNavigate();
   const { message, setMessage } = useContext(Global_context);

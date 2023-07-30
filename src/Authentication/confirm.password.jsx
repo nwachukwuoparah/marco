@@ -6,80 +6,58 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
-import React, { useContext, useEffect } from "react";
-import background from "../../assets/background.jpg";
-import login_illustration from "../../assets/login_illustration.png";
-import marco from "../../assets/marco.png";
-import Input from "../../Component/Input";
-import Button_component from "../../Component/Button";
-import { useNavigate, useParams } from "react-router-dom";
-import * as yup from "yup";
+import React, { useState } from "react";
+import background from "../assets/background.jpg";
+import marco from "../assets/marco.png";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Button_component from "../Component/Button";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import { changePassword } from "../../Component/Apis/Mutation/mutate";
-import { Global_context } from "../../Component/Context.api";
-import Message from "../../Component/message";
+import { Change_schema } from "../Component/Schema";
+import * as yup from "yup";
 
-const Change_schema = yup
-  .object({
-    password: yup
-      .string()
-      .required("Password is required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
-        "Password should contain 6 characters(lowercase and uppercase) and at least one special"
-      ),
-  })
-  .required();
+const Confirm_schema = yup.object({
+  currentpassword: yup
+    .string()
+    .required("Current Password is required")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,}$/,
+      "Password should contain 6 characters(lowercase and uppercase) and at least one special"
+    ),
+});
 
-const Change_password = (props) => {
+const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
   const Navigate = useNavigate();
-
-  const { message, setMessage } = useContext(Global_context);
-  const { token } = useParams();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Change_schema),
+    resolver: yupResolver(Confirm_schema),
   });
 
-  const { data, error, isLoading, mutate } = useMutation(
-    ["changePassword"],
-    changePassword,
-    {
-      onSuccess: () => {
-        Navigate("/login");
-      },
-    }
-  );
-  const onSubmit = (data) => {
-    mutate({ token: token, data: data });
-  };
-
-  useEffect(() => {
-    if (error) setMessage(!message);
-  }, [error]);
+  const onSubmit = (data) => console.log(data);
 
   return (
     <Container
       disableGutters
       maxWidth={false}
       sx={{
+        position: "fixed",
         height: "100vh",
         backgrounflexFlow: "row wrap",
         boxSizing: " border-box",
         display: "flex",
-        placeContent: "center",
+        justifyContent: "center",
         alignItems: "center",
-        position: "relative",
         backgroundImage: `url(${background})`,
+        zIndex: 100,
+        top: 0,
+        left: 0,
       }}
     >
-      {error && message && <Message title={error?.response?.data.message} />}
       <Stack
         alignItems="center"
         justifyContent="center"
@@ -117,31 +95,31 @@ const Change_password = (props) => {
                 fontWeight: 500,
               }}
             >
-              New Password
+              Confirm Password
             </Typography>
           </Stack>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
               <Controller
-                name="password"
+                name="currentpassword"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     sx={{
-                      borderBottom: errors["newpassword"] && "2px solid red",
+                      borderBottom:
+                        errors["currentpassword"] && "2px solid red",
                     }}
                     {...field}
                     variant="standard"
-                    label="New Password"
+                    label="Confirm Password"
                   />
                 )}
               />
               <Typography sx={{ color: "red" }}>
-                {errors["newpassword"]?.message}
+                {errors["currentpassword"]?.message}
               </Typography>
               <Button_component
-                loading={isLoading}
-                content="CHANGE PASSWORD"
+                content="CONFIRM PASSWORD"
                 boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                 bgcolor="#03a9f4"
                 width="100%"
@@ -151,10 +129,28 @@ const Change_password = (props) => {
               />
             </Stack>
           </form>
+
+          <Stack
+            spacing={1}
+            direction="row"
+            sx={{
+              flex: 1,
+              cursor: "pointer",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClick={() => {
+              setConfirm_change(false);
+              setConfirm_user(false);
+            }}
+          >
+            <ArrowBackIcon sx={{ fontSize: "20px", color: "#03a9f4" }} />
+            <Typography sx={{ color: "#03a9f4" }}>Back</Typography>
+          </Stack>
         </Stack>
       </Stack>
     </Container>
   );
 };
 
-export default Change_password;
+export default Confirm_password;
