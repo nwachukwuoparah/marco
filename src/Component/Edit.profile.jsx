@@ -117,8 +117,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
         flexDirection: "column",
         gap: "20px",
         height: "80vh",
-        padding: "20px 0px",
-        padding: "0px 15px",
+        padding: "20px 15px",
       }}
     >
       {confirm_user && (

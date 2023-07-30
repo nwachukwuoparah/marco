@@ -75,7 +75,10 @@ const Dashboard = (props) => {
     <Container
       disableGutters
       maxWidth={false}
-      sx={{ display: "flex", bgcolor: "#fdfcfc" }}
+      sx={{
+        display: "flex",
+         bgcolor: "#fdfcfc"
+      }}
     >
       {(logOutFetching || userFetching) && <Loadind />}
       {(logOutError || (userError && message)) && (
@@ -163,7 +166,7 @@ const Dashboard = (props) => {
             transition: "ease-in-out 0.5s",
             bgcolor: "white",
             borderRadius: "0px 0px 5px 5px",
-            overflow:"hidden"
+            overflow: "hidden",
           }}
         >
           {[

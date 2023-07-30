@@ -103,8 +103,7 @@ const Display_profile = ({ setToggleProfile, value }) => {
         flexDirection: "column",
         gap: "20px",
         height: "80vh",
-        padding: "20px 0px",
-        padding: "0px 15px",
+        padding: "20px 15px",
       }}
     >
       <Stack
@@ -185,6 +184,7 @@ const Display_profile = ({ setToggleProfile, value }) => {
             >
               {i?.title}
             </Typography>
+
             <Stack
               sx={{
                 width: "70%",
@@ -206,7 +206,6 @@ const Display_profile = ({ setToggleProfile, value }) => {
       </Stack>
 
       <Stack
-        direction="row"
         justifyContent="space-between"
         sx={{
           bgcolor: "#f7f9fb ",

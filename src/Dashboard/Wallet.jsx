@@ -4,20 +4,13 @@ import Display_card from "../Component/Display.card";
 import ChartComponent from "../Component/Chart";
 import { Global_context } from "../Component/Context.api";
 import Banner_card from "../Component/Banner.card";
-import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { useNavigate } from "react-router-dom";
-import Message from "../Component/message";
-import { useQuery } from "@tanstack/react-query";
-import { getUser } from "../Component/Apis/query";
-import Loadind from "../Component/loading.state";
- 
 const Wallet = ({ data }) => {
   const Navigate = useNavigate();
 
-  const { message, setMessage, setRouth, transaction, setTransaction } =
-    useContext(Global_context);
+  const { setRouth, transaction } = useContext(Global_context);
 
   useEffect(() => {
     setRouth("Wallet");
@@ -31,7 +24,6 @@ const Wallet = ({ data }) => {
         display: { md: "flex", xs: "block" },
         justifyContent: "space-between",
         width: { md: "97.5%", xs: "100%" },
-        padding: "0px 15px",
         height: "82vh",
       }}
     >
@@ -47,6 +39,7 @@ const Wallet = ({ data }) => {
       >
         <Grid md={6.665} xs={20} item>
           <Display_card
+            accountNo={data?.accountNumber}
             wallet={data?.wallet[0]}
           />
         </Grid>

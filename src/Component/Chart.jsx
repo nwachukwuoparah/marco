@@ -56,7 +56,7 @@ const ChartComponent = () => {
 
   return (
     <Stack
-      sx={{ display: { md: "block", xs: "none" } }}
+      sx={{ display: { md: "block", xs: "none", width: "100%" } }}
       id="chart"
       ref={chartRef}
     />
