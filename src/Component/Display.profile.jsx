@@ -95,22 +95,29 @@ const Display_profile = ({ setToggleProfile, value }) => {
     },
   ];
   return (
-    <Container
+    <Stack
       sx={{
-        width: "97.5%",
+        width: "100%",
         overflowY: "scroll",
         display: "flex",
         flexDirection: "column",
         gap: "20px",
         height: "80vh",
         padding: "20px 0px",
+        padding: "0px 15px",
       }}
     >
       <Stack
         direction="row"
         justifyContent="space-between"
         spacing={2}
-        sx={{ bgcolor: "#f7f9fb", padding: "30px 30px", borderRadius: "10px" }}
+        sx={{
+          width: "100%",
+          bgcolor: "#f7f9fb ",
+          padding: "30px 30px",
+          borderRadius: "10px",
+          border: "1px dotted rgb(219, 217, 217)",
+        }}
       >
         <Stack>
           <Stack>
@@ -151,7 +158,12 @@ const Display_profile = ({ setToggleProfile, value }) => {
 
       <Stack
         spacing={{ md: 2, xs: 4 }}
-        sx={{ bgcolor: "#f7f9fb", padding: "50px 30px", borderRadius: "10px" }}
+        sx={{
+          bgcolor: "#f7f9fb ",
+          padding: "50px 30px",
+          borderRadius: "10px",
+          border: "1px dotted rgb(219, 217, 217)",
+        }}
       >
         <Typography
           variant="h6"
@@ -194,9 +206,14 @@ const Display_profile = ({ setToggleProfile, value }) => {
       </Stack>
 
       <Stack
-        // direction="row"
+        direction="row"
         justifyContent="space-between"
-        sx={{ bgcolor: "#f7f9fb", padding: "50px 30px", borderRadius: "10px" }}
+        sx={{
+          bgcolor: "#f7f9fb ",
+          padding: "50px 30px",
+          borderRadius: "10px",
+          border: "1px dotted rgb(219, 217, 217)",
+        }}
       >
         <Stack spacing={{ md: 2, xs: 4 }}>
           <Typography
@@ -262,7 +279,7 @@ const Display_profile = ({ setToggleProfile, value }) => {
           />
         </Stack> */}
       </Stack>
-    </Container>
+    </Stack>
   );
 };
 

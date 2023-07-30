@@ -18,7 +18,6 @@ const Edit_profile = ({ setToggleProfile, value }) => {
   const { setRouth } = useContext(Global_context);
 
   const [confirm_user, setConfirm_user] = useState(false);
-  const [confirm_change, setConfirm_change] = useState(false);
   const Navigate = useNavigate();
 
   const {
@@ -29,13 +28,6 @@ const Edit_profile = ({ setToggleProfile, value }) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(User_schema),
-    // defaultValues: {
-    //   firstName: value?.firstName,
-    //   lastName: value?.lastName,
-    //   email: value?.email,
-    //   sex: value?.sex,
-    //   phoneNumber: value?.phoneNumber,
-    // },
   });
 
   const {
@@ -126,9 +118,10 @@ const Edit_profile = ({ setToggleProfile, value }) => {
         gap: "20px",
         height: "80vh",
         padding: "20px 0px",
+        padding: "0px 15px",
       }}
     >
-      {(confirm_user || confirm_change) && (
+      {confirm_user && (
         <Confirm_password
           setConfirm_change={setConfirm_change}
           setConfirm_user={setConfirm_user}
@@ -141,6 +134,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
           bgcolor: "#f7f9fb ",
           padding: "30px 30px",
           borderRadius: "10px",
+          border: "1px dotted rgb(219, 217, 217)",
         }}
       >
         <Stack direction="roe" justifyContent="space-between">
@@ -251,6 +245,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             padding: "20px 30px",
             borderRadius: "10px",
             gap: "30px",
+            border: "1px dotted rgb(219, 217, 217)",
           }}
         >
           <Typography>Change Password</Typography>
@@ -282,7 +277,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
               errors={change_password_errors}
             />
           ))}
-{/* {console.log(passwordError?.response.data.message)} */}
+
           <Stack
             spacing={3}
             direction="row"

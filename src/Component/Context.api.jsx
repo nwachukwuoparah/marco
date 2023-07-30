@@ -4,7 +4,6 @@ export const Global_context = createContext();
 export const Global_state = ({ children }) => {
   const [hover, setHover] = useState(false);
   const [routh, setRouth] = useState("");
-  const [toggleProfile, setToggleProfile] = useState(false);
   const [transaction, setTransaction] = useState(false);
   const [message, setMessage] = useState(false);
 
@@ -16,8 +15,6 @@ export const Global_state = ({ children }) => {
         setHover,
         routh,
         setRouth,
-        toggleProfile,
-        setToggleProfile,
         transaction,
         setTransaction,
         message,
