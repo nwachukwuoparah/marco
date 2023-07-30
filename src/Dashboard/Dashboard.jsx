@@ -3,6 +3,7 @@ import { Container, Stack, Typography } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import React, { useContext, useState, useEffect, useLayoutEffect } from "react";
@@ -41,7 +42,7 @@ const Dashboard = (props) => {
     cacheTime: 0,
     onSuccess: () => {
       localStorage.removeItem(VITE_userToken);
-        Navigate("/login");
+      Navigate("/login");
     },
   });
 
@@ -58,7 +59,6 @@ const Dashboard = (props) => {
   });
 
   const value = userdata?.data?.data;
-console.log(userError)
   useLayoutEffect(() => {
     if (value?.compliance === null) {
       console.log(value?.compliance);
@@ -72,7 +72,11 @@ console.log(userError)
   }, [userError, logOutError, userdata]);
 
   return (
-    <Container disableGutters maxWidth={false} sx={{ display: "flex" }}>
+    <Container
+      disableGutters
+      maxWidth={false}
+      sx={{ display: "flex", bgcolor: "#f8f8f8" }}
+    >
       {(logOutFetching || userFetching) && <Loadind />}
       {(logOutError || (userError && message)) && (
         <Message title={error?.response?.data.message} />
@@ -88,6 +92,7 @@ console.log(userError)
             padding: "0px 15px",
             height: "8vh",
             zIndex: 5000,
+            bgcolor: "white",
           }}
         >
           <MenuRoundedIcon
@@ -111,9 +116,6 @@ console.log(userError)
               }}
             >
               <SearchRoundedIcon
-                onClick={() => {
-                  setLogOut(true);
-                }}
                 sx={{ color: "#7081b9", fontSize: "25px", cursor: "pointer" }}
               />
             </Stack>
@@ -133,7 +135,6 @@ console.log(userError)
             <Stack
               onMouseEnter={() => setMenu(true)}
               onMouseLeave={() => setMenu(false)}
-              // onClick={() => Navigate("/dashboard/profile")}
               direction="row"
               spacing={1}
               sx={{
@@ -151,18 +152,57 @@ console.log(userError)
         </Stack>
 
         <Stack
+          onMouseEnter={() => setMenu(true)}
+          onMouseLeave={() => setMenu(false)}
           sx={{
-            width: "200px",
-            height: "200px",
+            width: "160px",
             position: "absolute",
             top: menu ? 56 : -160,
             right: 17,
             zIndex: 5,
             transition: "ease-in-out 0.5s",
-            border: "1px dashed grey",
+            bgcolor: "white",
+            borderRadius: "0px 0px 5px 5px",
+            overflow:"hidden"
           }}
         >
-          
+          {[
+            {
+              icon: (
+                <AccountCircleIcon
+                  sx={{ color: "#7081b9", fontSize: "25px" }}
+                />
+              ),
+              title: "Profile",
+              call: () => {
+                Navigate("/dashboard/profile");
+              },
+            },
+            {
+              icon: <LogoutIcon sx={{ color: "#7081b9", fontSize: "25px" }} />,
+              title: "Logout",
+              call: () => {
+                setLogOut(true);
+              },
+            },
+          ].map((i) => (
+            <Stack
+              onClick={i.call}
+              direction="row"
+              spacing={2}
+              sx={{
+                alignItems: "center",
+                width: "100%",
+                borderBottom: "1px dashed #f8f8f8",
+                padding: 1.5,
+                cursor: "pointer",
+                "&:hover": { bgcolor: "rgb(128, 147, 211,10%)" },
+              }}
+            >
+              {i.icon}
+              <Typography>{i.title}</Typography>
+            </Stack>
+          ))}
         </Stack>
 
         <Stack
