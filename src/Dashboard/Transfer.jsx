@@ -13,6 +13,7 @@ import OtpInput from "../Component/password.input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Confirm_Pin from "../Authentication/confirmPin";
 import Pin from "./pin";
+import { transfer } from "../Component/Apis/mutate";
 
 const Transfer = (props) => {
   const queryClient = useQueryClient();
@@ -55,8 +56,8 @@ const Transfer = (props) => {
   ];
 
   const { data, error, isLoading, mutate, status } = useMutation(
-    ["confirmPin"],
-    // createPin,
+    ["transfer"],
+    transfer,
     {
       onSuccess: async (data) => {
         console.log(data);
@@ -66,7 +67,6 @@ const Transfer = (props) => {
       },
     }
   );
-
   return (
     <Container
       disableGutters

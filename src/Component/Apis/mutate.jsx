@@ -93,6 +93,17 @@ export const createPin = (data) => {
 };
 
 export const transfer = (data) => {
+  console.log("transfer")
+  const token = localStorage.getItem(VITE_userToken);
+  const removedToken = token?.replace(/"/g, "");
+  return axios.post(
+    `${VITE_End_Point}/transaction/transfer/?access_token=${removedToken}`,
+    data
+  );
+};
+
+export const airtime = (data) => {
+  console.log("airtime")
   const token = localStorage.getItem(VITE_userToken);
   const removedToken = token?.replace(/"/g, "");
   return axios.post(
@@ -109,5 +120,3 @@ export const deposite = (data) => {
     data
   );
 };
-
-

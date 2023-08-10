@@ -85,10 +85,10 @@ const Dashboard = (props) => {
       {(logOutError || (userError && message)) && (
         <Message title={error?.response?.data.message} />
       )}
-      {value?.compliance && <Sidebar sidebar={sidebar} />}
-      {value?.bankPin === null && <Pin />}
 
-      
+      {value?.compliance && <Sidebar sidebar={sidebar} />}
+      {value?.compliance && value?.bankPin === null && <Pin />}
+
       <Container disableGutters maxWidth={false}>
         <Stack
           direction={{ md: "row", xs: "row" }}
@@ -248,7 +248,6 @@ const Dashboard = (props) => {
           <Route path="/transfer" element={<Transfer data={value} />} />
           <Route path="/airtime" element={<Airtime data={value} />} />
         </Routes>
-
       </Container>
     </Container>
   );

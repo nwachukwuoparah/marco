@@ -171,13 +171,13 @@ export const Transfer_schema = yup
 
 export const Airtime_schema = yup
   .object({
-    selectBiller: yup.string().required("Bank Name is required"),
+    serviceNetwork: yup.string().required("Bank Name is required"),
     phoneNumber: yup
       .string()
       .required("Account Number is required")
       .matches(
-        /^\d{1,10}$/,
-        "Account Number should not be longer than 11 digits"
+        /^\d{1,11}$/,
+        "Phone Number should not be longer than 11 digits"
       ),
     amount: yup.string().required("Amount is required"),
   })
