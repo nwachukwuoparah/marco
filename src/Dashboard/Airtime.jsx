@@ -7,12 +7,13 @@ import Input from "../Component/Input";
 import Button_component from "../Component/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Airtime_schema} from "../Component/Schema";
+import { Airtime_schema } from "../Component/Schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const Airtime = (props) => {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -51,7 +52,7 @@ const Airtime = (props) => {
 
   const { data, error, isLoading, mutate, status } = useMutation(
     ["confirmPin"],
-    // createPin,
+    createPin,
     {
       onSuccess: async (data) => {
         console.log(data);
@@ -61,7 +62,6 @@ const Airtime = (props) => {
       },
     }
   );
-
 
   return (
     <Container
