@@ -1,10 +1,4 @@
 import * as yup from "yup";
-// "FirstName": "Favour",
-// "LastName": "Igbani",
-// "email": "favourigbani29@gmail.com",
-// "password": "Favour#01",
-// "accountType": "business"
-
 export const Signup_schema = yup
   .object({
     firstName: yup
@@ -174,7 +168,7 @@ export const Airtime_schema = yup
     serviceNetwork: yup.string().required("Bank Name is required"),
     phoneNumber: yup
       .string()
-      .required("Account Number is required")
+      .required("Phone Number is required")
       .matches(
         /^\d{1,11}$/,
         "Phone Number should not be longer than 11 digits"
