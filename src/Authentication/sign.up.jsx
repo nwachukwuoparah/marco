@@ -5,8 +5,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+const { VITE_userToken } = import.meta.env;
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+} from "react";
 import background from "../assets/background.jpg";
 import login_illustration from "../assets/login_illustration.png";
 import marco from "../assets/marco.png";
@@ -43,6 +50,12 @@ const Sign_up = (props) => {
       },
     }
   );
+
+  useLayoutEffect(() => {
+    if (localStorage.getItem(VITE_userToken)) {
+      Navigate("/dashboard");
+    }
+  }, []);
 
   useEffect(() => {
     if (error) setMessage(!message);

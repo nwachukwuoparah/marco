@@ -9,8 +9,9 @@ import OutboxIcon from "@mui/icons-material/Outbox";
 
 import marco from "../assets/marco.png";
 import bg_shape from "../assets/bg-shape.jpeg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 const Sidebar = ({ sidebar }) => {
+  const Navigate = useNavigate();
   const { hover, setHover } = useContext(Global_context);
 
   const data = [
@@ -120,6 +121,25 @@ const Sidebar = ({ sidebar }) => {
             </Stack>
           </NavLink>
         ))}
+        <Stack
+          direction="row"
+          spacing={1.5}
+          onClick={() => Navigate("/deposite")}
+          sx={{
+            // bgcolor: "red",
+            color: "#f8f8f8",
+            overflow: "hidden",
+            justifyContent: sidebar || (!hover && "center"),
+            paddingLeft: (hover || sidebar) && "13px",
+            "&:hover": {
+              color: "#f8f8f8",
+            },
+            cursor: "pointer",
+          }}
+        >
+          <WalletIcon />
+          {(hover || sidebar) && <Typography>Deposit</Typography>}
+        </Stack>
       </Stack>
     </Stack>
   );

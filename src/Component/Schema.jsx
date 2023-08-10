@@ -157,7 +157,6 @@ export const User_schema = yup
 
 export const Transfer_schema = yup
   .object({
-    bankName: yup.string().required("Bank Name is required"),
     accountNumber: yup
       .string()
       .required("Account Number is required")
@@ -181,5 +180,14 @@ export const Airtime_schema = yup
         "Account Number should not be longer than 11 digits"
       ),
     amount: yup.string().required("Amount is required"),
+  })
+  .required();
+
+export const Depopsit_schema = yup
+  .object({
+    cardNumber: yup.string().required("Card Number Number is required"),
+    amount: yup.string().required("Amount is required"),
+    expiryDate: yup.string().required("Amount is required"),
+    CVV: yup.string().required("Amount is required"),
   })
   .required();

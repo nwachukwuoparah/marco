@@ -34,8 +34,9 @@ const Reset_schema = yup
   .required();
 
 const Reset_password = (props) => {
+  
   const Navigate = useNavigate();
-
+  
   const { message, setMessage } = useContext(Global_context);
   const { token } = useParams();
 
@@ -62,6 +63,7 @@ const Reset_password = (props) => {
 
   useEffect(() => {
     if (error) setMessage(!message);
+    console.log(error);
   }, [error]);
 
   return (

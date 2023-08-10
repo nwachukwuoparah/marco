@@ -22,6 +22,7 @@ import Message from "../Component/message";
 import { getUser } from "../Component/Apis/query";
 import { useQuery } from "@tanstack/react-query";
 import { userLogOut } from "../Component/Apis/mutate";
+import Pin from "./pin";
 
 const Dashboard = (props) => {
   const { routh, transaction, setTransaction, error, message, setMessage } =
@@ -60,8 +61,8 @@ const Dashboard = (props) => {
 
   const value = userdata?.data?.data;
   useLayoutEffect(() => {
+    console.log(value);
     if (value?.compliance === null) {
-      console.log(value?.compliance);
       Navigate("/dashboard/compliance");
     }
     if (!localStorage.getItem(VITE_userToken)) {
@@ -77,7 +78,7 @@ const Dashboard = (props) => {
       maxWidth={false}
       sx={{
         display: "flex",
-         bgcolor: "#fdfcfc"
+        bgcolor: "#fdfcfc",
       }}
     >
       {(logOutFetching || userFetching) && <Loadind />}
@@ -85,6 +86,9 @@ const Dashboard = (props) => {
         <Message title={error?.response?.data.message} />
       )}
       {value?.compliance && <Sidebar sidebar={sidebar} />}
+      {value?.bankPin === null && <Pin />}
+
+      
       <Container disableGutters maxWidth={false}>
         <Stack
           direction={{ md: "row", xs: "row" }}
@@ -244,6 +248,7 @@ const Dashboard = (props) => {
           <Route path="/transfer" element={<Transfer data={value} />} />
           <Route path="/airtime" element={<Airtime data={value} />} />
         </Routes>
+
       </Container>
     </Container>
   );

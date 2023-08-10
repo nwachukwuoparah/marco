@@ -17,10 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { Forget_schema } from "../Component/Schema";
-import { resetPassword } from "../Component/Apis/mutate";
+import { forgotPassword } from "../Component/Apis/mutate";
 import { Global_context } from "../Component/Context.api";
 import Message from "../Component/message";
-
 
 const Forgot_password = () => {
   const Navigate = useNavigate();
@@ -34,13 +33,14 @@ const Forgot_password = () => {
   });
 
   const { data, error, isLoading, mutate } = useMutation(
-    ["resetPassword"],
-    resetPassword,
+    ["forgotPassword"],
+    forgotPassword
   );
 
   useEffect(() => {
     if (error) setMessage(!message);
-  }, [error]);
+    console.log(data)
+  }, [error,data]);
 
   return (
     <Container
@@ -95,7 +95,7 @@ const Forgot_password = () => {
                 fontWeight: 500,
               }}
             >
-              Reset Password
+              Forgot Password
             </Typography>
             <Typography sx={{ color: "rgba(0,0,0,.54)", fontSize: "14px" }}>
               Enter your email for password recovery.

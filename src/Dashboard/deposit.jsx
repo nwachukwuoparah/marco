@@ -1,57 +1,34 @@
-import React from "react";
 import { Container, Stack, Typography } from "@mui/material";
-import Display_card from "../Component/Display.card";
-import background from "../assets/background.jpg";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import React from "react";
 import Input from "../Component/Input";
-import Button_component from "../Component/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Airtime_schema} from "../Component/Schema";
+import { Depopsit_schema } from "../Component/Schema";
+import background from "../assets/background.jpg";
+import Button_component from "../Component/Button";
+import { deposite } from "../Component/Apis/mutate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-const Airtime = (props) => {
-  const navigate = useNavigate();
+const Deposite = (props) => {
+  const queryClient = useQueryClient();
+  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Airtime_schema),
+    resolver: yupResolver(Depopsit_schema),
+    defaultValues: {
+      cardNumber: "0000000000000000",
+      expiryDate: "09/25",
+      CVV: "230",
+    },
   });
 
-  const From_input = [
-    {
-      id: 3,
-      name: "selectBiller",
-      type: "text",
-      placeholder: "Select Biller",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-    },
-    {
-      id: 5,
-      name: "phoneNumber",
-      type: "text",
-      placeholder: "Enter Phone Number",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-    },
-    {
-      id: 3,
-      name: "amount",
-      type: "text",
-      placeholder: "Enter Amount",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-    },
-  ];
-
   const { data, error, isLoading, mutate, status } = useMutation(
-    ["confirmPin"],
-    // createPin,
+    ["deposit"],
+    deposite,
     {
       onSuccess: async (data) => {
         console.log(data);
@@ -59,9 +36,11 @@ const Airtime = (props) => {
         Navigate("/dashboard");
         console.log("called");
       },
+      onError: (error) => {
+        queryClient.invalidateQueries({ queryKey: ["getUser"] });
+      },
     }
   );
-
 
   return (
     <Container
@@ -94,8 +73,7 @@ const Airtime = (props) => {
       >
         <Stack
           sx={{
-            width: "60%",
-            // height: "85.5%",
+            width: { md: "60%", xs: "85%" },
           }}
           spacing={3.5}
         >
@@ -106,24 +84,54 @@ const Airtime = (props) => {
               justifyContent: "center",
             }}
           >
-            <Typography
-              sx={{ textAlign: "center", fontSize: "20px", fontWeight: 700 }}
-            >
-              Get 10% off of every 50,000 one time
-              <br /> Daily Transaction
-            </Typography>
+            <Typography sx={{ fontWeight: 400 }}>Enter Card Details</Typography>
           </Stack>
-
           <form
             onSubmit={handleSubmit((data) => {
-              console.log(data);
+              const { amount, ...others } = data;
+              console.log({ amount: Number(amount), ...others });
+              mutate({ amount: Number(amount), ...others });
             })}
           >
             <Stack spacing={3}>
-              {From_input.map((i) => (
-                <Input {...i} register={register} errors={errors} />
-              ))}
+              <Input
+                name="cardNumber"
+                type="text"
+                border="1px solid rgba(28, 28, 28, 25%)"
+                padding="10px 15px"
+                register={register}
+                errors={errors}
+              />
+              <Stack flexDirection="row" justifyContent="space-between">
+                <Input
+                  name="expiryDate"
+                  type="text"
+                  border="1px solid rgba(28, 28, 28, 25%)"
+                  padding="10px 15px"
+                  register={register}
+                  errors={errors}
+                  width="40%"
+                />{" "}
+                <Input
+                  name="CVV"
+                  type="text"
+                  border="1px solid rgba(28, 28, 28, 25%)"
+                  padding="10px 15px"
+                  register={register}
+                  errors={errors}
+                  width="40%"
+                />
+              </Stack>
+              <Input
+                name="amount"
+                type="text"
+                border="1px solid rgba(28, 28, 28, 25%)"
+                padding="10px 15px"
+                register={register}
+                errors={errors}
+              />
               <Button_component
+                loading={isLoading}
                 content="CONTINUE"
                 boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                 bgcolor="#03a9f4"
@@ -134,26 +142,10 @@ const Airtime = (props) => {
               />
             </Stack>
           </form>
-          <Stack
-            spacing={1}
-            direction="row"
-            sx={{
-              flex: 1,
-              cursor: "pointer",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            onClick={() => {
-              navigate("/dashboard/");
-            }}
-          >
-            <ArrowBackIcon sx={{ fontSize: "20px", color: "#03a9f4" }} />
-            <Typography sx={{ color: "#03a9f4" }}>Back</Typography>
-          </Stack>
         </Stack>
       </Stack>
     </Container>
   );
 };
 
-export default Airtime;
+export default Deposite;

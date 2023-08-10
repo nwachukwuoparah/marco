@@ -43,17 +43,20 @@ const Input = (props) => {
               : props.border,
           borderRadius: "5px",
           opacity: props.disabled && 0.4,
+          backgroundColor:"#f8f8f8"
         }}
         type={props.type}
         name={props.name}
         placeholder={props.placeholder}
         {...props.register(props.name)}
-        disabled={props.disabled}
-        defaultValue={props.defaultValue}
+        disabled={props?.disabled}
+        defaultValue={props?.defaultValue}
       />
 
       <Typography sx={{ color: "red" }}>
-        {props.apiError ? props.apiError?.message : props.errors[props.name]?.message}
+        {props.apiError
+          ? props.apiError?.message
+          : props.errors[props.name]?.message}
       </Typography>
     </Stack>
   );

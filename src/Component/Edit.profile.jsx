@@ -1,6 +1,6 @@
 import { Button, Container, Stack, Typography, colors } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { QueryCache, useMutation, useQueryClient } from "@tanstack/react-query";
 import Input from "./Input";
 import Button_component from "./Button";
 import { Global_context } from "./Context.api";
@@ -11,14 +11,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { User_schema } from "./Schema";
 import { Change_schema } from "./Schema";
 import Confirm_password from "../Authentication/confirm.password";
-import { changePassword } from "./Apis/mutate";
+import { changePassword, confirmPassword, updateUser } from "./Apis/mutate";
 import { useNavigate } from "react-router-dom";
+import Loadind from "./loading.state";
 
 const Edit_profile = ({ setToggleProfile, value }) => {
+  const queryClient = useQueryClient();
   const { setRouth } = useContext(Global_context);
-
   const [confirm_user, setConfirm_user] = useState(false);
   const Navigate = useNavigate();
+  const userRef = useRef();
 
   const {
     defaultValue,
@@ -28,6 +30,40 @@ const Edit_profile = ({ setToggleProfile, value }) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(User_schema),
+    defaultValues: {
+      image: value?.imageurl,
+      lastName: value?.lastName,
+      email: value?.email,
+      sex: value?.sex,
+      phoneNumber: value?.phoneNumber,
+      firstName: value?.firstName,
+    },
+  });
+
+  const {
+    data: updateUserData,
+    error: updateUserError,
+    isLoading: updateUserIsLoading,
+    mutate: updateUserMutate,
+    status: updateUserStatus,
+  } = useMutation(["updateUser"], updateUser, {
+    onSettled: async (error) => {
+      await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+      Navigate("/dashboard/profile");
+    },
+  });
+
+  const {
+    data: confirmPasswordData,
+    error: confirmPasswordError,
+    isLoading: confirmPasswordIsLoading,
+    mutate: confirmPasswordMutate,
+    status: confirmPasswordStatus,
+  } = useMutation(["confirmPassword"], confirmPassword, {
+    onSuccess: () => {
+      setConfirm_user(false);
+      updateUserMutate(userRef.current);
+    },
   });
 
   const {
@@ -40,22 +76,14 @@ const Edit_profile = ({ setToggleProfile, value }) => {
   });
 
   const {
-    data: passwordData,
-    error: passwordError,
-    isLoading: passwordIsLoading,
-    mutate: passwordMutate,
-    status,
-  } = useMutation(["compliance"], changePassword, {
-    onSuccess: () => {
-      // Navigate("/login");
-    },
+    data: changePasswordData,
+    error: changePasswordError,
+    isLoading: changePasswordIsLoading,
+    mutate: changePasswordMutate,
+    status: changePasswordStatus,
+  } = useMutation(["changePassword"], changePassword, {
+    onSuccess: () => {},
   });
-
-  const onSubmit = (data) => {
-    setConfirm_change(true);
-    const { image, ...others } = data;
-    console.log({ ...others, image: image[0] });
-  };
 
   const From_input = [
     {
@@ -122,11 +150,11 @@ const Edit_profile = ({ setToggleProfile, value }) => {
     >
       {confirm_user && (
         <Confirm_password
-          setConfirm_change={setConfirm_change}
           setConfirm_user={setConfirm_user}
+          mutate={confirmPasswordMutate}
+          loading={confirmPasswordIsLoading}
         />
       )}
-
       <Stack
         spacing={2}
         sx={{
@@ -157,7 +185,12 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             gap: "25px",
             position: "relative",
           }}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit((data) => {
+            console.log("call");
+            setConfirm_user(true);
+            const { image, ...others } = data;
+            userRef.current = { ...others, image: image[0] };
+          })}
         >
           <Stack>
             <label
@@ -178,6 +211,8 @@ const Edit_profile = ({ setToggleProfile, value }) => {
                 type="file"
                 {...register("image")}
               />
+              {value?.phoneNumber}
+              {value?.sex}
             </label>
             <Typography
               sx={{
@@ -216,6 +251,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             width={{ md: "35%", xs: "100%" }}
           >
             <Button_component
+              loading={updateUserIsLoading}
               content="Save changes"
               boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
               bgcolor="#03a9f4"
@@ -231,8 +267,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
 
       <form
         onSubmit={handle_change_password((data) => {
-          console.log(data);
-          passwordMutate(data);
+          changePasswordMutate(data);
         })}
       >
         <Stack
@@ -257,7 +292,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
               placeholder: "Old Password",
               border: "1px solid rgba(28, 28, 28, 25%)",
               padding: "10px 15px",
-              apiError: passwordError?.response.data,
+              apiError: changePasswordError?.response?.data,
             },
             {
               id: 2,
@@ -285,7 +320,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             width={{ md: "35%", xs: "100%" }}
           >
             <Button_component
-              loading={passwordIsLoading}
+              loading={changePasswordIsLoading}
               content="Change password"
               boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
               bgcolor="#03a9f4"

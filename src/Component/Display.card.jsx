@@ -6,10 +6,27 @@ import WalletIcon from "@mui/icons-material/Wallet";
 import React, { useContext, useState } from "react";
 import { Global_context } from "./Context.api";
 
+function formatNumberAbbreviated(number) {
+  const abbreviations = [
+    [1e9, "B"],
+    [1e6, "M"],
+    [1e3, "K"],
+  ];
+
+  for (const [factor, symbol] of abbreviations) {
+    if (number >= factor) {
+      const formattedNumber = number / factor;
+      return `${formattedNumber.toFixed(2)}${symbol}`;
+    }
+  }
+
+  return number.toString();
+}
+
 const Display_card = ({ wallet }) => {
   const [view, setView] = useState(false);
   const { transaction } = useContext(Global_context);
-  
+
   return (
     <Stack
       sx={{
@@ -22,7 +39,7 @@ const Display_card = ({ wallet }) => {
     >
       <Typography
         sx={{ fontSize: "14px", lineHeight: "30px", color: "#f8f8f8" }}
-      >  
+      >
         ACCOUNT # {wallet?.accountNumber}
       </Typography>
       {view ? (
@@ -35,7 +52,7 @@ const Display_card = ({ wallet }) => {
             fontWeight: 900,
           }}
         >
-          $ {wallet?.accountBalance}
+          $ {formatNumberAbbreviated(wallet?.accountBalance)}
         </Typography>
       ) : (
         <Typography

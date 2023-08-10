@@ -18,7 +18,7 @@ import { Change_schema } from "../Component/Schema";
 import * as yup from "yup";
 
 const Confirm_schema = yup.object({
-  currentpassword: yup
+  password: yup
     .string()
     .required("Current Password is required")
     .matches(
@@ -27,7 +27,7 @@ const Confirm_schema = yup.object({
     ),
 });
 
-const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
+const Confirm_password = ({ setConfirm_user, mutate,loading }) => {
   const Navigate = useNavigate();
 
   const {
@@ -37,8 +37,6 @@ const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
   } = useForm({
     resolver: yupResolver(Confirm_schema),
   });
-
-  const onSubmit = (data) => console.log(data);
 
   return (
     <Container
@@ -98,16 +96,20 @@ const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
               Confirm Password
             </Typography>
           </Stack>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            onSubmit={handleSubmit((data) => {
+              console.log(data);
+              mutate(data);
+            })}
+          >
             <Stack spacing={2}>
               <Controller
-                name="currentpassword"
+                name="password"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     sx={{
-                      borderBottom:
-                        errors["currentpassword"] && "2px solid red",
+                      borderBottom: errors["password"] && "2px solid red",
                     }}
                     {...field}
                     variant="standard"
@@ -119,6 +121,7 @@ const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
                 {errors["currentpassword"]?.message}
               </Typography>
               <Button_component
+              loading={loading}
                 content="CONFIRM PASSWORD"
                 boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
                 bgcolor="#03a9f4"
@@ -140,7 +143,6 @@ const Confirm_password = ({ setConfirm_change, setConfirm_user }) => {
               justifyContent: "center",
             }}
             onClick={() => {
-              setConfirm_change(false);
               setConfirm_user(false);
             }}
           >

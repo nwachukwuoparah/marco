@@ -45,10 +45,33 @@ export const changePassword = async (data) => {
   );
 };
 
+export const confirmPassword = async (data) => {
+  const token = localStorage.getItem(VITE_userToken);
+  const removedToken = token?.replace(/"/g, "");
+  return await axios.post(
+    `${VITE_End_Point}/user/confirm-password?access_token=${removedToken}`,
+    data
+  );
+};
+
+export const updateUser = async (data) => {
+  const token = localStorage.getItem(VITE_userToken);
+  const removedToken = token?.replace(/"/g, "");
+  return await axios.patch(
+    `${VITE_End_Point}/user/profile-update/?access_token=${removedToken}`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+};
+
 export const createCompliance = (data) => {
   const token = localStorage.getItem(VITE_userToken);
   const removedToken = token?.replace(/"/g, "");
-  console.log(data);
+  console.log(data, removedToken);
   return axios.post(
     `${VITE_End_Point}/compliance/new/?access_token=${removedToken}`,
     data,
@@ -59,3 +82,32 @@ export const createCompliance = (data) => {
     }
   );
 };
+
+export const createPin = (data) => {
+  const token = localStorage.getItem(VITE_userToken);
+  const removedToken = token?.replace(/"/g, "");
+  return axios.post(
+    `${VITE_End_Point}/user/bankpin/?access_token=${removedToken}`,
+    data
+  );
+};
+
+export const transfer = (data) => {
+  const token = localStorage.getItem(VITE_userToken);
+  const removedToken = token?.replace(/"/g, "");
+  return axios.post(
+    `${VITE_End_Point}/transaction/transfer/?access_token=${removedToken}`,
+    data
+  );
+};
+
+export const deposite = (data) => {
+  const token = localStorage.getItem(VITE_userToken);
+  const removedToken = token?.replace(/"/g, "");
+  return axios.post(
+    `${VITE_End_Point}/transaction/deposit/?access_token=${removedToken}`,
+    data
+  );
+};
+
+

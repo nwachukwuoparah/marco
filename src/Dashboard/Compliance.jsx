@@ -22,10 +22,13 @@ import { useNavigate } from "react-router-dom";
 import { Compliance_schema } from "../Component/Schema";
 import { createCompliance } from "../Component/Apis/mutate";
 import Message from "../Component/message";
+
 const Compliance = ({ data }) => {
+  const queryClient = useQueryClient();
   const { setRouth, message, setMessage } = useContext(Global_context);
   const imageref = useRef(null);
   const Navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -37,7 +40,6 @@ const Compliance = ({ data }) => {
 
   useEffect(() => {
     setRouth("Compliance");
-    // console.log(errors);
   }, [errors]);
 
   const From_input = [
@@ -124,8 +126,11 @@ const Compliance = ({ data }) => {
     mutate,
     status,
   } = useMutation(["compliance"], createCompliance, {
-    onSuccess: () => {
+    onSuccess: async (data) => {
+      console.log(data);
+      await queryClient.invalidateQueries({ queryKey: ["getUser"] });
       Navigate("/dashboard/profile");
+      console.log("called");
     },
   });
 
@@ -192,6 +197,7 @@ const Compliance = ({ data }) => {
             paddingTop="28px"
           >
             <Button_component
+              loading={isLoading}
               content="Submit"
               boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
               bgcolor="#03a9f4"
@@ -202,7 +208,7 @@ const Compliance = ({ data }) => {
               fontSize="15px"
             />
 
-            <Button_component
+            {/* <Button_component
               routh="/dashboard/profile"
               content="Cancel"
               boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
@@ -213,7 +219,7 @@ const Compliance = ({ data }) => {
               // color="#fff"
               border=" 1px solid #e3ebf6"
               fontSize="15px"
-            />
+            /> */}
           </Stack>
         </form>
       </Stack>
