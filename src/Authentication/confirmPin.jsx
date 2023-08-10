@@ -6,30 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button_component from "../Component/Button";
 import { transfer } from "../Component/Apis/mutate";
-const Confirm_Pin = ({ value }) => {
-  const Navigate = useNavigate();
-  const queryClient = useQueryClient();
+const Confirm_Pin = ({ value, mutate, isLoading }) => {
 
-  const { data, error, isLoading, mutate, status } = useMutation(
-    ["transfer"],
-    transfer,
-    {
-      onSuccess: async (data) => {
-        console.log(data);
-        await queryClient.invalidateQueries({ queryKey: ["getUser"] });
-        // Navigate("/dashboard");
-        console.log("called");
-      },
-    }
-  );
-
-
-
-
-
+  
   const onSubmit = (pin) => {
     const { amount, ...others } = value;
-    // console.log({ amount: Number(amount), ...others, ...pin });
+    console.log({ amount: Number(amount), ...others, ...pin });
     mutate({ amount: Number(amount), ...others, ...pin });
   };
 

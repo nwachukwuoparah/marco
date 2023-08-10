@@ -1,10 +1,4 @@
 import * as yup from "yup";
-// "FirstName": "Favour",
-// "LastName": "Igbani",
-// "email": "favourigbani29@gmail.com",
-// "password": "Favour#01",
-// "accountType": "business"
-
 export const Signup_schema = yup
   .object({
     firstName: yup
@@ -171,7 +165,7 @@ export const Transfer_schema = yup
 
 export const Airtime_schema = yup
   .object({
-    selectBiller: yup.string().required("Biller is required"),
+    serviceNetwork: yup.string().required("Bank Name is required"),
     phoneNumber: yup
       .string()
       .required("Phone Number is required")

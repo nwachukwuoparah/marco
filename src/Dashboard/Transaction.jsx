@@ -4,20 +4,19 @@ import { Global_context } from "../Component/Context.api";
 import { Padding } from "@mui/icons-material";
 import Pie_chart from "../Component/Pie.chart ";
 
-const Transaction = (props) => {
-  
+const Transaction = (data) => {
+  console.log(data?.data.transaction);
   const { setRouth } = useContext(Global_context);
 
   useEffect(() => {
     setRouth("Transactions");
   }, []);
 
-
   return (
     <Container
       disableGutters
       maxWidth={false}
-      sx={{ width: "97.5%", display: "flex", gap: "10px"}}
+      sx={{ width: "97.5%", display: "flex", gap: "10px" }}
     >
       <Stack
         sx={{
@@ -34,10 +33,10 @@ const Transaction = (props) => {
             bgcolor: "rgb(128, 147, 211,20%)",
           }}
         >
-            <Typography> NAME</Typography>
+          <Typography> NAME</Typography>
           <Typography>TRANSACTION ID</Typography>
           <Typography>DATE</Typography>
-          
+
           <Typography>STATUS</Typography>
           <Typography>AMOUNT</Typography>
         </Stack>
@@ -50,9 +49,9 @@ const Transaction = (props) => {
             alignItems: "center",
           }}
         >
-          {Array.from(Array(20)).map((i,index) => (
+          {data?.data?.transaction?.map((i) => (
             <Stack
-            key={index}
+              key={i?.id}
               direction="row"
               sx={{
                 justifyContent: "space-between",
@@ -74,17 +73,16 @@ const Transaction = (props) => {
                   justifyContent: "space-between",
                 }}
               >
-                   <Typography>NAME</Typography>
-                <Typography>#*****1245</Typography>
-                <Typography>{new Date().toUTCString().slice(5, 16)}</Typography>
-             
+                <Typography>NAME</Typography>
+                <Typography sx={{overflow:"hidden",width:"30%"}}>{i?.transactionRef}</Typography>
+                <Typography >{new Date().toUTCString().slice(5, 16)}</Typography>
               </Stack>
               <Stack
                 direction="row"
                 sx={{
                   width: "30%",
                   justifyContent: "space-between",
-         }}
+                }}
               >
                 <Typography
                   sx={{
