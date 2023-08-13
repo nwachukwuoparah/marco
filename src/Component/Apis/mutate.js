@@ -1,7 +1,6 @@
 const { VITE_End_Point } = import.meta.env;
 import axios from "axios";
 const { VITE_userToken } = import.meta.env;
-const token = localStorage.getItem(VITE_userToken);
 
 export const signUp = async (data) => {
   return await axios.post(`${VITE_End_Point}/user/register`, data);
@@ -104,10 +103,11 @@ export const transfer = (data) => {
 
 export const airtime = (data) => {
   console.log("airtime")
+  console.log(data)
   const token = localStorage.getItem(VITE_userToken);
   const removedToken = token?.replace(/"/g, "");
   return axios.post(
-    `${VITE_End_Point}/transaction/transfer/?access_token=${removedToken}`,
+    `${VITE_End_Point}/transaction/airtime-recharge/?access_token=${removedToken}`,
     data
   );
 };

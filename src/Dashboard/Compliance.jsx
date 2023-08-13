@@ -106,7 +106,7 @@ const Compliance = ({ data }) => {
       placeholder: "Business Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      disabled: !data?.status ? true : false,
+      disabled: data?.user?.accountType !== "Business" ? true : false,
     },
     {
       id: 8,
@@ -115,7 +115,7 @@ const Compliance = ({ data }) => {
       placeholder: "Business Address",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      disabled: !data?.status ? true : false,
+      disabled: data?.user.accountType !== "Business" ? true : false,
     },
   ];
 
@@ -127,17 +127,20 @@ const Compliance = ({ data }) => {
     status,
   } = useMutation(["compliance"], createCompliance, {
     onSuccess: async (data) => {
-      console.log(data);
       await queryClient.invalidateQueries({ queryKey: ["getUser"] });
       Navigate("/dashboard/profile");
-      console.log("called");
+    },
+    onError: async (data, error) => {
+      if (error?.response?.data.message === "Token has expired") {
+        await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+      }
     },
   });
 
   const onSubmit = async (data) => {
     const { image, ...others } = data;
     await Compliance_schema?.validate({
-      isDisabled: !data?.status ? true : false,
+      isDisabled: data?.user?.accountType !== "Business" ? true : false,
       ...others,
       image: image,
     });
@@ -207,19 +210,6 @@ const Compliance = ({ data }) => {
               color="#fff"
               fontSize="15px"
             />
-
-            {/* <Button_component
-              routh="/dashboard/profile"
-              content="Cancel"
-              boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
-              bgcolor="#ffff"
-              width="35%"
-              height="45px"
-              radius="2px"
-              // color="#fff"
-              border=" 1px solid #e3ebf6"
-              fontSize="15px"
-            /> */}
           </Stack>
         </form>
       </Stack>
