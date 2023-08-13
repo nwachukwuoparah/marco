@@ -3,7 +3,6 @@ import { Container, Stack, Typography } from "@mui/material";
 import background from "../assets/background.jpg";
 import { useNavigate, useParams } from "react-router-dom";
 import TransactionCard from "../Component/transactionCard";
-import CardPDF from "../Component/pdfDownload/CardPDF";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { singleTransact } from "../Component/Apis/query";
 import DownloadButton from "../Component/pdfDownload/downloadButton";
