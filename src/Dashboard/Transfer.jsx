@@ -30,7 +30,7 @@ const Transfer = (props) => {
 
   const From_input = [
     {
-      id: 5,
+      id: 1,
       name: "accountNumber",
       type: "text",
       placeholder: "Enter Destination Account",
@@ -38,7 +38,7 @@ const Transfer = (props) => {
       padding: "10px 15px",
     },
     {
-      id: 3,
+      id: 2,
       name: "amount",
       type: "text",
       placeholder: "Enter Amount",
@@ -46,7 +46,7 @@ const Transfer = (props) => {
       padding: "10px 15px",
     },
     {
-      id: 5,
+      id: 3,
       name: "naration",
       type: "text",
       placeholder: "Enter Narration(Optional)",
@@ -64,6 +64,11 @@ const Transfer = (props) => {
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
         Navigate("/dashboard");
         console.log("called");
+      },
+      onError: async (data, error) => {
+        if (error?.response?.data.message === "Token has expired") {
+          await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+        }
       },
     }
   );
@@ -130,7 +135,12 @@ const Transfer = (props) => {
             >
               <Stack spacing={3}>
                 {From_input.map((i) => (
-                  <Input {...i} register={register} errors={errors} />
+                  <Input
+                    key={i.id}
+                    {...i}
+                    register={register}
+                    errors={errors}
+                  />
                 ))}
                 <Button_component
                   content="CONTINUE"

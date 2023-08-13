@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Stack, Typography } from "@mui/material";
 import Display_card from "../Component/Display.card";
 import background from "../assets/background.jpg";
@@ -29,7 +29,7 @@ const Airtime = (props) => {
 
   const From_input = [
     {
-      id: 3,
+      id: 1,
       name: "serviceNetwork",
       type: "text",
       placeholder: "Select Biller",
@@ -37,7 +37,7 @@ const Airtime = (props) => {
       padding: "10px 15px",
     },
     {
-      id: 5,
+      id: 2,
       name: "phoneNumber",
       type: "text",
       placeholder: "Enter Phone Number",
@@ -59,13 +59,18 @@ const Airtime = (props) => {
     airtime,
     {
       onSuccess: async (data) => {
-        console.log(data);
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
         Navigate("/dashboard");
-        console.log("called");
+      },
+      onError: async (data, error) => {
+        if (error?.response?.data.message === "Token has expired") {
+          await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+        }
       },
     }
   );
+
+
   return (
     <Container
       disableGutters
@@ -127,7 +132,12 @@ const Airtime = (props) => {
             >
               <Stack spacing={3}>
                 {From_input.map((i) => (
-                  <Input {...i} register={register} errors={errors} />
+                  <Input
+                    key={i.id}
+                    {...i}
+                    register={register}
+                    errors={errors}
+                  />
                 ))}
                 <Button_component
                   loading={isLoading}

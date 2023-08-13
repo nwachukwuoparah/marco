@@ -3,9 +3,12 @@ import React, { useContext, useEffect } from "react";
 import { Global_context } from "../Component/Context.api";
 import { Padding } from "@mui/icons-material";
 import Pie_chart from "../Component/Pie.chart ";
+import { Link } from "react-router-dom";
 
 const Transaction = (data) => {
-  console.log(data?.data.transaction);
+
+  const reversedData = [...data?.data?.transaction].reverse();
+
   const { setRouth } = useContext(Global_context);
 
   useEffect(() => {
@@ -33,7 +36,7 @@ const Transaction = (data) => {
             bgcolor: "rgb(128, 147, 211,20%)",
           }}
         >
-          <Typography> NAME</Typography>
+          {/* <Typography> NAME</Typography> */}
           <Typography>TRANSACTION ID</Typography>
           <Typography>DATE</Typography>
 
@@ -49,54 +52,80 @@ const Transaction = (data) => {
             alignItems: "center",
           }}
         >
-          {data?.data?.transaction?.map((i) => (
-            <Stack
-              key={i?.id}
-              direction="row"
-              sx={{
-                justifyContent: "space-between",
+          {reversedData.map((i) => (
+            <Link
+              to={`/dashboard/single-transaction/${i?.transactionRef}`}
+              style={{
                 width: "100%",
-                padding: " 10px",
-                cursor: "pointer",
-                borderBottom: " 1px solid #e3ebf6",
-                transition: "all .5s",
-                "&:hover": {
-                  bgcolor: "rgb(128, 147, 211,10%)",
-                  borderTop: " 1px solid #f8f8f8",
-                },
+                textDecoration: "none",
+                color: "inherit",
               }}
             >
               <Stack
+                key={i?.id}
                 direction="row"
                 sx={{
-                  width: "58%",
                   justifyContent: "space-between",
+                  width: "100%",
+                  padding: " 10px",
+                  cursor: "pointer",
+                  borderBottom: " 1px solid #e3ebf6",
+                  transition: "all .5s",
+                  "&:hover": {
+                    bgcolor: "rgb(128, 147, 211,10%)",
+                    borderTop: " 1px solid #f8f8f8",
+                  },
                 }}
               >
-                <Typography>NAME</Typography>
-                <Typography sx={{overflow:"hidden",width:"30%"}}>{i?.transactionRef}</Typography>
-                <Typography >{new Date().toUTCString().slice(5, 16)}</Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                sx={{
-                  width: "30%",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography
+                <Stack
+                  direction="row"
                   sx={{
-                    bgcolor: "rgb(3, 216, 127,45%)",
-                    padding: "5px 10px",
-                    fontSize: "10px",
-                    borderRadius: "20px",
+                    minWidth: "45%",
+                    justifyContent: "space-between",
                   }}
                 >
-                  SUSCESS
-                </Typography>
-                <Typography>20000000</Typography>
+                  <Typography sx={{ overflow: "hidden" }}>
+                    {i?.transactionRef.slice(0, 28)}
+                  </Typography>
+                  <Typography>{i?.createDate.slice(0, 10)}</Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  sx={{
+                    minWidth: "37%",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      bgcolor:
+                        i?.status === "success"
+                          ? "rgba(3, 216, 127,40%)"
+                          : "rgba(255, 0, 0,40%)",
+                      padding: "5px 10px",
+                      fontSize: "10px",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    {i?.status}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color:
+                        i?.payMethod === "transfer" ||
+                        i?.payMethod === "airtime"
+                          ? "rgb(255, 0, 0)"
+                          : "rgb(3, 216, 127)",
+                    }}
+                  >
+                    {i?.payMethod === "transfer" || i?.payMethod === "airtime"
+                      ? "-"
+                      : "+"}
+                    {i?.amount}
+                  </Typography>
+                </Stack>
               </Stack>
-            </Stack>
+            </Link>
           ))}
         </Stack>
       </Stack>

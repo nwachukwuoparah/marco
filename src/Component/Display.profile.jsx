@@ -6,7 +6,7 @@ import { Global_context } from "./Context.api";
 import { useNavigate } from "react-router-dom";
 import { CropLandscapeOutlined } from "@mui/icons-material";
 
-const Display_profile = ({ setToggleProfile, value }) => {
+const Display_profile = ({ value }) => {
   const { setRouth } = useContext(Global_context);
   const Navigate = useNavigate();
 
@@ -18,32 +18,32 @@ const Display_profile = ({ setToggleProfile, value }) => {
     {
       id: 1,
       title: "First Name",
-      value: value?.firstName,
+      value: value?.user.firstName,
     },
     {
       id: 1,
       title: "Last Name",
-      value: value?.lastName,
+      value: value?.user.lastName,
     },
     {
       id: 1,
       title: "Email",
-      value: value?.email,
+      value: value?.user.email,
     },
     {
       id: 1,
       title: "Phone Number",
-      value: value?.phoneNumber,
+      value: value?.user.phoneNumber,
     },
     {
       id: 1,
       title: "Sex",
-      value: value?.sex,
+      value: value?.user.sex,
     },
     {
       id: 1,
       title: "Account Type",
-      value: value?.accountType,
+      value: value?.user.accountType,
     },
   ];
 
@@ -130,7 +130,7 @@ const Display_profile = ({ setToggleProfile, value }) => {
             }}
             variant="body1"
           >
-            {value?.accountName}
+            {value?.user.accountName}
           </Typography>
         </Stack>
 

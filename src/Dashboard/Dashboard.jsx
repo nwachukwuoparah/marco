@@ -20,11 +20,13 @@ import zIndex from "@mui/material/styles/zIndex";
 import Loadind from "../Component/loading.state";
 import Message from "../Component/message";
 import { getUser } from "../Component/Apis/query";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { userLogOut } from "../Component/Apis/mutate";
 import Pin from "./pin";
+import SingleTransaction from "./singleTrans";
 
 const Dashboard = (props) => {
+  const queryClient = useQueryClient();
   const { routh, transaction, setTransaction, error, message, setMessage } =
     useContext(Global_context);
   const [sidebar, setSidebar] = useState(false);
@@ -56,12 +58,19 @@ const Dashboard = (props) => {
     refetchOnWindowFocus: false,
     staleTime: 60000,
     cacheTime: 1,
-    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+      if (error?.response?.data.message === "Token has expired") {
+        setLogOut(true);
+      } else {
+        queryClient.invalidateQueries({ queryKey: ["getUser"] });
+      }
+    },
   });
 
   const value = userdata?.data?.data;
+
   useLayoutEffect(() => {
-    console.log(value);
     if (value?.compliance === null) {
       Navigate("/dashboard/compliance");
     }
@@ -69,7 +78,6 @@ const Dashboard = (props) => {
       Navigate("/login");
     }
     if (logOutError) setMessage(!message);
-    if (userError) setLogOut(true);
   }, [userError, logOutError, userdata]);
 
   return (
@@ -153,7 +161,7 @@ const Dashboard = (props) => {
               }}
             >
               <AccountCircleIcon sx={{ color: "#7081b9" }} />
-              <Typography>{value?.accountName}</Typography>
+              <Typography>{value?.user.accountName}</Typography>
             </Stack>
           </Stack>
         </Stack>
@@ -175,6 +183,7 @@ const Dashboard = (props) => {
         >
           {[
             {
+              id: 1,
               icon: (
                 <AccountCircleIcon
                   sx={{ color: "#7081b9", fontSize: "25px" }}
@@ -186,6 +195,7 @@ const Dashboard = (props) => {
               },
             },
             {
+              id: 2,
               icon: <LogoutIcon sx={{ color: "#7081b9", fontSize: "25px" }} />,
               title: "Logout",
               call: () => {
@@ -194,6 +204,7 @@ const Dashboard = (props) => {
             },
           ].map((i) => (
             <Stack
+              key={i.id}
               onClick={i.call}
               direction="row"
               spacing={2}
@@ -247,6 +258,10 @@ const Dashboard = (props) => {
           <Route path="/profile/*" element={<Profile data={value} />} />
           <Route path="/transfer" element={<Transfer data={value} />} />
           <Route path="/airtime" element={<Airtime data={value} />} />
+          <Route
+            path="/single-transaction/:Ref"
+            element={<SingleTransaction data={value} />}
+          />
         </Routes>
       </Container>
     </Container>

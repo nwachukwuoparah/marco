@@ -9,7 +9,7 @@ import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { useNavigate } from "react-router-dom";
 const Wallet = ({ data }) => {
   const Navigate = useNavigate();
-
+  console.log(data?.transaction);
   const { setRouth, transaction } = useContext(Global_context);
 
   useEffect(() => {
@@ -156,7 +156,7 @@ const Wallet = ({ data }) => {
             overflowY: "scroll",
           }}
         >
-          {Array.from(Array(10)).map((i, index) => (
+          {data?.transaction.slice(0, 21).map((i, index) => (
             <Stack
               key={index}
               direction="row"
@@ -174,12 +174,26 @@ const Wallet = ({ data }) => {
               }}
             >
               <Stack>
-                <Typography>FBNMOBILE:Nwachukwu oparah</Typography>
+                <Typography>
+                  {i?.senderName ? i?.senderName : i?.transactionRef.slice(0,15)}
+                </Typography>
                 <Typography sx={{ color: "#a4abc5" }}>
-                  {new Date().toUTCString().slice(5, 16)}
+                  {i?.createDate.slice(0, 19)}
                 </Typography>
               </Stack>
-              <Typography sx={{ color: "#03d87f" }}> ₦ 5000</Typography>
+              <Typography
+                sx={{
+                  color:
+                    i?.payMethod === "transfer" || i?.payMethod === "airtime"
+                      ? "rgb(255, 0, 0)"
+                      : "rgb(3, 216, 127)",
+                }}
+              >
+                {i?.payMethod === "transfer" || i?.payMethod === "airtime"
+                  ? "-"
+                  : "+"}
+                $ {i?.amount}
+              </Typography>
             </Stack>
           ))}
         </Stack>
