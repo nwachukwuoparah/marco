@@ -65,11 +65,16 @@ const Airtime = (props) => {
       onError: async (data, error) => {
         if (error?.response?.data.message === "Token has expired") {
           await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+        } else {
+          setValue(null);
         }
       },
     }
   );
 
+  useEffect(() => {
+    console.log(error?.response.data?.message);
+  }, [error]);
 
   return (
     <Container
@@ -123,6 +128,16 @@ const Airtime = (props) => {
                 Get 10% off of every 50,000 one time
                 <br /> Daily Transaction
               </Typography>
+              {error?.response.data?.message === "Invalid Pin" && (
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    color: "red",
+                  }}
+                >
+                  {error?.response.data?.message}
+                </Typography>
+              )}
             </Stack>
 
             <form
