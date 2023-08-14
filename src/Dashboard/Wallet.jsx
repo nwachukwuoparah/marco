@@ -9,7 +9,6 @@ import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { useNavigate } from "react-router-dom";
 const Wallet = ({ data }) => {
   const Navigate = useNavigate();
-  console.log(data?.transaction);
   const { setRouth, transaction } = useContext(Global_context);
 
   useEffect(() => {

@@ -93,7 +93,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       placeholder: "Frst Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      defaultValue: value?.firstName,
+      defaultValue: value?.user.firstName,
     },
     {
       id: 2,
@@ -102,7 +102,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       placeholder: "last Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      defaultValue: value?.lastName,
+      defaultValue: value?.user.lastName,
     },
     {
       id: 3,
@@ -111,7 +111,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       placeholder: "Email",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      defaultValue: value?.email,
+      defaultValue: value?.user.email,
     },
     {
       id: 4,
@@ -120,7 +120,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       placeholder: "Phone Number",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      defaultValue: value?.sex,
+      defaultValue: value?.user.sex,
     },
     {
       id: 8,
@@ -129,7 +129,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       placeholder: "Sex",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      defaultValue: value?.phoneNumber,
+      defaultValue: value?.user.phoneNumber,
     },
   ];
 

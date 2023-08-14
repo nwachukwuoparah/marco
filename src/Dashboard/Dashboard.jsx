@@ -69,7 +69,7 @@ const Dashboard = (props) => {
   });
 
   const value = userdata?.data?.data;
-
+console.log(value)
   useLayoutEffect(() => {
     if (value?.compliance === null) {
       Navigate("/dashboard/compliance");
