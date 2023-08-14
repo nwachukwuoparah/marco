@@ -73,7 +73,7 @@ const Airtime = (props) => {
   );
 
   useEffect(() => {
-    console.log(error?.response.data?.message);
+    console.log(error?.response?.data?.message);
   }, [error]);
 
   return (
@@ -128,14 +128,14 @@ const Airtime = (props) => {
                 Get 10% off of every 50,000 one time
                 <br /> Daily Transaction
               </Typography>
-              {error?.response.data?.message === "Invalid Pin" && (
+              {error?.response?.data?.message === "Invalid Pin" && (
                 <Typography
                   sx={{
                     fontWeight: 400,
                     color: "red",
                   }}
                 >
-                  {error?.response.data?.message}
+                  {error?.response?.data?.message}
                 </Typography>
               )}
             </Stack>

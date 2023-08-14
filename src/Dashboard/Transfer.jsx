@@ -76,7 +76,7 @@ const Transfer = (props) => {
   );
 
   useEffect(() => {
-    console.log(error?.response.data?.message);
+    console.log(error?.response?.data?.message);
   }, [error]);
 
   return (
@@ -130,9 +130,15 @@ const Transfer = (props) => {
                 Available Daily Transaction limit:
                 <br /> 1,000,000.00
               </Typography>
-              <Typography sx={{ fontWeight: 400, color: error?.response.data?.message === "Invalid Pin"&&"red" }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  color:
+                    error?.response.data?.message === "Invalid Pin" && "red",
+                }}
+              >
                 {error?.response.data?.message === "Invalid Pin"
-                  ? error?.response.data?.message
+                  ? error?.response?.data?.message
                   : "Enter Transfer Details"}
               </Typography>
             </Stack>
