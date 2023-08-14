@@ -141,7 +141,7 @@ const Login = (props) => {
                     bgcolor: "none",
                   }}
                 >
-                  Sign In (Test)
+                  Sign In
                 </Typography>
               </span>
               <Stack direction="row" alignItems="center">

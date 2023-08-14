@@ -167,7 +167,7 @@ const Sign_up = (props) => {
                     fontWeight: 500,
                   }}
                 >
-                  Sign Up (Test)
+                  Sign Up
                 </Typography>
               </span>
 
