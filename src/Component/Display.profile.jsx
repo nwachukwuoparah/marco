@@ -120,7 +120,15 @@ const Display_profile = ({ value }) => {
       >
         <Stack>
           <Stack>
-            <AccountCircleIcon sx={{ fontSize: "110px" }} />
+            {value?.user.imageurl === null ? (
+              <AccountCircleIcon sx={{ fontSize: "110px" }} />
+            ) : (
+              <Stack
+                sx={{ width: "100px", height: "100%", overflow: "hidden",borderRadius:"10px" }}
+              >
+                <img src={value?.user.imageurl} style={{}} />
+              </Stack>
+            )}
           </Stack>
           <Typography
             sx={{

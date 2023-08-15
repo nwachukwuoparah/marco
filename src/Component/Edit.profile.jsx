@@ -21,6 +21,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
   const [confirm_user, setConfirm_user] = useState(false);
   const Navigate = useNavigate();
   const userRef = useRef();
+  const [image, setImage] = useState(null);
 
   const {
     defaultValue,
@@ -31,12 +32,12 @@ const Edit_profile = ({ setToggleProfile, value }) => {
   } = useForm({
     resolver: yupResolver(User_schema),
     defaultValues: {
-      image: value?.imageurl,
-      lastName: value?.lastName,
-      email: value?.email,
-      sex: value?.sex,
-      phoneNumber: value?.phoneNumber,
-      firstName: value?.firstName,
+      image: value?.user?.imageurl,
+      lastName: value?.user?.lastName,
+      email: value?.user?.email,
+      sex: value?.user?.sex,
+      phoneNumber: value?.user?.phoneNumber,
+      firstName: value?.user?.firstName,
     },
   });
 
@@ -64,6 +65,12 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       setConfirm_user(false);
       updateUserMutate(userRef.current);
     },
+    onError: (error) => {
+      console.log("error");
+      if (error?.response?.data.message === "Token has expired") {
+        queryClient.invalidateQueries({ queryKey: ["getUser"] });
+      }
+    },
   });
 
   const {
@@ -83,7 +90,22 @@ const Edit_profile = ({ setToggleProfile, value }) => {
     status: changePasswordStatus,
   } = useMutation(["changePassword"], changePassword, {
     onSuccess: () => {},
+    onError: (error) => {
+      if (error?.response?.data.message === "Token has expired") {
+        queryClient.invalidateQueries({ queryKey: ["getUser"] });
+      }
+    },
   });
+
+  useEffect(() => {
+    if (value?.user?.imageurl !== null) return;
+    if (watch("image") !== null && watch("image")[0] !== undefined) {
+      const blob = new Blob([watch("image")?.[0]], { type: "image/jpeg" });
+      const url = URL.createObjectURL(blob);
+      console.log("call");
+      setImage(url);
+    }
+  }, [watch("image")]);
 
   const From_input = [
     {
@@ -94,6 +116,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
       defaultValue: value?.user.firstName,
+      disabled: true,
     },
     {
       id: 2,
@@ -103,6 +126,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
       defaultValue: value?.user.lastName,
+      disabled: true,
     },
     {
       id: 3,
@@ -120,7 +144,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       placeholder: "Phone Number",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      defaultValue: value?.user.sex,
+      defaultValue: value?.user.phoneNumber,
     },
     {
       id: 8,
@@ -129,7 +153,8 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       placeholder: "Sex",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      defaultValue: value?.user.phoneNumber,
+      defaultValue: value?.user.sex,
+      disabled: value?.user.sex === null ? false : true,
     },
   ];
 
@@ -165,7 +190,16 @@ const Edit_profile = ({ setToggleProfile, value }) => {
         }}
       >
         <Stack direction="roe" justifyContent="space-between">
-          <Typography>Edit Profile</Typography>
+          <Typography
+            sx={{ cursor: "pointer" }}
+            onClick={() => {
+              console.log("click");
+              // URL.revokeObjectURL(url);
+              setImage(null);
+            }}
+          >
+            Edit Profile
+          </Typography>
           <Stack
             direction="row"
             sx={{ cursor: "pointer", alignItems: "center" }}
@@ -177,7 +211,6 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             <Typography sx={{ color: "rgb(28, 28, 28,70%)" }}>Back</Typography>
           </Stack>
         </Stack>
-
         <form
           style={{
             display: "flex",
@@ -185,10 +218,14 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             gap: "25px",
             position: "relative",
           }}
-          onSubmit={handleSubmit((data) => {
-            console.log("call");
+          onSubmit={handleSubmit(async (data) => {
             setConfirm_user(true);
             const { image, ...others } = data;
+            await User_schema?.validate({
+              isDisabled: value?.user.sex === null ? true : false,
+              ...others,
+              image: image,
+            });
             userRef.current = { ...others, image: image[0] };
           })}
         >
@@ -203,14 +240,31 @@ const Edit_profile = ({ setToggleProfile, value }) => {
                 cursor: "pointer",
               }}
             >
-              <AccountCircleIcon sx={{ fontSize: "110px", color: "#03a9f4" }} />
-              <input
-                defaultValue={value?.image}
-                name="image"
-                hidden
-                type="file"
-                {...register("image")}
-              />
+              {console.log(image !== null)}
+              {console.log(image)}
+              {console.log(value?.user.imageurl !== null)}
+              {image !== null || value?.user.imageurl !== null ? (
+                <Stack
+                  sx={{
+                    width: "100px",
+                    height: "100%",
+                    overflow: "hidden",
+                    borderRadius: "10px",
+                  }}
+                >
+                  {image !== null ? (
+                    <img src={image} style={{}} />
+                  ) : (
+                    <img src={value?.user?.imageurl} style={{}} />
+                  )}
+                </Stack>
+              ) : (
+                <AccountCircleIcon
+                  sx={{ fontSize: "110px", color: "#03a9f4" }}
+                />
+              )}
+
+              <input name="image" hidden type="file" {...register("image")} />
               {value?.phoneNumber}
               {value?.sex}
             </label>

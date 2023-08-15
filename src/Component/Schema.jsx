@@ -138,10 +138,29 @@ export const User_schema = yup
           }
         },
       }),
-    firstName: yup.string().required("First Name is required"),
-    lastName: yup.string().required("Last Name is required"),
+    firstName: yup.string().when("isDisabled", (isDisabled, schema) => {
+      if (!isDisabled) {
+        console.log(isDisabled);
+        return schema.required("First Name is required");
+      }
+      return schema;
+    }),
+    lastName: yup.string().when("isDisabled", (isDisabled, schema) => {
+      if (!isDisabled) {
+        console.log(isDisabled);
+        return schema.required("Last name is required");
+      }
+      return schema;
+    }),
     email: yup.string().required("Email is required"),
-    sex: yup.string().required("Sex is required"),
+    sex: yup.string().when("isDisabled", (isDisabled, schema) => {
+      if (isDisabled[0] !== true) {
+        console.log(isDisabled[0]);
+        return schema.required("Sex is required");
+      }
+      return schema;
+    }),
+
     phoneNumber: yup
       .string()
       .required("Phone number is required")
