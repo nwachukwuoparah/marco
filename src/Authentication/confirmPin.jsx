@@ -1,14 +1,14 @@
 import OtpInput from "../Component/password.input";
 import React, { useEffect } from "react";
 import { Container, Stack, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import background from "../assets/background.jpg";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button_component from "../Component/Button";
 import { transfer } from "../Component/Apis/mutate";
 const Confirm_Pin = ({ value, mutate, isLoading }) => {
-
-  
+  const Navigate = useNavigate();
   const onSubmit = (pin) => {
     const { amount, ...others } = value;
     console.log({ amount: Number(amount), ...others, ...pin });
@@ -60,9 +60,25 @@ const Confirm_Pin = ({ value, mutate, isLoading }) => {
             <Typography
               sx={{ textAlign: "center", fontSize: "20px", fontWeight: 500 }}
             >
-              Create a Four digit pin
+              Enter your Four digit pin
             </Typography>
             <OtpInput mutate={onSubmit} isLoading={isLoading} />
+          </Stack>
+          <Stack
+            spacing={1}
+            direction="row"
+            sx={{
+              flex: 1,
+              cursor: "pointer",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClick={() => {
+              Navigate("/dashboard/");
+            }}
+          >
+            <ArrowBackIcon sx={{ fontSize: "20px", color: "#03a9f4" }} />
+            <Typography sx={{ color: "#03a9f4" }}>Back</Typography>
           </Stack>
         </Stack>
       </Stack>

@@ -2,7 +2,9 @@ import { Stack, Typography } from "@mui/material";
 import ApexCharts from "apexcharts";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import WalletIcon from "@mui/icons-material/Wallet";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useContext, useState } from "react";
 import { Global_context } from "./Context.api";
 
@@ -33,40 +35,39 @@ const Display_card = ({ wallet }) => {
         border: " 1px solid #e3ebf6",
         padding: "20px 15px",
         borderRadius: "5px",
-        // bgcolor: "rgb(172, 166, 204,10%)",
         bgcolor: "#03a9f4",
       }}
     >
+      <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+        <Typography
+          sx={{ fontSize: "14px", lineHeight: "30px", color: "#f8f8f8" }}
+        >
+          ACCOUNT # {wallet?.accountNumber}
+        </Typography>
+        {view ? (
+          <VisibilityIcon
+            onClick={() => setView(!view)}
+            sx={{ color: "#fbfbfb " }}
+          />
+        ) : (
+          <VisibilityOffIcon
+            onClick={() => setView(!view)}
+            sx={{ color: "#fbfbfb " }}
+          />
+        )}
+      </Stack>
+
       <Typography
-        sx={{ fontSize: "14px", lineHeight: "30px", color: "#f8f8f8" }}
+        letterSpacing={3}
+        sx={{
+          fontSize: "25px",
+          lineHeight: "30px",
+          color: "#f8f8f8",
+          fontWeight: 900,
+        }}
       >
-        ACCOUNT # {wallet?.accountNumber}
+        ₦ {view ? formatNumberAbbreviated(wallet?.accountBalance) : "*********"}
       </Typography>
-      {view ? (
-        <Typography
-          letterSpacing={3}
-          sx={{
-            fontSize: "25px",
-            lineHeight: "30px",
-            color: "#f8f8f8",
-            fontWeight: 900,
-          }}
-        >
-          $ {formatNumberAbbreviated(wallet?.accountBalance)}
-        </Typography>
-      ) : (
-        <Typography
-          letterSpacing={3}
-          sx={{
-            fontSize: "25px",
-            lineHeight: "30px",
-            color: "#f8f8f8",
-            fontWeight: 900,
-          }}
-        >
-          $*********
-        </Typography>
-      )}
       <Stack>
         <Stack direction="row" alignItems="center">
           <TrendingUpIcon
@@ -107,7 +108,7 @@ const Display_card = ({ wallet }) => {
           justifyContent: "center",
         }}
       >
-        <WalletIcon onClick={() => setView(!view)} sx={{ color: "#fbfbfb " }} />
+        <WalletIcon sx={{ color: "#fbfbfb " }} />
       </Stack>
     </Stack>
   );

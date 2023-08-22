@@ -2,6 +2,7 @@ import { Container, Stack, Typography } from "@mui/material";
 import React from "react";
 import Input from "../Component/Input";
 import { useForm } from "react-hook-form";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Depopsit_schema } from "../Component/Schema";
 import background from "../assets/background.jpg";
@@ -142,6 +143,22 @@ const Deposite = (props) => {
               />
             </Stack>
           </form>
+          <Stack
+            spacing={1}
+            direction="row"
+            sx={{
+              flex: 1,
+              cursor: "pointer",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClick={() => {
+              Navigate("/dashboard/");
+            }}
+          >
+            <ArrowBackIcon sx={{ fontSize: "20px", color: "#03a9f4" }} />
+            <Typography sx={{ color: "#03a9f4" }}>Back</Typography>
+          </Stack>
         </Stack>
       </Stack>
     </Container>

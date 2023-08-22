@@ -43,7 +43,7 @@ const Input = (props) => {
               : props.border,
           borderRadius: "5px",
           opacity: props.disabled && 0.4,
-          backgroundColor:"#f8f8f8"
+          backgroundColor: "#f8f8f8",
         }}
         type={props.type}
         name={props.name}
@@ -57,6 +57,9 @@ const Input = (props) => {
         {props.apiError
           ? props.apiError?.message
           : props.errors[props.name]?.message}
+      </Typography>
+      <Typography sx={{ marginLeft: "5px" }}>
+        {props.apiData && props.apiData}
       </Typography>
     </Stack>
   );

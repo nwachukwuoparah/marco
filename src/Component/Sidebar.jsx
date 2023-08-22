@@ -124,7 +124,7 @@ const Sidebar = ({ sidebar }) => {
         <Stack
           direction="row"
           spacing={1.5}
-          onClick={() => Navigate("/deposite")}
+          onClick={() => Navigate("/dashboard/deposite")}
           sx={{
             // bgcolor: "red",
             color: "#f8f8f8",

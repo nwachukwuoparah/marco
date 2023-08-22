@@ -6,7 +6,6 @@ import Forgot_password from "./Authentication/forgot.password";
 import Dashboard from "./Dashboard/Dashboard";
 import Reset_password from "./Authentication/reset.password";
 import Verify from "./Authentication/verify.user";
-import Deposite from "./Dashboard/deposit";
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
         <Route path="/forgot.password" element={<Forgot_password />} />
         <Route path="/reset.Password/:token" element={<Reset_password />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/deposite" element={<Deposite />} />
       </Routes>
     </Router>
   );

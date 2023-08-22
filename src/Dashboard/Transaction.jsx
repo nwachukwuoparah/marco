@@ -6,7 +6,6 @@ import Pie_chart from "../Component/Pie.chart ";
 import { Link } from "react-router-dom";
 
 const Transaction = (data) => {
-
   const reversedData = [...data?.data?.transaction].reverse();
 
   const { setRouth } = useContext(Global_context);
@@ -36,7 +35,6 @@ const Transaction = (data) => {
             bgcolor: "rgb(128, 147, 211,20%)",
           }}
         >
-          {/* <Typography> NAME</Typography> */}
           <Typography>TRANSACTION ID</Typography>
           <Typography>DATE</Typography>
 
@@ -52,7 +50,7 @@ const Transaction = (data) => {
             alignItems: "center",
           }}
         >
-          {reversedData.map((i) => (
+          {reversedData?.map((i) => (
             <Link
               to={`/dashboard/single-transaction/${i?.transactionRef}`}
               style={{

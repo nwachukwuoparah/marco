@@ -1,14 +1,16 @@
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect } from "react";
-import Display_card from "../Component/Display.card";
+import Wallet_card from "../Component/wallet.card";
 import ChartComponent from "../Component/Chart";
 import { Global_context } from "../Component/Context.api";
 import Banner_card from "../Component/Banner.card";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import SendToMobileIcon from "@mui/icons-material/SendToMobile";
 import { useNavigate } from "react-router-dom";
+
 const Wallet = ({ data }) => {
   const Navigate = useNavigate();
+
   const { setRouth, transaction } = useContext(Global_context);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const Wallet = ({ data }) => {
         }}
       >
         <Grid md={6.665} xs={20} item>
-          <Display_card
+          <Wallet_card
             accountNo={data?.accountNumber}
             wallet={data?.wallet[0]}
           />
@@ -174,7 +176,9 @@ const Wallet = ({ data }) => {
             >
               <Stack>
                 <Typography>
-                  {i?.senderName ? i?.senderName : i?.transactionRef.slice(0,15)}
+                  {i?.senderName
+                    ? i?.senderName
+                    : i?.transactionRef.slice(0, 15)}
                 </Typography>
                 <Typography sx={{ color: "#a4abc5" }}>
                   {i?.createDate.slice(0, 19)}

@@ -24,6 +24,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { userLogOut } from "../Component/Apis/mutate";
 import Pin from "./pin";
 import SingleTransaction from "./singleTrans";
+import Deposite from "./deposit";
 
 const Dashboard = (props) => {
   const queryClient = useQueryClient();
@@ -41,7 +42,6 @@ const Dashboard = (props) => {
   } = useQuery(["logOut"], userLogOut, {
     enabled: logOut,
     refetchOnWindowFocus: false,
-    staleTime: 0,
     cacheTime: 0,
     onSuccess: () => {
       localStorage.removeItem(VITE_userToken);
@@ -69,7 +69,7 @@ const Dashboard = (props) => {
   });
 
   const value = userdata?.data?.data;
-console.log(value)
+  console.log(value);
   useLayoutEffect(() => {
     if (value?.compliance === null) {
       Navigate("/dashboard/compliance");
@@ -254,7 +254,10 @@ console.log(value)
         <Routes>
           <Route path="/" element={<Wallet data={value} />} />
           <Route path="/transaction" element={<Transaction data={value} />} />
-          <Route path="/compliance" element={<Compliance data={value} />} />
+          <Route
+            path="/compliance"
+            element={<Compliance compData={value} />}
+          />
           <Route path="/profile/*" element={<Profile data={value} />} />
           <Route path="/transfer" element={<Transfer data={value} />} />
           <Route path="/airtime" element={<Airtime data={value} />} />
@@ -262,6 +265,7 @@ console.log(value)
             path="/single-transaction/:Ref"
             element={<SingleTransaction data={value} />}
           />
+          <Route path="/deposite" element={<Deposite />} />
         </Routes>
       </Container>
     </Container>

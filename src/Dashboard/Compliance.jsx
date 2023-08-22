@@ -10,7 +10,13 @@ import {
   Radio,
   Button,
 } from "@mui/material";
-import React, { useContext, useEffect, useRef, useLayoutEffect } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+} from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Global_context } from "../Component/Context.api";
 import Input from "../Component/Input";
@@ -23,26 +29,8 @@ import { Compliance_schema } from "../Component/Schema";
 import { createCompliance } from "../Component/Apis/mutate";
 import Message from "../Component/message";
 
-const Compliance = ({ data }) => {
-  const queryClient = useQueryClient();
-  const { setRouth, message, setMessage } = useContext(Global_context);
-  const imageref = useRef(null);
-  const Navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(Compliance_schema),
-  });
-
-  useEffect(() => {
-    setRouth("Compliance");
-  }, [errors]);
-
-  const From_input = [
+const Compliance = ({ compData }) => {
+  let From_input = [
     {
       id: 1,
       name: "BVN",
@@ -99,25 +87,28 @@ const Compliance = ({ data }) => {
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
     },
-    {
-      id: 7,
-      name: "businessName",
-      type: "text",
-      placeholder: "Business Name",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-      disabled: data?.user?.accountType !== "Business" ? true : false,
-    },
-    {
-      id: 8,
-      name: "businessAddress",
-      type: "text",
-      placeholder: "Business Address",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-      disabled: data?.user.accountType !== "Business" ? true : false,
-    },
   ];
+  let ImageFiles = [{ id: 1, title: "Upload NIN", name: "nin" }];
+  const queryClient = useQueryClient();
+  const { setRouth, message, setMessage } = useContext(Global_context);
+  const imageref = useRef(null);
+  const inputRef = useRef();
+  const Navigate = useNavigate();
+  const [form, setForm] = useState(From_input);
+  const [files, setFiles] = useState(ImageFiles);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(Compliance_schema),
+  });
+
+  useEffect(() => {
+    setRouth("Compliance");
+  }, [errors]);
 
   const {
     data: complianceData,
@@ -132,31 +123,97 @@ const Compliance = ({ data }) => {
     },
     onError: async (data, error) => {
       if (error?.response?.data.message === "Token has expired") {
+        console.log(error?.response?.data.message);
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
       }
     },
   });
 
+  Compliance_schema?.validate({
+    disabled: compData?.user?.accountType,
+    NIN: "",
+    businessAddress: "",
+    businessName: "",
+    address: "",
+    LGA: "",
+    city: "",
+    state: "",
+    country: "",
+    BVN: "",
+    nin: "",
+    cert: "",
+    memo: "",
+    memo: "",
+  });
+
   const onSubmit = async (data) => {
-    const { image, ...others } = data;
-    await Compliance_schema?.validate({
-      isDisabled: data?.user?.accountType !== "Business" ? true : false,
-      ...others,
-      image: image,
-    });
-    console.log({ ...others, image: image[0] });
-    mutate({ ...others, image: image[0] });
+    const { nin, cert, memo, ...others } = data;
+    inputRef.current = data;
+    console.log();
+
+    // await Compliance_schema?.validate({
+    //   disabled: compData?.user?.accountType,
+    //   ...others,
+    //   nin: nin,
+    //   cert: cert,
+    //   memo: memo,
+    // });
+
+    // console.log({ ...others, nin: nin?.[0], cert: cert?.[0], memo: memo?.[0] });
+
+    mutate(
+      compData?.user?.accountType === "Business"
+        ? { ...others, nin: nin?.[0], cert: cert?.[0], memo: memo?.[0] }
+        : { ...others, nin: nin?.[0] }
+    );
   };
 
   useLayoutEffect(() => {
-    if (data?.compliance !== null) {
+    if (compData?.compliance !== null) {
       Navigate("/dashboard/");
     }
   }, []);
 
   useEffect(() => {
-    if (error) setMessage(!message);
-  }, [error]);
+    if (compData?.user?.accountType === "Business") {
+      setForm([
+        ...From_input,
+        {
+          id: 7,
+          name: "businessName",
+          type: "text",
+          placeholder: "Business Name",
+          border: "1px solid rgba(28, 28, 28, 25%)",
+          padding: "10px 15px",
+          disabled: compData?.user?.accountType !== "Business" ? true : false,
+        },
+        {
+          id: 8,
+          name: "businessAddress",
+          type: "text",
+          placeholder: "Business Address",
+          border: "1px solid rgba(28, 28, 28, 25%)",
+          padding: "10px 15px",
+          disabled: compData?.user?.accountType !== "Business" ? true : false,
+        },
+      ]);
+      setFiles([
+        ...ImageFiles,
+        {
+          id: 2,
+          title: "Upload Memorandum",
+          name: "memo",
+          disabled: compData?.user?.accountType !== "Business" ? true : false,
+        },
+        {
+          id: 3,
+          title: "Upload Certificate of incorporation",
+          name: "cert",
+          disabled: compData?.user?.accountType !== "Business" ? true : false,
+        },
+      ]);
+    }
+  }, [compData]);
 
   return (
     <Container
@@ -179,17 +236,16 @@ const Compliance = ({ data }) => {
           padding: "0px 0px 30px",
         }}
       >
-        <form
+        <div
           style={{
             display: "flex",
             flexDirection: "column",
             gap: "25px",
             position: "relative",
           }}
-          onSubmit={handleSubmit(onSubmit)}
         >
           <Stack gap="30px" sx={{ width: "100%" }}>
-            {From_input.map((i) => (
+            {form.map((i) => (
               <Input key={i.id} {...i} register={register} errors={errors} />
             ))}
           </Stack>
@@ -200,6 +256,7 @@ const Compliance = ({ data }) => {
             paddingTop="28px"
           >
             <Button_component
+              click={handleSubmit(onSubmit)}
               loading={isLoading}
               content="Submit"
               boxShadow="box-shadow: 0 0 0 0 rgba(0,0,0,.2), 0 0 0 0 rgba(0,0,0,.14), 0 0 0 0 rgba(0,0,0,.12)"
@@ -211,7 +268,7 @@ const Compliance = ({ data }) => {
               fontSize="15px"
             />
           </Stack>
-        </form>
+        </div>
       </Stack>
       <Stack
         sx={{
@@ -220,37 +277,66 @@ const Compliance = ({ data }) => {
           borderRadius: "10px",
           border: "1px rgba(128, 128, 128,20%)",
           borderStyle: "dashed",
-          position: "sticky",
-          display: "flex",
-          flexDirection: "column",
+          flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "center",
+          padding: "20px",
+          gap: "30px",
         }}
       >
-        <label
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "6px",
-            fontSize: "16px",
-            color: errors["image"] ? "red" : "rgba(3, 169, 244,20%)",
-            cursor: "pointer",
-          }}
-        >
-          <CameraAltIcon sx={{ fontSize: "30px" }} />
-          <Typography
+        {files.map((i) => (
+          <Stack
+            key={i.id}
             sx={{
-              padding: "15px",
-              bgcolor: "rgba(3, 169, 244,15%)",
-              color: "rgba(3, 169, 244)",
+              width: compData?.user?.accountType !== "Business" ? "70%" : "48%",
+              height:
+                compData?.user?.accountType !== "Business" ? "70%" : "40%",
               borderRadius: "10px",
+              border: errors[i.name]
+                ? "1px red"
+                : "1px rgba(128, 128, 128,20%)",
+              borderStyle: "dashed",
             }}
           >
-            Upload a clear picture of your NIN
-          </Typography>
-          <input name="image" hidden type="file" {...register("image")} />
-        </label>
+            <label
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "6px",
+                fontSize: "16px",
+                color: errors[i.name] ? "red" : "rgba(3, 169, 244,20%)",
+                cursor: "pointer",
+                padding: "0px 15px",
+              }}
+            >
+              <CameraAltIcon sx={{ fontSize: "30px" }} />
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: 900,
+
+                  color: "rgba(3, 169, 244)",
+                }}
+              >
+                {i.title}
+              </Typography>
+              <input
+                name={i.name}
+                disabled={i.disabled}
+                hidden
+                type="file"
+                {...register(i.name)}
+              />
+            </label>
+          </Stack>
+        ))}
       </Stack>
     </Container>
   );

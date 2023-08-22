@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Stack, Typography } from "@mui/material";
-import Display_card from "../Component/Display.card";
+import Display_card from "../Component/wallet.card";
 import background from "../assets/background.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Input from "../Component/Input";
@@ -10,11 +10,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Transfer_schema } from "../Component/Schema";
 import { useNavigate } from "react-router-dom";
 import OtpInput from "../Component/password.input";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Confirm_Pin from "../Authentication/confirmPin";
 import Pin from "./pin";
 import { transfer } from "../Component/Apis/mutate";
-
+import { getAccName } from "../Component/Apis/mutate";
+import { height } from "@mui/system";
+` `
 const Transfer = (props) => {
   const queryClient = useQueryClient();
   const [value, setValue] = useState(null);
@@ -27,33 +29,6 @@ const Transfer = (props) => {
   } = useForm({
     resolver: yupResolver(Transfer_schema),
   });
-
-  const From_input = [
-    {
-      id: 1,
-      name: "accountNumber",
-      type: "text",
-      placeholder: "Enter Destination Account",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-    },
-    {
-      id: 2,
-      name: "amount",
-      type: "text",
-      placeholder: "Enter Amount",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-    },
-    {
-      id: 3,
-      name: "naration",
-      type: "text",
-      placeholder: "Enter Narration(Optional)",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-    },
-  ];
 
   const { data, error, isLoading, mutate, status } = useMutation(
     ["transfer"],
@@ -75,10 +50,63 @@ const Transfer = (props) => {
     }
   );
 
-  useEffect(() => {
-    console.log(error?.response?.data?.message);
-  }, [error]);
+  const {
+    data: accNameData,
+    mutate: accNameMutate,
+    isLoading: accNameLoading,
+    error: accNameError,
+  } = useMutation(["getAccName"], getAccName, {
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+      if (error?.response?.data.message === "Token has expired") {
+        queryClient.invalidateQueries({ queryKey: ["getUser"] });
+      } else {
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ["getUser"] });
+          Navigate("/dashboard");
+        }, 4000);
+      }
+    },
+    cacheTime: 0,
+  });
 
+  useEffect(() => {
+    watch("accountNumber")?.length === 10
+      ? accNameMutate(watch("accountNumber"))
+      : null;
+  }, [watch("accountNumber")]);
+
+  const From_input = [
+    {
+      id: 1,
+      name: "accountNumber",
+      type: "text",
+      placeholder: "Enter Destination Account",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding: "10px 15px",
+      apiData: accNameData?.data.accountName,
+    },
+    {
+      id: 2,
+      name: "amount",
+      type: "text",
+      placeholder: "Enter Amount",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding: "10px 15px",
+    },
+    {
+      id: 3,
+      name: "naration",
+      type: "text",
+      placeholder: "Enter Narration(Optional)",
+      border: "1px solid rgba(28, 28, 28, 25%)",
+      padding: "10px 15px",
+    },
+  ];
   return (
     <Container
       disableGutters
@@ -133,12 +161,11 @@ const Transfer = (props) => {
               <Typography
                 sx={{
                   fontWeight: 400,
-                  color:
-                    error?.response.data?.message === "Invalid Pin" && "red",
+                  color: error || (accNameError && "red"),
                 }}
               >
-                {error?.response.data?.message === "Invalid Pin"
-                  ? error?.response?.data?.message
+                {error || accNameError
+                  ? error || accNameError?.response?.data?.message
                   : "Enter Transfer Details"}
               </Typography>
             </Stack>
@@ -148,7 +175,23 @@ const Transfer = (props) => {
                 setValue(data);
               })}
             >
-              <Stack spacing={3}>
+              <Stack spacing={3} sx={{}}>
+                <Stack
+                  sx={{
+                    display: accNameLoading ? "flex" : "none",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "absolute",
+                    bgcolor: "rgba(255,255,255,80%)",
+                    width: "30%",
+                    height: "37%",
+                  }}
+                >
+                  <Stack direction="row" spacing={1.5} alignItems="center">
+                    <div className="loader"></div>
+                    <h2>Loading...</h2>
+                  </Stack>
+                </Stack>
                 {From_input.map((i) => (
                   <Input
                     key={i.id}

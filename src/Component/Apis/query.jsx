@@ -18,3 +18,4 @@ export const singleTransact = async (data) => {
     `${VITE_End_Point}/transaction/?access_token=${removedToken}&transactionRef=${removedRef}`
   );
 };
+

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import TransactionCard from "../Component/transactionCard";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { singleTransact } from "../Component/Apis/query";
+import Loadind from "../Component/loading.state";
 // import DownloadButton from "../Component/pdfDownload/downloadButton";
 
 const SingleTransaction = (props) => {
@@ -12,10 +13,11 @@ const SingleTransaction = (props) => {
   const { Ref } = useParams();
   const Navigate = useNavigate();
 
-  const { data, error, isLoading, mutate, status } = useQuery(
+  const { data, error, isFetching, status } = useQuery(
     ["getOneUser", Ref],
     singleTransact,
     {
+      refetchOnWindowFocus: false,
       onSettled: async (data, error) => {
         if (error?.response?.data.message === "Token has expired") {
           await queryClient.invalidateQueries({ queryKey: ["getUser"] });
@@ -42,6 +44,7 @@ const SingleTransaction = (props) => {
         zIndex: 20,
       }}
     >
+      {isFetching && <Loadind />}
       <Stack
         sx={{
           width: { md: "40%", xs: "100%" },

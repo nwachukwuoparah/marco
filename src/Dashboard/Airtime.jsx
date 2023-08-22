@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Stack, Typography } from "@mui/material";
-import Display_card from "../Component/Display.card";
+import Display_card from "../Component/wallet.card";
 import background from "../assets/background.jpg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Input from "../Component/Input";
