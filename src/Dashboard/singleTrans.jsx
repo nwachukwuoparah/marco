@@ -6,7 +6,7 @@ import TransactionCard from "../Component/transactionCard";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { singleTransact } from "../Component/Apis/query";
 import Loadind from "../Component/loading.state";
-import DownloadButton from "../Component/pdfDownload/downloadButton";
+// import DownloadButton from "../Component/pdfDownload/downloadButton";
 
 const SingleTransaction = (props) => {
   const queryClient = useQueryClient();
