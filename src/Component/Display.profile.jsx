@@ -21,27 +21,27 @@ const Display_profile = ({ value }) => {
       value: value?.user.firstName,
     },
     {
-      id: 1,
+      id: 2,
       title: "Last Name",
       value: value?.user.lastName,
     },
     {
-      id: 1,
+      id: 3,
       title: "Email",
       value: value?.user.email,
     },
     {
-      id: 1,
+      id: 4,
       title: "Phone Number",
       value: value?.user.phoneNumber,
     },
     {
-      id: 1,
+      id: 5,
       title: "Sex",
       value: value?.user.sex,
     },
     {
-      id: 1,
+      id: 6,
       title: "Account Type",
       value: value?.user.accountType,
     },
@@ -54,46 +54,47 @@ const Display_profile = ({ value }) => {
       value: value?.compliance?.BVN,
     },
     {
-      id: 1,
+      id: 2,
       title: "National Id",
       value: value?.compliance?.NIN,
     },
     {
-      id: 1,
+      id: 3,
       title: "Country",
       value: value?.compliance?.country,
     },
     {
-      id: 1,
+      id: 4,
       title: "State",
       value: value?.compliance?.state,
     },
     {
-      id: 1,
+      id: 5,
       title: "City",
       value: value?.compliance?.city,
     },
     {
-      id: 1,
+      id: 6,
       title: "LGA",
       value: value?.compliance?.LGA,
     },
     {
-      id: 1,
+      id: 7,
       title: "Home Adress",
       value: value?.compliance?.address,
     },
     {
-      id: 1,
+      id: 8,
       title: "Business Name",
       value: value?.compliance?.businessName,
     },
     {
-      id: 1,
+      id: 8,
       title: "Business Address",
       value: value?.compliance?.businessAddress,
     },
   ];
+  console.log(complianceDate);
   return (
     <Stack
       sx={{
@@ -124,7 +125,12 @@ const Display_profile = ({ value }) => {
               <AccountCircleIcon sx={{ fontSize: "110px" }} />
             ) : (
               <Stack
-                sx={{ width: "100px", height: "100%", overflow: "hidden",borderRadius:"10px" }}
+                sx={{
+                  width: "100px",
+                  height: "100%",
+                  overflow: "hidden",
+                  borderRadius: "10px",
+                }}
               >
                 <img src={value?.user.imageurl} style={{}} />
               </Stack>
@@ -230,40 +236,43 @@ const Display_profile = ({ value }) => {
             Compliance Details
           </Typography>
 
-          {complianceDate.map((i) => (
-            <Stack
-              direction={{ md: "row", xs: "column" }}
-              justifyContent="space-between"
-            >
-              <Typography
-                sx={{
-                  color: "rgb(28 28 28 / 0.4)",
-                  fontSize: "14px",
-                  lineHeight: "1rem",
-                }}
-              >
-                {i?.title}
-              </Typography>
-
-              <Stack
-                sx={{
-                  width: "70%",
-                }}
-              >
-                {i?.value && (
+          {complianceDate.map(
+            (i) =>
+              i.value && (
+                <Stack
+                  direction={{ md: "row", xs: "column" }}
+                  justifyContent="space-between"
+                >
                   <Typography
                     sx={{
-                      color: "#1C1C1C",
+                      color: "rgb(28 28 28 / 0.4)",
                       fontSize: "14px",
                       lineHeight: "1rem",
                     }}
                   >
-                    {i?.value}
+                    {i?.title}
                   </Typography>
-                )}
-              </Stack>
-            </Stack>
-          ))}
+
+                  <Stack
+                    sx={{
+                      width: "70%",
+                    }}
+                  >
+                    {i?.value && (
+                      <Typography
+                        sx={{
+                          color: "#1C1C1C",
+                          fontSize: "14px",
+                          lineHeight: "1rem",
+                        }}
+                      >
+                        {i?.value}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Stack>
+              )
+          )}
         </Stack>
 
         {/* <Stack

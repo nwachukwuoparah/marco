@@ -6,25 +6,27 @@ import * as yup from "yup";
 
 export const InputSelect = (props) => {
   return (
-    <select
-      style={{
-        outline: "none",
-        padding: props.padding,
-        width: "100%",
-        border: props.errors[props.name] ? "1px solid red" : props.border,
-        borderRadius: "5px",
-        opacity: props.disabled && 0.4,
-      }}
-      name={props.name}
-      {...props.register(props.name)}
-      disabled={props.disabled}
-    >
-      {props?.value.map((i, index) => (
-        <option key={index} value={i.value}>
-          {i.title}
-        </option>
-      ))}
-    </select>
+    <Stack sx={{ width: { md: props.width, xs: "100%" } }}>
+      <select
+        style={{
+          outline: "none",
+          padding: props.padding,
+          width: "100%",
+          border: props.errors[props.name] ? "1px solid red" : props.border,
+          borderRadius: "5px",
+          opacity: props.disabled && 0.4,
+        }}
+        name={props.name}
+        {...props.register(props.name)}
+        disabled={props.disabled}
+      >
+        {props?.value.map((i, index) => (
+          <option key={index} value={i.value}>
+            {i.title}
+          </option>
+        ))}
+      </select>
+    </Stack>
   );
 };
 

@@ -12,7 +12,7 @@ import Wallet from "./Wallet";
 import Sidebar from "../Component/Sidebar";
 import { Global_context } from "../Component/Context.api";
 import Transaction from "./Transaction";
-import Compliance from "./Compliance";
+// import Compliance from "./Compliance";
 import Profile from "./Profile";
 import Transfer from "./Transfer";
 import Airtime from "./Airtime";
@@ -25,6 +25,8 @@ import { userLogOut } from "../Component/Apis/mutate";
 import Pin from "./pin";
 import SingleTransaction from "./singleTrans";
 import Deposite from "./deposit";
+import BusinessCompliance from "./businessCompliance";
+import Personal_compliance from "./personalCompliance";
 
 const Dashboard = (props) => {
   const queryClient = useQueryClient();
@@ -71,8 +73,12 @@ const Dashboard = (props) => {
   const value = userdata?.data?.data;
   console.log(value);
   useLayoutEffect(() => {
-    if (value?.compliance === null) {
-      Navigate("/dashboard/compliance");
+    if (value?.user.status && value?.compliance === null) {
+      Navigate("/dashboard/businesscompliance");
+    } else if (!value?.user.status && value?.compliance === null) {
+      Navigate("/dashboard/personalcompliance");
+    } else {
+      return;
     }
     if (!localStorage.getItem(VITE_userToken)) {
       Navigate("/login");
@@ -254,9 +260,14 @@ const Dashboard = (props) => {
         <Routes>
           <Route path="/" element={<Wallet data={value} />} />
           <Route path="/transaction" element={<Transaction data={value} />} />
+          {/* <Route path="/compliance" element={<Compliance compData={value} />} /> */}
           <Route
-            path="/compliance"
-            element={<Compliance compData={value} />}
+            path="/businesscompliance"
+            element={<BusinessCompliance compData={value} />}
+          />
+          <Route
+            path="/personalcompliance"
+            element={<Personal_compliance compData={value} />}
           />
           <Route path="/profile/*" element={<Profile data={value} />} />
           <Route path="/transfer" element={<Transfer data={value} />} />

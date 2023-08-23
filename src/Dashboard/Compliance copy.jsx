@@ -103,7 +103,7 @@ const Compliance = ({ compData }) => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Compliance_schema),
+    // resolver: yupResolver(Compliance_schema),
   });
 
   useEffect(() => {

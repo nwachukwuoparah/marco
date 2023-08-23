@@ -17,8 +17,7 @@ const Pin = (props) => {
       onSuccess: async (data) => {
         console.log(data);
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
-        Navigate("/dashboard");
-        console.log("called");
+        Navigate("/dashboard/profile");
       },
     }
   );
@@ -77,7 +76,7 @@ const Pin = (props) => {
               sx={{ textAlign: "center", fontSize: "20px", fontWeight: 500 }}
             >
               Create a Four digit pin
-            </Typography> 
+            </Typography>
             <OtpInput mutate={mutate} isLoading={isLoading} />
           </Stack>
         </Stack>

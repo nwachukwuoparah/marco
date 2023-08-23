@@ -70,7 +70,7 @@ export const updateUser = async (data) => {
 export const createCompliance = (data) => {
   const token = localStorage.getItem(VITE_userToken);
   const removedToken = token?.replace(/"/g, "");
-  console.log(data, removedToken);
+  console.log(data);
   return axios.post(
     `${VITE_End_Point}/compliance/new/?access_token=${removedToken}`,
     data,

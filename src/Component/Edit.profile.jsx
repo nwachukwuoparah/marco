@@ -1,7 +1,7 @@
 import { Button, Container, Stack, Typography, colors } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { QueryCache, useMutation, useQueryClient } from "@tanstack/react-query";
-import Input from "./Input";
+import Input, { InputSelect } from "./Input";
 import Button_component from "./Button";
 import { Global_context } from "./Context.api";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -146,16 +146,6 @@ const Edit_profile = ({ setToggleProfile, value }) => {
       padding: "10px 15px",
       defaultValue: value?.user.phoneNumber,
     },
-    {
-      id: 8,
-      name: "sex",
-      type: "text",
-      placeholder: "Sex",
-      border: "1px solid rgba(28, 28, 28, 25%)",
-      padding: "10px 15px",
-      defaultValue: value?.user.sex,
-      disabled: value?.user.sex === null ? false : true,
-    },
   ];
 
   useEffect(() => {
@@ -240,9 +230,6 @@ const Edit_profile = ({ setToggleProfile, value }) => {
                 cursor: "pointer",
               }}
             >
-              {console.log(image !== null)}
-              {console.log(image)}
-              {console.log(value?.user.imageurl !== null)}
               {image !== null || value?.user.imageurl !== null ? (
                 <Stack
                   sx={{
@@ -295,6 +282,19 @@ const Edit_profile = ({ setToggleProfile, value }) => {
                 errors={errors}
               />
             ))}
+            <InputSelect
+              register={register}
+              width="35%"
+              errors={errors}
+              value={[
+                { title: "Select your Sex", value: "" },
+                { title: "Male", value: "Male" },
+                { title: "Female", value: "Female" },
+              ]}
+              name="sex"
+              border="1px solid rgba(28, 28, 28, 25%)"
+              padding="10px 15px"
+            />
           </Stack>
 
           <Stack

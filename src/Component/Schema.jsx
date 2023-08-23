@@ -67,7 +67,7 @@ export const Change_schema = yup
   })
   .required();
 
-export const Compliance_schema = yup
+export const businessCompliance_schema = yup
   .object({
     BVN: yup
       .string()
@@ -78,43 +78,13 @@ export const Compliance_schema = yup
     city: yup.string().required("City is required"),
     LGA: yup.string().required("LGA is required"),
     address: yup.string().required("Address is required"),
-
-    businessName: yup.string().when("disabled", (disabled, schema) => {
-      if (disabled[0] === undefined) {
-        return schema;
-      } else if (disabled[0] === "Business") {
-        // console.log("disabled[0]:", disabled[0] === "Business");
-        // console.log(disabled[0] === "Business");
-        return schema.required("Business Name is required");
-      } else {
-        // console.log("disabled[0]:", disabled);
-        // console.log(disabled[0] === "Business");
-        return schema.required("Business Name is required");
-      }
-    }),
-
-    businessAddress: yup.string().when("disabled", (disabled, schema) => {
-      if (disabled[0] === undefined) {
-        return;
-      } else if (disabled[0] === "Business") {
-        // console.log("disabled[0]:", disabled[0] === "Business");
-        // console.log(disabled[0] === "Business");
-        return schema.required("Business Name is required");
-      } else {
-        // console.log("disabled[0]:", disabled);
-        // console.log(disabled[0] === "Business");
-        return schema.required("Business Name is required");
-      }
-    }),
-    NIN: yup
-      .string()
-      .required("NIN is required")
-      .matches(/^\d{1,11}$/, "NIN should not be longer than 11 digits"),
-    nin: yup
+    businessName: yup.string().required("Business Name is required"),
+    businessAddress: yup.string().required("Business Address is required"),
+    cert: yup
       .mixed()
       .test({
         name: "required",
-        message: "NIN document is requried",
+        message: "Certificate of Incorporation is requried",
         test: (value) => value?.length > 0,
       })
       .test({
@@ -128,52 +98,170 @@ export const Compliance_schema = yup
           }
         },
       }),
-
-    cert: yup.mixed().when("disabled", (disabled, schema) => {
-      if (disabled[0] === "Business") {
-        return schema
-          .test({
-            name: "required",
-            message: "Certificate of incorporation is requried",
-            test: (value) => value?.length > 0,
-          })
-          .test({
-            name: "fileSize",
-            message: "file uploaded is larger than 500kb",
-            test: (value) => {
-              if (typeof value === "object") {
-                return value[0]?.size < 500000;
-              } else {
-                return true;
-              }
-            },
-          });
-      }
-    }),
-
-    memo: yup.mixed().when("disabled", (disabled, schema) => {
-      if (disabled[0] === "Business") {
-        return schema
-          .test({
-            name: "required",
-            message: "Memorandum is requried",
-            test: (value) => value?.length > 0,
-          })
-          .test({
-            name: "fileSize",
-            message: "file uploaded is larger than 500kb",
-            test: (value) => {
-              if (typeof value === "object") {
-                return value[0]?.size < 500000;
-              } else {
-                return true;
-              }
-            },
-          });
-      }
-    }),
+    memo: yup
+      .mixed()
+      .test({
+        name: "required",
+        message: "Memorandum is requried",
+        test: (value) => value?.length > 0,
+      })
+      .test({
+        name: "fileSize",
+        message: "file uploaded is larger than 500kb",
+        test: (value) => {
+          if (typeof value === "object") {
+            return value[0]?.size < 500000;
+          } else {
+            return true;
+          }
+        },
+      }),
   })
   .required();
+
+export const personalCompliance_schema = yup
+  .object({
+    BVN: yup
+      .string()
+      .required("BVN is required")
+      .matches(/^\d{1,11}$/, "BVN should not be longer than 11 digits"),
+    country: yup.string().required("Country is required"),
+    state: yup.string().required("State is required"),
+    city: yup.string().required("City is required"),
+    LGA: yup.string().required("LGA is required"),
+    address: yup.string().required("Address is required"),
+    NIN: yup
+      .string()
+      .required("NIN is required")
+      .matches(/^\d{1,11}$/, "NIN should not be longer than 11 digits"),
+    nin: yup
+      .mixed()
+      .test({
+        name: "required",
+        message: "Certificate of incorporation is requried",
+        test: (value) => value?.length > 0,
+      })
+      .test({
+        name: "fileSize",
+        message: "file uploaded is larger than 500kb",
+        test: (value) => {
+          if (typeof value === "object") {
+            return value[0]?.size < 500000;
+          } else {
+            return true;
+          }
+        },
+      }),
+  })
+  .required();
+
+// export const Compliance_schema = yup
+//   .object({
+//     BVN: yup
+//       .string()
+//       .required("BVN is required")
+//       .matches(/^\d{1,11}$/, "BVN should not be longer than 11 digits"),
+//     country: yup.string().required("Country is required"),
+//     state: yup.string().required("State is required"),
+//     city: yup.string().required("City is required"),
+//     LGA: yup.string().required("LGA is required"),
+//     address: yup.string().required("Address is required"),
+
+//     businessName: yup.string().when("disabled", (disabled, schema) => {
+//       if (disabled[0] === undefined) {
+//         return schema;
+//       } else if (disabled[0] === "Business") {
+//         // console.log("disabled[0]:", disabled[0] === "Business");
+//         // console.log(disabled[0] === "Business");
+//         return schema.required("Business Name is required");
+//       } else {
+//         // console.log("disabled[0]:", disabled);
+//         // console.log(disabled[0] === "Business");
+//         return schema.required("Business Name is required");
+//       }
+//     }),
+
+//     businessAddress: yup.string().when("disabled", (disabled, schema) => {
+//       if (disabled[0] === undefined) {
+//         return;
+//       } else if (disabled[0] === "Business") {
+//         // console.log("disabled[0]:", disabled[0] === "Business");
+//         // console.log(disabled[0] === "Business");
+//         return schema.required("Business Name is required");
+//       } else {
+//         // console.log("disabled[0]:", disabled);
+//         // console.log(disabled[0] === "Business");
+//         return schema.required("Business Name is required");
+//       }
+//     }),
+//     NIN: yup
+//       .string()
+//       .required("NIN is required")
+//       .matches(/^\d{1,11}$/, "NIN should not be longer than 11 digits"),
+//     nin: yup
+//       .mixed()
+//       .test({
+//         name: "required",
+//         message: "NIN document is requried",
+//         test: (value) => value?.length > 0,
+//       })
+//       .test({
+//         name: "fileSize",
+//         message: "file uploaded is larger than 500kb",
+//         test: (value) => {
+//           if (typeof value === "object") {
+//             return value[0]?.size < 500000;
+//           } else {
+//             return true;
+//           }
+//         },
+//       }),
+
+//     cert: yup.mixed().when("disabled", (disabled, schema) => {
+//       if (disabled[0] === "Business") {
+//         return schema
+//           .test({
+//             name: "required",
+//             message: "Certificate of incorporation is requried",
+//             test: (value) => value?.length > 0,
+//           })
+//           .test({
+//             name: "fileSize",
+//             message: "file uploaded is larger than 500kb",
+//             test: (value) => {
+//               if (typeof value === "object") {
+//                 return value[0]?.size < 500000;
+//               } else {
+//                 return true;
+//               }
+//             },
+//           });
+//       }
+//     }),
+
+//     memo: yup.mixed().when("disabled", (disabled, schema) => {
+//       if (disabled[0] === "Business") {
+//         return schema
+//           .test({
+//             name: "required",
+//             message: "Memorandum is requried",
+//             test: (value) => value?.length > 0,
+//           })
+//           .test({
+//             name: "fileSize",
+//             message: "file uploaded is larger than 500kb",
+//             test: (value) => {
+//               if (typeof value === "object") {
+//                 return value[0]?.size < 500000;
+//               } else {
+//                 return true;
+//               }
+//             },
+//           });
+//       }
+//     }),
+//   })
+//   .required();
 
 export const User_schema = yup
   .object({
@@ -196,7 +284,7 @@ export const User_schema = yup
         },
       }),
     firstName: yup.string().when("isDisabled", (isDisabled, schema) => {
-      if (disabled[0] === "Business") {
+      if (!isDisabled) {
         console.log(isDisabled);
         return schema.required("First Name is required");
       }

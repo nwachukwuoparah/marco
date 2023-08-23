@@ -11,9 +11,12 @@ const Profile = ({ data }) => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    if (data?.compliance === null) {
-      // console.log(value?.compliance);
-      Navigate("/dashboard/compliance");
+    if (data?.user.status && data?.compliance === null) {
+      Navigate("/dashboard/businesscompliance");
+    } else if (!data?.user.status && data?.compliance === null) {
+      Navigate("/dashboard/personalcompliance");
+    } else {
+      return;
     }
     if (!localStorage.getItem(VITE_userToken)) {
       Navigate("/login");
