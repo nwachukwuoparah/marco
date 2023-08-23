@@ -21,7 +21,6 @@ function formatNumberAbbreviated(number) {
       return `${formattedNumber.toFixed(2)}${symbol}`;
     }
   }
-
   return number.toString();
 }
 

@@ -9,6 +9,7 @@ import Button_component from "../Component/Button";
 import { transfer } from "../Component/Apis/mutate";
 const Confirm_Pin = ({ value, mutate, isLoading }) => {
   const Navigate = useNavigate();
+  
   const onSubmit = (pin) => {
     const { amount, ...others } = value;
     console.log({ amount: Number(amount), ...others, ...pin });

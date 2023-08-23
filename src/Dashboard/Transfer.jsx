@@ -16,7 +16,7 @@ import Pin from "./pin";
 import { transfer } from "../Component/Apis/mutate";
 import { getAccName } from "../Component/Apis/mutate";
 import { height } from "@mui/system";
-` `
+` `;
 const Transfer = (props) => {
   const queryClient = useQueryClient();
   const [value, setValue] = useState(null);
@@ -34,13 +34,13 @@ const Transfer = (props) => {
     ["transfer"],
     transfer,
     {
+      refetchOnWindowFocus: false,
       onSuccess: async (data) => {
         console.log(data);
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
         Navigate("/dashboard");
-        console.log("called");
       },
-      onError: async (data, error) => {
+      onError: async (error) => {
         if (error?.response?.data.message === "Token has expired") {
           await queryClient.invalidateQueries({ queryKey: ["getUser"] });
         } else {
@@ -57,17 +57,16 @@ const Transfer = (props) => {
     error: accNameError,
   } = useMutation(["getAccName"], getAccName, {
     refetchOnWindowFocus: false,
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    onSuccess: (data) => {},
     onError: (error) => {
       console.log(error);
       if (error?.response?.data.message === "Token has expired") {
         queryClient.invalidateQueries({ queryKey: ["getUser"] });
       } else {
-        setTimeout(() => {
+        setTimeout((error) => {
           queryClient.invalidateQueries({ queryKey: ["getUser"] });
           Navigate("/dashboard");
+          console.log(error);
         }, 4000);
       }
     },
@@ -107,6 +106,7 @@ const Transfer = (props) => {
       padding: "10px 15px",
     },
   ];
+
   return (
     <Container
       disableGutters
@@ -125,6 +125,7 @@ const Transfer = (props) => {
         zIndex: 20,
       }}
     >
+      {console.log(accNameError)}
       {value ? (
         <Confirm_Pin value={value} mutate={mutate} isLoading={isLoading} />
       ) : (
@@ -158,16 +159,27 @@ const Transfer = (props) => {
                 Available Daily Transaction limit:
                 <br /> 1,000,000.00
               </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 400,
-                  color: error || (accNameError && "red"),
-                }}
-              >
-                {error || accNameError
-                  ? error || accNameError?.response?.data?.message
-                  : "Enter Transfer Details"}
-              </Typography>
+              {accNameError ? (
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    color: accNameError ? "red" : "black",
+                  }}
+                >
+                  {accNameError ? accNameError?.response?.data?.message : null}
+                </Typography>
+              ) : (
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    color: error ? "red" : "black",
+                  }}
+                >
+                  {error
+                    ? error?.response?.data?.message
+                    : "Enter Transfer Details"}
+                </Typography>
+              )}
             </Stack>
 
             <form

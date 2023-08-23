@@ -1,18 +1,6 @@
-import {
-  Container,
-  FormControlLabel,
-  Stack,
-  Typography,
-  Checkbox,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  Button,
-} from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import React, {
   useContext,
-  useState,
   useEffect,
   useRef,
   useLayoutEffect,
