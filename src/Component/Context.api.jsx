@@ -7,6 +7,7 @@ export const Global_state = ({ children }) => {
   const [routh, setRouth] = useState("");
   const [transaction, setTransaction] = useState(false);
   const [message, setMessage] = useState(false);
+  const [toste, setToste] = useState(false);
   return (
     <Global_context.Provider
       value={{
@@ -18,6 +19,8 @@ export const Global_state = ({ children }) => {
         setTransaction,
         message,
         setMessage,
+        toste,
+        setToste,
       }}
     >
       {children}

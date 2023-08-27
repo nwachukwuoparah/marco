@@ -20,6 +20,7 @@ import { useForm, Controller } from "react-hook-form";
 import { resetPassword } from "../Component/Apis/mutate";
 import { Global_context } from "../Component/Context.api";
 import Message from "../Component/message";
+import Toste from "../Component/toste";
 
 const Reset_schema = yup
   .object({
@@ -34,10 +35,8 @@ const Reset_schema = yup
   .required();
 
 const Reset_password = (props) => {
-  
+  const { toste, setToste } = useContext(Global_context);
   const Navigate = useNavigate();
-  
-  const { message, setMessage } = useContext(Global_context);
   const { token } = useParams();
 
   const {
@@ -53,7 +52,9 @@ const Reset_password = (props) => {
     resetPassword,
     {
       onSuccess: () => {
-        Navigate("/login");
+        setTimeout(() => {
+          Navigate("/login");
+        }, 4000);
       },
     }
   );
@@ -62,9 +63,15 @@ const Reset_password = (props) => {
   };
 
   useEffect(() => {
-    if (error) setMessage(!message);
     console.log(error);
-  }, [error]);
+    console.log(data);
+    if (data || error) {
+      setToste(true);
+    }
+    setTimeout(() => {
+      setToste(false);
+    }, 3000);
+  }, [error, data]);
 
   return (
     <Container
@@ -81,7 +88,10 @@ const Reset_password = (props) => {
         backgroundImage: `url(${background})`,
       }}
     >
-      {error && message && <Message title={error?.response?.data.message} />}
+      <Toste
+        suscess={data?.data.message}
+        error={error?.response?.data.message}
+      />
       <Stack
         alignItems="center"
         justifyContent="center"
@@ -130,7 +140,7 @@ const Reset_password = (props) => {
                 render={({ field }) => (
                   <TextField
                     sx={{
-                      borderBottom: errors["newpassword"] && "2px solid red",
+                      borderBottom: errors["password"] && "2px solid red",
                     }}
                     {...field}
                     variant="standard"
@@ -140,6 +150,7 @@ const Reset_password = (props) => {
               />
               <Typography sx={{ color: "red" }}>
                 {errors["newpassword"]?.message}
+                {console.log(errors)}
               </Typography>
               <Button_component
                 loading={isLoading}

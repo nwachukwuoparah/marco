@@ -40,9 +40,9 @@ const Transfer = (props) => {
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
         Navigate("/dashboard");
       },
-      onError: async (error) => {
+      onError: async (error) => {  
         if (error?.response?.data.message === "Token has expired") {
-          await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+          await queryClient.invalidateQueries({ queryKey: ["getUser"] }); 
         } else {
           setValue(null);
         }

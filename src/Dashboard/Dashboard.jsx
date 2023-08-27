@@ -12,7 +12,6 @@ import Wallet from "./Wallet";
 import Sidebar from "../Component/Sidebar";
 import { Global_context } from "../Component/Context.api";
 import Transaction from "./Transaction";
-// import Compliance from "./Compliance";
 import Profile from "./Profile";
 import Transfer from "./Transfer";
 import Airtime from "./Airtime";
@@ -73,15 +72,15 @@ const Dashboard = (props) => {
   const value = userdata?.data?.data;
   console.log(value);
   useLayoutEffect(() => {
+    if (!localStorage.getItem(VITE_userToken)) {
+      Navigate("/login");
+    }
     if (value?.user.status && value?.compliance === null) {
       Navigate("/dashboard/businesscompliance");
     } else if (!value?.user.status && value?.compliance === null) {
       Navigate("/dashboard/personalcompliance");
     } else {
       return;
-    }
-    if (!localStorage.getItem(VITE_userToken)) {
-      Navigate("/login");
     }
     if (logOutError) setMessage(!message);
   }, [userError, logOutError, userdata]);
@@ -159,6 +158,8 @@ const Dashboard = (props) => {
               direction="row"
               spacing={1}
               sx={{
+                alignItems: "center",
+                justifyContent: "center",
                 bgcolor: "#fbfbfb",
                 padding: "5px",
                 borderRadius: "20px",
@@ -166,7 +167,22 @@ const Dashboard = (props) => {
                 "&:hover": { bgcolor: "rgb(128, 147, 211,10%)" },
               }}
             >
-              <AccountCircleIcon sx={{ color: "#7081b9" }} />
+              {value?.user.imageurl === null ? (
+                <AccountCircleIcon
+                  sx={{ fontSize: "110px", color: "#7081b9" }}
+                />
+              ) : (
+                <Stack
+                  sx={{
+                    width: "22px",
+                    height: "22px",
+                    overflow: "hidden",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <img src={value?.user.imageurl} style={{}} />
+                </Stack>
+              )}
               <Typography>{value?.user.accountName}</Typography>
             </Stack>
           </Stack>
@@ -179,7 +195,7 @@ const Dashboard = (props) => {
             width: "160px",
             position: "absolute",
             top: menu ? 56 : -160,
-            right: 17,
+            right: 0,
             zIndex: 5,
             transition: "ease-in-out 0.5s",
             bgcolor: "white",
@@ -190,11 +206,23 @@ const Dashboard = (props) => {
           {[
             {
               id: 1,
-              icon: (
-                <AccountCircleIcon
-                  sx={{ color: "#7081b9", fontSize: "25px" }}
-                />
-              ),
+              icon:
+                value?.user.imageurl === null ? (
+                  <AccountCircleIcon
+                    sx={{ color: "#7081b9", fontSize: "25px" }}
+                  />
+                ) : (
+                  <Stack
+                    sx={{
+                      width: "22px",
+                      height: "22px",
+                      overflow: "hidden",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    <img src={value?.user.imageurl} style={{}} />
+                  </Stack>
+                ),
               title: "Profile",
               call: () => {
                 Navigate("/dashboard/profile");

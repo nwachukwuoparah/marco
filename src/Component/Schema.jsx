@@ -125,11 +125,26 @@ export const personalCompliance_schema = yup
       .string()
       .required("BVN is required")
       .matches(/^\d{1,11}$/, "BVN should not be longer than 11 digits"),
-    country: yup.string().required("Country is required"),
-    state: yup.string().required("State is required"),
-    city: yup.string().required("City is required"),
-    LGA: yup.string().required("LGA is required"),
-    address: yup.string().required("Address is required"),
+    country: yup
+      .string()
+      .required("Country is required")
+      .matches(/^[a-zA-Z ]+$/, "Country Should not contain a number"),
+    state: yup
+      .string()
+      .required("State is required")
+      .matches(/^[a-zA-Z ]+$/, "State Should not contain a number"),
+    city: yup
+      .string()
+      .required("City is required")
+      .matches(/^[a-zA-Z ]+$/, "City Should not contain a number"),
+    LGA: yup
+      .string()
+      .required("LGA is required")
+      .matches(/^[a-zA-Z ]+$/, "LGA Should not contain a number"),
+    address: yup
+      .string()
+      .required("Address is required")
+      .matches(/^[a-zA-Z ]+$/, "Address Should not contain a number"),
     NIN: yup
       .string()
       .required("NIN is required")
@@ -322,7 +337,7 @@ export const Transfer_schema = yup
         /^\d{1,10}$/,
         "Account Number should not be longer than 11 digits"
       ),
-    amount: yup.string().required("Amount is required"),
+    amount: yup.number().required("Amount is required"),
     naration: yup.string(),
   })
   .required();

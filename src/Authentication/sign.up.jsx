@@ -27,9 +27,11 @@ import { Signup_schema } from "../Component/Schema";
 import { signUp } from "../Component/Apis/mutate";
 import Message from "../Component/message";
 import { Global_context } from "../Component/Context.api";
+import Toste from "../Component/toste";
 
 const Sign_up = (props) => {
   const Navigate = useNavigate();
+  const { toste, setToste } = useContext(Global_context);
   const { message, setMessage } = useContext(Global_context);
 
   const {
@@ -46,7 +48,8 @@ const Sign_up = (props) => {
     signUp,
     {
       onSuccess: () => {
-        Navigate("/login");
+        setToste(true);
+        setTimeout(() => Navigate("/login"), 5000);
       },
     }
   );
@@ -69,6 +72,7 @@ const Sign_up = (props) => {
       placeholder: "First Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label:"First Name"
     },
     {
       id: 2,
@@ -77,6 +81,7 @@ const Sign_up = (props) => {
       placeholder: "Last Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label:"Last Name"
     },
     {
       id: 3,
@@ -85,6 +90,7 @@ const Sign_up = (props) => {
       placeholder: "Email",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label:"Email"
     },
     {
       id: 4,
@@ -93,6 +99,7 @@ const Sign_up = (props) => {
       placeholder: "Password",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label:"Password"
     },
   ];
 
@@ -112,7 +119,10 @@ const Sign_up = (props) => {
         backgroundImage: { md: `url(${background})`, xs: "none" },
       }}
     >
-      {error && message && <Message title={error?.response?.data.message} />}
+      <Toste
+        suscess="SignUp Successfull"
+        error={error?.response?.data.message}
+      />
       <Stack
         direction={{ md: "row", xs: "column" }}
         sx={{
@@ -193,7 +203,7 @@ const Sign_up = (props) => {
                 mutate(others);
               })}
             >
-              <Stack spacing={3}>
+              <Stack spacing={2.5}>
                 {From_input.map((i) => (
                   <Input
                     key={i.id}
@@ -205,6 +215,7 @@ const Sign_up = (props) => {
                 <InputSelect
                   register={register}
                   errors={errors}
+                  label="Account Type"
                   value={[
                     { title: "Select account type", value: "" },
                     { title: "Personal", value: "Personal" },

@@ -1,15 +1,4 @@
-import {
-  Container,
-  FormControlLabel,
-  Stack,
-  Typography,
-  Checkbox,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  Button,
-} from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import React, {
   useContext,
   useState,
@@ -28,10 +17,12 @@ import { useNavigate } from "react-router-dom";
 import { personalCompliance_schema } from "../Component/Schema";
 import { createCompliance } from "../Component/Apis/mutate";
 import Message from "../Component/message";
+import Toste from "../Component/toste";
 
 const Personal_compliance = ({ compData }) => {
   const queryClient = useQueryClient();
-  const { setRouth, message, setMessage } = useContext(Global_context);
+  const { setRouth, message, setMessage, setToste } =
+    useContext(Global_context);
   const imageref = useRef(null);
   const inputRef = useRef();
   const Navigate = useNavigate();
@@ -57,6 +48,7 @@ const Personal_compliance = ({ compData }) => {
     status,
   } = useMutation(["compliance"], createCompliance, {
     onSuccess: async (data) => {
+      console.log(data?.data);
       await queryClient.invalidateQueries({ queryKey: ["getUser"] });
       Navigate("/dashboard");
     },
@@ -79,6 +71,17 @@ const Personal_compliance = ({ compData }) => {
       Navigate("/dashboard");
     }
   }, []);
+
+  useEffect(() => {
+    console.log(error);
+    if (error) {
+      setToste(true);
+      setMessage(!message);
+    }
+    setTimeout(() => {
+      setToste(false);
+    }, 5000);
+  }, [error]);
 
   let From_input = [
     {
@@ -151,6 +154,7 @@ const Personal_compliance = ({ compData }) => {
         padding: "0px 15px 30px",
       }}
     >
+      <Toste error={error?.response?.data.message} />
       <Stack
         width={{
           md: "50%",

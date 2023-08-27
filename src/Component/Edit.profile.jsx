@@ -286,6 +286,7 @@ const Edit_profile = ({ setToggleProfile, value }) => {
               register={register}
               width="35%"
               errors={errors}
+              disabled={value?.user?.sex ? true : false}
               value={[
                 { title: "Select your Sex", value: "" },
                 { title: "Male", value: "Male" },

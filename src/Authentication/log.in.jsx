@@ -6,7 +6,13 @@ import {
   Typography,
 } from "@mui/material";
 const { VITE_userToken } = import.meta.env;
-import React, { useContext, useEffect, useLayoutEffect } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import background from "../assets/background.jpg";
 import login_illustration from "../assets/login_illustration.png";
 import marco from "../assets/marco.png";
@@ -20,8 +26,11 @@ import { useMutation } from "@tanstack/react-query";
 import { logIn } from "../Component/Apis/mutate";
 import Message from "../Component/message";
 import { Global_context } from "../Component/Context.api";
+import Toste from "../Component/toste";
 
 const Login = (props) => {
+  const { setToste } = useContext(Global_context);
+  const [toggle, setToggle] = useState(false);
   const Navigate = useNavigate();
   const { message, setMessage } = useContext(Global_context);
   const {
@@ -33,7 +42,11 @@ const Login = (props) => {
   });
 
   const { data, error, isLoading, mutate } = useMutation(["login"], logIn, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      localStorage.setItem(
+        VITE_userToken,
+        JSON.stringify(data?.data?.access_token)
+      );
       setTimeout(() => {
         Navigate("/dashboard/");
       }, 50);
@@ -41,15 +54,14 @@ const Login = (props) => {
   });
 
   useEffect(() => {
-    if (error) setMessage(!message);
-    data
-      ? localStorage.setItem(
-          VITE_userToken,
-          JSON.stringify(data?.data?.access_token)
-        )
-      : null;
-
-  }, [error, data]);
+    if (error) {
+      setToste(true);
+      setMessage(!message);
+    }
+    setTimeout(() => {
+      setToste(false);
+    }, 5000);
+  }, [error]);
 
   const From_input = [
     {
@@ -59,16 +71,19 @@ const Login = (props) => {
       type: "email",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "Email",
     },
     {
       id: 2,
       name: "password",
       placeholder: "Password",
-      type: "text",
+      type: "text", // toggle ? "text" : "password",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "Password",
     },
   ];
+
   return (
     <Container
       disableGutters
@@ -85,7 +100,10 @@ const Login = (props) => {
         backgroundImage: `url(${background})`,
       }}
     >
-      {error && message && <Message title={error?.response?.data.message} />}
+      <Toste
+        suscess={""}
+        error={error?.response?.data.message || "Check email to verify account"}
+      />
       <Stack
         spacing={{ md: 0, xs: 5 }}
         direction={{ md: "row", xs: "column" }}
@@ -144,7 +162,7 @@ const Login = (props) => {
                   Sign In
                 </Typography>
               </span>
-              <Stack direction="row" alignItems="center">
+              <Stack direction="row" alignItems="center" spacing={1}>
                 <Typography sx={{ color: "rgba(0, 0, 0, 0.54)" }}>
                   Don't have an account?
                 </Typography>
@@ -175,6 +193,10 @@ const Login = (props) => {
                     register={register}
                     errors={errors}
                     width="100%"
+                    Toggle={() => {
+                      setToggle(!toggle);
+                    }}
+                    toggle={toggle}
                   />
                 ))}
 

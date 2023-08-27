@@ -54,8 +54,6 @@ const OtpInput = ({ mutate, isLoading }) => {
   ];
 
   return (
-
-
     <form
       style={{
         display: "flex",
@@ -116,9 +114,6 @@ const OtpInput = ({ mutate, isLoading }) => {
         radius="5px"
         color="#fff"
       />
-
-
-      
     </form>
   );
 };

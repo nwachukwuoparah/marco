@@ -10,12 +10,15 @@ import { useNavigate } from "react-router-dom";
 
 const Wallet = ({ data }) => {
   const Navigate = useNavigate();
-
   const { setRouth, transaction } = useContext(Global_context);
-
   useEffect(() => {
     setRouth("Wallet");
   }, []);
+  console.log(data);
+
+  const trsnsaction = () => {
+    if (data !== undefined) return [...data?.transaction].reverse();
+  };
 
   return (
     <Container
@@ -127,7 +130,7 @@ const Wallet = ({ data }) => {
           height: { md: "100%", xs: "85vh" },
           border: " 1px solid #e3ebf6",
           width: { md: "30%", xs: transaction && "100%" },
-          borderRadius: !transaction && "5px",
+          borderRadius: !transaction && "5px 5px 0px 0px ",
           bgcolor: "#f8f8f8",
           zIndex: { md: 1, xs: 1000 },
           top: { md: "0px", xs: "135px" },
@@ -157,7 +160,7 @@ const Wallet = ({ data }) => {
             overflowY: "scroll",
           }}
         >
-          {data?.transaction.slice(0, 21).map((i, index) => (
+          {trsnsaction()?.map((i, index) => (
             <Stack
               key={index}
               direction="row"

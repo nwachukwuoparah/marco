@@ -20,8 +20,10 @@ import { Forget_schema } from "../Component/Schema";
 import { forgotPassword } from "../Component/Apis/mutate";
 import { Global_context } from "../Component/Context.api";
 import Message from "../Component/message";
+import Toste from "../Component/toste";
 
 const Forgot_password = () => {
+  const { toste, setToste } = useContext(Global_context);
   const Navigate = useNavigate();
   const { message, setMessage } = useContext(Global_context);
   const {
@@ -38,9 +40,14 @@ const Forgot_password = () => {
   );
 
   useEffect(() => {
-    if (error) setMessage(!message);
-    console.log(data)
-  }, [error,data]);
+    console.log(error);
+    if (data || error) {
+      setToste(true);
+    }
+    setTimeout(() => {
+      setToste(false);
+    }, 5000);
+  }, [error, data]);
 
   return (
     <Container
@@ -57,7 +64,10 @@ const Forgot_password = () => {
         backgroundImage: `url(${background})`,
       }}
     >
-      {error && message && <Message title={error?.response?.data.message} />}
+      <Toste
+        suscess={data?.data.message}
+        error={error?.response?.data.message}
+      />
       <Stack
         alignItems="center"
         justifyContent="center"

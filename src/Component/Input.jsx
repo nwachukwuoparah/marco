@@ -1,12 +1,14 @@
-import { Stack, TextField, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 export const InputSelect = (props) => {
   return (
     <Stack sx={{ width: { md: props.width, xs: "100%" } }}>
+      <label style={{ marginLeft: "5px", fontSize: "14px", fontWeight: 500 }}>
+        {props.label}
+      </label>
       <select
         style={{
           outline: "none",
@@ -33,7 +35,11 @@ export const InputSelect = (props) => {
 const Input = (props) => {
   return (
     <Stack sx={{ width: { md: props.width, xs: "100%" } }}>
-      <input
+      <label style={{ marginLeft: "5px", fontSize: "14px", fontWeight: 500 }}>
+        {props.label}
+      </label>
+      <Stack
+        direction="row"
         style={{
           outline: "none",
           padding: props.padding,
@@ -47,14 +53,39 @@ const Input = (props) => {
           opacity: props.disabled && 0.4,
           backgroundColor: "#f8f8f8",
         }}
-        type={props.type}
-        name={props.name}
-        placeholder={props.placeholder}
-        {...props.register(props.name)}
-        disabled={props?.disabled}
-        defaultValue={props?.defaultValue}
-      />
-
+      >
+        <input
+          style={{
+            outline: "none",
+            width: "100%",
+            border: "none",
+            backgroundColor: "#f8f8f8",
+          }}
+          type={props.type}
+          name={props.name}
+          placeholder={props.placeholder}
+          {...props.register(props.name)}
+          disabled={props?.disabled}
+          defaultValue={props?.defaultValue}
+        />
+        <>
+          {props.password && (
+            <>
+              {props.toggle ? (
+                <VisibilityIcon
+                  sx={{ opacity: props.disabled && 0.4, color: "grey" }}
+                  onClick={props.Toggle}
+                />
+              ) : (
+                <VisibilityOffIcon
+                  sx={{ opacity: props.disabled && 0.4, color: "grey" }}
+                  onClick={props.Toggle}
+                />
+              )}
+            </>
+          )}
+        </>
+      </Stack>
       <Typography sx={{ color: "red" }}>
         {props.apiError
           ? props.apiError?.message
