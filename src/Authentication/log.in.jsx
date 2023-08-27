@@ -52,6 +52,11 @@ const Login = (props) => {
       }, 50);
     },
   });
+  useLayoutEffect(() => {
+    if (localStorage.getItem(VITE_userToken)) {
+      Navigate("/dashboard");
+    }
+  }, []);
 
   useEffect(() => {
     if (error) {

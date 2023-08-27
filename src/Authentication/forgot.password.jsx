@@ -6,8 +6,9 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
+const { VITE_userToken } = import.meta.env;
 import { useMutation } from "@tanstack/react-query";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useLayoutEffect } from "react";
 import background from "../assets/background.jpg";
 import login_illustration from "../assets/login_illustration.png";
 import marco from "../assets/marco.png";
@@ -38,6 +39,11 @@ const Forgot_password = () => {
     ["forgotPassword"],
     forgotPassword
   );
+  useLayoutEffect(() => {
+    if (localStorage.getItem(VITE_userToken)) {
+      Navigate("/dashboard");
+    }
+  }, []);
 
   useEffect(() => {
     console.log(error);
