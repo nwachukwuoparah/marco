@@ -4,12 +4,14 @@ import { Global_context } from "./Context.api";
 
 const Toste = ({ suscess, error }) => {
   const { toste } = useContext(Global_context);
+  console.log(error);
+  console.log(toste);
   return (
     <Stack
       sx={{
         position: "absolute",
         top: toste ? "30px" : "-50px",
-        left:"500px",
+        left: "500px",
         border: suscess
           ? "1px solid rgba(0, 128, 0,50%)"
           : "1px solid rgba(255, 0, 0,40%)",

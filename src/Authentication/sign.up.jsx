@@ -31,6 +31,7 @@ import Toste from "../Component/toste";
 
 const Sign_up = (props) => {
   const Navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
   const { toste, setToste } = useContext(Global_context);
   const { message, setMessage } = useContext(Global_context);
 
@@ -51,6 +52,7 @@ const Sign_up = (props) => {
         setToste(true);
         setTimeout(() => Navigate("/login"), 5000);
       },
+      cacheTime: 0,
     }
   );
 
@@ -61,8 +63,14 @@ const Sign_up = (props) => {
   }, []);
 
   useEffect(() => {
-    if (error) setMessage(!message);
-  }, [error, data]);
+    if (error) {
+      setToste(true);
+      setMessage(!message);
+    }
+    setTimeout(() => {
+      setToste(false);
+    }, 5000);
+  }, [error]);
 
   const From_input = [
     {
@@ -72,7 +80,8 @@ const Sign_up = (props) => {
       placeholder: "First Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      label:"First Name"
+      label: "First Name",
+      password: false,
     },
     {
       id: 2,
@@ -81,7 +90,8 @@ const Sign_up = (props) => {
       placeholder: "Last Name",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      label:"Last Name"
+      label: "Last Name",
+      password: false,
     },
     {
       id: 3,
@@ -90,16 +100,18 @@ const Sign_up = (props) => {
       placeholder: "Email",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      label:"Email"
+      label: "Email",
+      password: false,
     },
     {
       id: 4,
       name: "password",
-      type: "text",
+      type: toggle ? "text" : "password",
       placeholder: "Password",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
-      label:"Password"
+      label: "Password",
+      password: true,
     },
   ];
 
@@ -120,7 +132,7 @@ const Sign_up = (props) => {
       }}
     >
       <Toste
-        suscess="SignUp Successfull"
+        suscess={data?.data.message}
         error={error?.response?.data.message}
       />
       <Stack
@@ -210,6 +222,10 @@ const Sign_up = (props) => {
                     {...i}
                     register={register}
                     errors={errors}
+                    Toggle={() => {
+                      setToggle(!toggle);
+                    }}
+                    toggle={toggle}
                   />
                 ))}
                 <InputSelect

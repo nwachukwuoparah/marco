@@ -338,7 +338,7 @@ export const Transfer_schema = yup
         "Account Number should not be longer than 11 digits"
       ),
     amount: yup.number().required("Amount is required"),
-    naration: yup.string(),
+    narration: yup.string(),
   })
   .required();
 

@@ -5,11 +5,12 @@ import {
   Stack,
   Typography,
   TextField,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import background from "../assets/background.jpg";
-import login_illustration from "../assets/login_illustration.png";
 import marco from "../assets/marco.png";
 import Input from "../Component/Input";
 import Button_component from "../Component/Button";
@@ -19,7 +20,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { resetPassword } from "../Component/Apis/mutate";
 import { Global_context } from "../Component/Context.api";
-import Message from "../Component/message";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Toste from "../Component/toste";
 
 const Reset_schema = yup
@@ -35,6 +37,7 @@ const Reset_schema = yup
   .required();
 
 const Reset_password = (props) => {
+  const [toggle, setToggle] = useState(false);
   const { toste, setToste } = useContext(Global_context);
   const Navigate = useNavigate();
   const { token } = useParams();
@@ -137,6 +140,7 @@ const Reset_password = (props) => {
               <Controller
                 name="password"
                 control={control}
+                startIcon={<VisibilityIcon />}
                 render={({ field }) => (
                   <TextField
                     sx={{
@@ -145,6 +149,22 @@ const Reset_password = (props) => {
                     {...field}
                     variant="standard"
                     label="New Password"
+                    type={toggle ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => {
+                            setToggle(!toggle);
+                          }}
+                          onMouseDown={() => {
+                            setToggle(!toggle);
+                          }}
+                        >
+                          {toggle ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
                   />
                 )}
               />

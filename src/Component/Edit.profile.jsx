@@ -14,10 +14,12 @@ import Confirm_password from "../Authentication/confirm.password";
 import { changePassword, confirmPassword, updateUser } from "./Apis/mutate";
 import { useNavigate } from "react-router-dom";
 import Loadind from "./loading.state";
+import Toste from "./toste";
 
 const Edit_profile = ({ setToggleProfile, value }) => {
   const queryClient = useQueryClient();
-  const { setRouth } = useContext(Global_context);
+  const { setRouth, setToste } = useContext(Global_context);
+  const [toggle, setToggle] = useState(false);
   const [confirm_user, setConfirm_user] = useState(false);
   const Navigate = useNavigate();
   const userRef = useRef();
@@ -48,9 +50,12 @@ const Edit_profile = ({ setToggleProfile, value }) => {
     mutate: updateUserMutate,
     status: updateUserStatus,
   } = useMutation(["updateUser"], updateUser, {
-    onSettled: async (error) => {
-      await queryClient.invalidateQueries({ queryKey: ["getUser"] });
-      Navigate("/dashboard/profile");
+    onSuccess: () => {
+      setToste(true);
+      setTimeout(async () => {
+        await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+        Navigate("/dashboard/profile");
+      }, 5000);
     },
   });
 
@@ -89,7 +94,10 @@ const Edit_profile = ({ setToggleProfile, value }) => {
     mutate: changePasswordMutate,
     status: changePasswordStatus,
   } = useMutation(["changePassword"], changePassword, {
-    onSuccess: () => {},
+    onSuccess: (data) => {
+      console.log(data?.data.message);
+      setToste(true);
+    },
     onError: (error) => {
       if (error?.response?.data.message === "Token has expired") {
         queryClient.invalidateQueries({ queryKey: ["getUser"] });
@@ -149,6 +157,16 @@ const Edit_profile = ({ setToggleProfile, value }) => {
   ];
 
   useEffect(() => {
+    console.log(changePasswordError);
+    if (changePasswordError) {
+      setToste(true);
+    }
+    setTimeout(() => {
+      setToste(false);
+    }, 5000);
+  }, [changePasswordError, changePasswordData, updateUserData]);
+
+  useEffect(() => {
     setRouth("Profile/Edit Profile");
   }, []);
 
@@ -170,6 +188,12 @@ const Edit_profile = ({ setToggleProfile, value }) => {
           loading={confirmPasswordIsLoading}
         />
       )}
+      <Toste
+        error={changePasswordError?.response?.data.message}
+        suscess={
+          changePasswordData?.data.message || updateUserData?.data.message
+        }
+      />
       <Stack
         spacing={2}
         sx={{
@@ -184,7 +208,6 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             sx={{ cursor: "pointer" }}
             onClick={() => {
               console.log("click");
-              // URL.revokeObjectURL(url);
               setImage(null);
             }}
           >
@@ -343,19 +366,23 @@ const Edit_profile = ({ setToggleProfile, value }) => {
             {
               id: 1,
               name: "oldPassword",
-              type: "text",
+              type: toggle ? "text" : "password",
               placeholder: "Old Password",
               border: "1px solid rgba(28, 28, 28, 25%)",
               padding: "10px 15px",
               apiError: changePasswordError?.response?.data,
+              password: true,
+              label: "Current password",
             },
             {
               id: 2,
               name: "newPassword",
-              type: "text",
+              type: toggle ? "text" : "password",
               placeholder: "New Password",
               border: "1px solid rgba(28, 28, 28, 25%)",
               padding: "10px 15px",
+              password: true,
+              label: "New password",
             },
           ].map((i) => (
             <Input
@@ -364,6 +391,10 @@ const Edit_profile = ({ setToggleProfile, value }) => {
               {...i}
               register={register_change_password}
               errors={change_password_errors}
+              Toggle={() => {
+                setToggle(!toggle);
+              }}
+              toggle={toggle}
             />
           ))}
 

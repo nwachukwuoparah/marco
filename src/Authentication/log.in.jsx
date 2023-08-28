@@ -43,13 +43,15 @@ const Login = (props) => {
 
   const { data, error, isLoading, mutate } = useMutation(["login"], logIn, {
     onSuccess: (data) => {
+      setToste(true);
       localStorage.setItem(
         VITE_userToken,
         JSON.stringify(data?.data?.access_token)
       );
       setTimeout(() => {
+        setToste(false);
         Navigate("/dashboard/");
-      }, 50);
+      }, 3000);
     },
   });
   useLayoutEffect(() => {
@@ -77,15 +79,17 @@ const Login = (props) => {
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
       label: "Email",
+      password: false,
     },
     {
       id: 2,
       name: "password",
       placeholder: "Password",
-      type: "text", // toggle ? "text" : "password",
+      type: toggle ? "text" : "password",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
       label: "Password",
+      password: true,
     },
   ];
 
@@ -106,7 +110,7 @@ const Login = (props) => {
       }}
     >
       <Toste
-        suscess={""}
+        suscess={data?.data.message}
         error={error?.response?.data.message || "Check email to verify account"}
       />
       <Stack

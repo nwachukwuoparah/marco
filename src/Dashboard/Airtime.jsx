@@ -59,8 +59,9 @@ const Airtime = (props) => {
     airtime,
     {
       onSuccess: async (data) => {
+        console.log(data)
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
-        Navigate("/dashboard");
+        Navigate(`/dashboard/single-transaction/${data?.data.data}`);
       },
       onError: async (data, error) => {
         if (error?.response?.data.message === "Token has expired") {

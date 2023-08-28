@@ -21,8 +21,7 @@ import Toste from "../Component/toste";
 
 const Personal_compliance = ({ compData }) => {
   const queryClient = useQueryClient();
-  const { setRouth, message, setMessage, setToste } =
-    useContext(Global_context);
+  const { setRouth, setToste } = useContext(Global_context);
   const imageref = useRef(null);
   const inputRef = useRef();
   const Navigate = useNavigate();
@@ -38,7 +37,7 @@ const Personal_compliance = ({ compData }) => {
 
   useEffect(() => {
     setRouth("Compliance");
-  }, [errors]);
+  }, []);
 
   const {
     data: complianceData,
@@ -48,9 +47,12 @@ const Personal_compliance = ({ compData }) => {
     status,
   } = useMutation(["compliance"], createCompliance, {
     onSuccess: async (data) => {
-      console.log(data?.data);
-      await queryClient.invalidateQueries({ queryKey: ["getUser"] });
-      Navigate("/dashboard");
+      setToste(true);
+      setTimeout(async () => {
+        await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+        Navigate("/dashboard");
+        setToste(false);
+      }, 3000);
     },
     onError: async (error) => {
       if (error?.response?.data.message === "Token has expired") {
@@ -76,12 +78,11 @@ const Personal_compliance = ({ compData }) => {
     console.log(error);
     if (error) {
       setToste(true);
-      setMessage(!message);
     }
     setTimeout(() => {
       setToste(false);
     }, 5000);
-  }, [error]);
+  }, [error, complianceData]);
 
   let From_input = [
     {
@@ -141,6 +142,7 @@ const Personal_compliance = ({ compData }) => {
       padding: "10px 15px",
     },
   ];
+
   return (
     <Container
       disableGutters
@@ -154,7 +156,10 @@ const Personal_compliance = ({ compData }) => {
         padding: "0px 15px 30px",
       }}
     >
-      <Toste error={error?.response?.data.message} />
+      <Toste
+        error={error?.response?.data.message}
+        suscess={complianceData?.data.message}
+      />
       <Stack
         width={{
           md: "50%",
