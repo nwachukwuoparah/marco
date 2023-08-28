@@ -2,8 +2,6 @@ import OtpInput from "../Component/password.input";
 import React, { useEffect } from "react";
 import { Container, Stack, Typography } from "@mui/material";
 import background from "../assets/background.jpg";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { createPin } from "../Component/Apis/mutate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

@@ -169,7 +169,7 @@ const Dashboard = (props) => {
             >
               {value?.user.imageurl === null ? (
                 <AccountCircleIcon
-                  sx={{ fontSize: "110px", color: "#7081b9" }}
+                  sx={{ fontSize: "20px", color: "#7081b9" }} 
                 />
               ) : (
                 <Stack

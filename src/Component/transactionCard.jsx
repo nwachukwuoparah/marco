@@ -85,7 +85,7 @@ const TransactionCard = ({ data }) => {
         >
           <Typography sx={{ overflow: "hidden" }}>Name</Typography>
           <Typography>
-            {value?.senderName ? value?.senderName : "- - - - -"}
+            {value?.senderName ? value?.senderName : value?.recieverName}
           </Typography>
         </Stack>
         <Stack
@@ -117,6 +117,18 @@ const TransactionCard = ({ data }) => {
         >
           <Typography sx={{ overflow: "hidden" }}>Date</Typography>
           <Typography>{value?.createDate.slice(0, 19)}</Typography>
+        </Stack>
+        <Stack
+          direction="row"
+          sx={{
+            minWidth: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography sx={{ overflow: "hidden" }}>Narration</Typography>
+          <Typography>
+            {value?.narration ? value?.narration : "- - - -"}
+          </Typography>
         </Stack>
       </Stack>
     </Stack>

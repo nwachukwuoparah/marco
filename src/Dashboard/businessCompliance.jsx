@@ -1,10 +1,5 @@
 import { Container, Stack, Typography } from "@mui/material";
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-} from "react";
+import React, { useContext, useEffect, useRef, useLayoutEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Global_context } from "../Component/Context.api";
 import Input from "../Component/Input";
@@ -15,11 +10,11 @@ import Button_component from "../Component/Button";
 import { useNavigate } from "react-router-dom";
 import { businessCompliance_schema } from "../Component/Schema";
 import { createCompliance } from "../Component/Apis/mutate";
-import Message from "../Component/message";
+import Toste from "../Component/toste";
 
 const BusinessCompliance = ({ compData }) => {
   const queryClient = useQueryClient();
-  const { setRouth, message, setMessage } = useContext(Global_context);
+  const { setRouth, setToste } = useContext(Global_context);
   const imageref = useRef(null);
   const inputRef = useRef();
   const Navigate = useNavigate();
@@ -45,8 +40,12 @@ const BusinessCompliance = ({ compData }) => {
     status,
   } = useMutation(["compliance"], createCompliance, {
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries({ queryKey: ["getUser"] });
-      Navigate("/dashboard");
+      setToste(true);
+      setTimeout(async () => {
+        await queryClient.invalidateQueries({ queryKey: ["getUser"] });
+        Navigate("/dashboard");
+        setToste(false);
+      }, 3000);
     },
     onError: async (error) => {
       if (error?.response?.data.message === "Token has expired") {
@@ -71,6 +70,16 @@ const BusinessCompliance = ({ compData }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (error) {
+      console.log(error?.response?.data.message);
+      setToste(true);
+    }
+    setTimeout(() => {
+      setToste(false);
+    }, 5000);
+  }, [error, complianceData]);
+
   let From_input = [
     {
       id: 1,
@@ -79,6 +88,7 @@ const BusinessCompliance = ({ compData }) => {
       placeholder: "BVN",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "Bank Verification Number",
     },
     {
       id: 2,
@@ -87,6 +97,7 @@ const BusinessCompliance = ({ compData }) => {
       placeholder: "Country",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "Country",
     },
     {
       id: 3,
@@ -95,6 +106,7 @@ const BusinessCompliance = ({ compData }) => {
       placeholder: "State",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "State",
     },
     {
       id: 4,
@@ -103,6 +115,7 @@ const BusinessCompliance = ({ compData }) => {
       placeholder: "City",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "City",
     },
     {
       id: 5,
@@ -111,6 +124,7 @@ const BusinessCompliance = ({ compData }) => {
       placeholder: "LGA",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "Local Government Area",
     },
     {
       id: 6,
@@ -119,6 +133,7 @@ const BusinessCompliance = ({ compData }) => {
       placeholder: "Address",
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
+      label: "Address",
     },
     {
       id: 7,
@@ -128,6 +143,7 @@ const BusinessCompliance = ({ compData }) => {
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
       disabled: compData?.user?.accountType !== "Business" ? true : false,
+      label: "Business Name",
     },
     {
       id: 8,
@@ -137,6 +153,7 @@ const BusinessCompliance = ({ compData }) => {
       border: "1px solid rgba(28, 28, 28, 25%)",
       padding: "10px 15px",
       disabled: compData?.user?.accountType !== "Business" ? true : false,
+      label: "Business Address",
     },
   ];
   let ImageFiles = [
@@ -167,6 +184,10 @@ const BusinessCompliance = ({ compData }) => {
         padding: "0px 15px 30px",
       }}
     >
+      <Toste
+        error={error?.response?.data.message}
+        suscess={complianceData?.data.message}
+      />
       <Stack
         width={{
           md: "50%",

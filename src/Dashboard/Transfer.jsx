@@ -36,13 +36,12 @@ const Transfer = (props) => {
     {
       refetchOnWindowFocus: false,
       onSuccess: async (data) => {
-        console.log(data);
         await queryClient.invalidateQueries({ queryKey: ["getUser"] });
-        Navigate("/dashboard");
+        Navigate(`/dashboard/single-transaction/${data?.data.data}`);
       },
-      onError: async (error) => {  
+      onError: async (error) => {
         if (error?.response?.data.message === "Token has expired") {
-          await queryClient.invalidateQueries({ queryKey: ["getUser"] }); 
+          await queryClient.invalidateQueries({ queryKey: ["getUser"] });
         } else {
           setValue(null);
         }
@@ -79,6 +78,10 @@ const Transfer = (props) => {
       : null;
   }, [watch("accountNumber")]);
 
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
   const From_input = [
     {
       id: 1,
@@ -99,7 +102,7 @@ const Transfer = (props) => {
     },
     {
       id: 3,
-      name: "naration",
+      name: "narration",
       type: "text",
       placeholder: "Enter Narration(Optional)",
       border: "1px solid rgba(28, 28, 28, 25%)",
