@@ -58,10 +58,10 @@ const BusinessCompliance = ({ compData }) => {
   });
 
   const onSubmit = async (data) => {
-    const { cert, memo, ...others } = data;
+    const { cert, doc, ...others } = data;
     inputRef.current = data;
     // console.log({ ...others, cert: cert?.[0], memo: memo?.[0], NIN: "12344556685" });
-    mutate({ ...others, cert: cert?.[0], memo: memo?.[0] });
+    mutate({ ...others, cert: cert?.[0], doc: doc?.[0] });
   };
 
   useLayoutEffect(() => {
@@ -156,11 +156,12 @@ const BusinessCompliance = ({ compData }) => {
       label: "Business Address",
     },
   ];
+
   let ImageFiles = [
     {
       id: 2,
-      title: "Upload Memorandum",
-      name: "memo",
+      title: "Upload Incorporation documents",
+      name: "doc",
       disabled: compData?.user?.accountType !== "Business" ? true : false,
     },
     {
@@ -294,6 +295,7 @@ const BusinessCompliance = ({ compData }) => {
                 type="file"
                 {...register(i.name)}
               />
+              <p>{errors[i.name]?.message}</p>
             </label>
           </Stack>
         ))}

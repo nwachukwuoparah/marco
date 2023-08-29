@@ -98,21 +98,22 @@ export const businessCompliance_schema = yup
           }
         },
       }),
-    memo: yup
+    doc: yup
       .mixed()
       .test({
         name: "required",
-        message: "Memorandum is requried",
+        message: "Incorporation documents is requried",
         test: (value) => value?.length > 0,
       })
       .test({
         name: "fileSize",
-        message: "file uploaded is larger than 500kb",
+        message: "Uploaded file should be in Pdf format",
         test: (value) => {
-          if (typeof value === "object") {
-            return value[0]?.size < 500000;
+          if (typeof value === "object" && value instanceof FileList) {
+            const pdfFile = value[0];
+            return pdfFile.type === "application/pdf"; // && pdfFile.size < 500000;
           } else {
-            return true;
+            return true; // Non-file values are considered valid
           }
         },
       }),
@@ -320,7 +321,6 @@ export const User_schema = yup
       }
       return schema;
     }),
-
     phoneNumber: yup
       .string()
       .required("Phone number is required")
