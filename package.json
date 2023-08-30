@@ -22,7 +22,7 @@
     "file-saver": "^2.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.45.0",
+    "react-hook-form": "^7.45.4",
     "react-pdf": "^7.3.3",
     "react-router-dom": "^6.13.0",
     "yup": "^1.2.0"
