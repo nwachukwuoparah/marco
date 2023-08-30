@@ -255,6 +255,7 @@ const Personal_compliance = ({ compData }) => {
               Upload NIN
             </Typography>
             <input name="nin" hidden type="file" {...register("nin")} />
+            <p>{errors["nin"]?.message}</p>
           </label>
         </Stack>
       </Stack>

@@ -154,7 +154,7 @@ export const personalCompliance_schema = yup
       .mixed()
       .test({
         name: "required",
-        message: "Certificate of incorporation is requried",
+        message: "A Picture of your National Identity is requried",
         test: (value) => value?.length > 0,
       })
       .test({
